@@ -63,3 +63,76 @@ export async function loginWithEmail(email: string): Promise<AuthUser> {
     entitlements: parseEntitlements(sub.plan.entitlements),
   };
 }
+
+export async function loginWithTelegram(initData: string): Promise<AuthUser> {
+  const { validateTelegramInitData, parseInitDataUser } = await import("./telegram-auth");
+  
+  const botToken = process.env.TELEGRAM_BOT_TOKEN;
+  if (!botToken) throw new Error("TELEGRAM_BOT_TOKEN is not configured");
+
+  if (!validateTelegramInitData(initData, botToken)) {
+    throw new Error("Invalid Telegram initData signature");
+  }
+
+  const tgUser = parseInitDataUser(initData);
+  if (!tgUser) {
+    throw new Error("No user data in initData");
+  }
+
+  const externalId = tgUser.id.toString();
+
+  // Find existing channel binding
+  let binding = await prisma.channelBinding.findFirst({
+    where: { channel: "telegram", externalId },
+    include: { user: true }
+  });
+
+  let user = binding?.user;
+
+  if (!user) {
+    // Check if maybe we bound via phone or email in a different way, but for silent TMA auth we just create a new user
+    // Generate a dummy email
+    const dummyEmail = `tg_${externalId}@tma.pitchlab.io`;
+    
+    // Find if dummy email already exists (edge case)
+    user = await prisma.user.findUnique({ where: { email: dummyEmail } });
+
+    if (!user) {
+      user = await prisma.user.create({ data: { email: dummyEmail } });
+      await prisma.subscription.create({
+        data: { userId: user.id, planId: "free", status: "active" },
+      });
+      await ensurePaperWallet(prisma, user.id);
+    }
+
+    // Create the binding
+    await prisma.channelBinding.create({
+      data: {
+        userId: user.id,
+        channel: "telegram",
+        externalId,
+        verifiedAt: new Date(),
+      }
+    });
+  } else {
+    await ensurePaperWallet(prisma, user.id);
+  }
+
+  const sub = await prisma.subscription.findUniqueOrThrow({
+    where: { userId: user.id },
+    include: { plan: true },
+  });
+
+  const session = await getSession();
+  session.userId = user.id;
+  session.email = user.email;
+  session.planId = sub.planId;
+  await session.save();
+
+  return {
+    id: user.id,
+    email: user.email,
+    planId: sub.planId as PlanId,
+    entitlements: parseEntitlements(sub.plan.entitlements),
+  };
+}
