@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Script from "next/script";
 import { TmaAuthProvider } from "@/components/TmaAuthProvider";
-import { BottomNav } from "@/components/BottomNav";
+import BottomNav from "@/components/BottomNav";
 import "./globals.css";
 
 export const metadata: Metadata = {

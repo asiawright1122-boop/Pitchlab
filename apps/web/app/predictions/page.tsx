@@ -1,147 +1,108 @@
-import Image from "next/image";
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
+import TeamFlag from "@/components/TeamFlag";
 
 export default async function PredictionsPage() {
-  const slips = [
-    {
-      id: 1,
-      home: "Liverpool",
-      away: "Man City",
-      league: "Premier League",
-      date: "Today 16:30 BST",
-      stake: 50.00,
-      win: "LIVERPOOL",
-      odds: 2.10,
-      status: "UPCOMING",
-      homeFlag: "🔴",
-      awayFlag: "🔵",
-    },
-    {
-      id: 2,
-      home: "Arsenal",
-      away: "Bayern Munich",
-      league: "UCL - 18 APR",
-      score: "2 - 1",
-      stake: 25.00,
-      result: "WIN",
-      odds: 1.85,
-      profit: "+£21.25",
-      status: "COMPLETED",
-      homeFlag: "🛡️",
-      awayFlag: "⭐",
-    },
-    {
-      id: 3,
-      home: "Real Madrid",
-      away: "Barcelona",
-      league: "La Liga - 17 APR",
-      score: "1 - 2",
-      stake: 40.00,
-      result: "LOSS",
-      odds: 2.30,
-      loss: "-£40.00",
-      status: "COMPLETED",
-      homeFlag: "👑",
-      awayFlag: "🔵🔴",
-    }
-  ];
+  // Fetch real trades from database
+  const trades = await prisma.paperTrade.findMany({
+    orderBy: { createdAt: "desc" },
+    include: { fixture: true },
+    take: 20
+  });
+
+  // Calculate aggregated stats
+  const settledTrades = trades.filter(t => t.status === "settled");
+  const winCount = settledTrades.filter(t => t.pnl && t.pnl > 0).length;
+  const winRate = settledTrades.length > 0 ? Math.round((winCount / settledTrades.length) * 100) : 0;
+  
+  const totalProfit = settledTrades.reduce((acc, t) => acc + (t.pnl || 0), 0);
+  const profitStr = totalProfit >= 0 ? `+${totalProfit.toFixed(2)}` : totalProfit.toFixed(2);
 
   return (
     <div className="flex flex-col min-h-[100dvh] bg-[#f2f2f7]">
-      <header className="bg-white px-4 pt-6 pb-4 sticky top-0 z-10 shadow-sm border-b border-gray-100">
-        <div className="flex justify-between items-center mb-2">
-          <span className="text-xs font-bold text-gray-500 uppercase tracking-wider">Total Balance</span>
-          <div className="flex items-center gap-3">
-            <div className="w-7 h-7 rounded-full bg-gray-500 text-white flex items-center justify-center font-bold text-xs">A</div>
-            <button className="text-gray-800 relative">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
-              <span className="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full border border-white"></span>
-            </button>
+      <header className="bg-gradient-to-b from-blue-600 to-blue-500 px-4 pt-8 pb-10 shadow-sm relative overflow-hidden">
+        {/* Decorative background circle */}
+        <div className="absolute top-[-50px] right-[-50px] w-32 h-32 bg-blue-400 rounded-full blur-2xl opacity-50"></div>
+        <div className="absolute bottom-[-30px] left-[-30px] w-24 h-24 bg-blue-300 rounded-full blur-xl opacity-30"></div>
+
+        <h1 className="font-bold text-2xl tracking-tight text-white mb-6 relative z-10">Predictions</h1>
+        
+        <div className="flex justify-between items-center bg-white/10 p-4 rounded-2xl border border-white/20 backdrop-blur-md relative z-10">
+          <div className="flex flex-col">
+            <span className="text-blue-100 text-[10px] font-bold uppercase tracking-wider mb-1">Win Rate</span>
+            <span className="text-white font-black text-2xl">{winRate}%</span>
+          </div>
+          <div className="w-px h-10 bg-white/20"></div>
+          <div className="flex flex-col text-right">
+            <span className="text-blue-100 text-[10px] font-bold uppercase tracking-wider mb-1">Total Profit</span>
+            <span className="text-white font-black text-2xl">{profitStr}</span>
           </div>
         </div>
-        <div className="text-3xl font-black text-gray-900 tracking-tight">£1,280.50</div>
       </header>
 
-      <div className="flex items-center justify-between px-4 py-4 bg-[#f2f2f7]">
-        <h1 className="font-bold text-xl text-gray-900">PREDICTIONS</h1>
-        <div className="text-xs font-medium text-gray-500 flex items-center gap-1 cursor-pointer">
-          All / Active / History
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>
-        </div>
-      </div>
-
-      <div className="flex-1 overflow-y-auto px-4 pb-24 space-y-4">
-        {slips.map((slip) => (
-          <div key={slip.id} className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden relative">
-            <div className="absolute top-0 right-0 bg-gray-50 px-3 py-1 rounded-bl-2xl border-l border-b border-gray-100 text-[10px] font-bold text-gray-500">
-              {slip.status}
-            </div>
-            <div className="p-4 pt-5 border-b border-gray-50">
-              <div className="flex items-center justify-between mb-4">
-                <div className="flex items-center gap-3">
-                  <span className="text-2xl">{slip.homeFlag}</span>
-                  <div className="text-sm font-bold text-gray-900">{slip.home}</div>
-                </div>
-                <div className="flex flex-col items-center">
-                  <span className="text-[10px] text-gray-400 uppercase tracking-wider">{slip.league}</span>
-                  {slip.score ? (
-                    <span className="text-xl font-black text-gray-800 tracking-widest my-1">{slip.score}</span>
-                  ) : (
-                    <span className="text-xs text-gray-800 font-bold my-1">vs</span>
-                  )}
-                  {slip.date && <span className="text-[10px] font-bold text-gray-500">{slip.date}</span>}
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="text-sm font-bold text-gray-900">{slip.away}</div>
-                  <span className="text-2xl">{slip.awayFlag}</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="p-4 bg-gray-50/50 flex justify-between items-center">
-              <div>
-                <div className="text-[10px] text-gray-500 font-medium">Stake:</div>
-                <div className="text-sm font-bold text-gray-900">£{slip.stake.toFixed(2)}</div>
-              </div>
-              
-              {slip.status === "UPCOMING" ? (
-                <>
-                  <div className="text-center">
-                    <div className="text-[10px] text-gray-500 font-medium">Win:</div>
-                    <div className="text-sm font-bold text-gray-900">{slip.win}</div>
-                  </div>
-                  <div className="text-right">
-                    <div className="text-lg font-black text-gray-900">{slip.odds.toFixed(2)}</div>
-                    <div className="text-[10px] font-medium text-gray-500 mt-0.5">Potential: <span className="font-bold text-gray-900">£{(slip.stake * slip.odds).toFixed(2)}</span></div>
-                  </div>
-                </>
-              ) : (
-                <>
-                  <div className="text-center">
-                    <div className="text-[10px] text-gray-500 font-medium">Result:</div>
-                    <div className={`text-sm font-bold ${slip.result === "WIN" ? "text-green-500" : "text-red-500"}`}>{slip.result}</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-[10px] text-gray-500 font-medium">Odds:</div>
-                    <div className="text-sm font-bold text-gray-900">{slip.odds.toFixed(2)}</div>
-                  </div>
-                  <div className="text-right flex flex-col items-end">
-                    <div className={`w-8 h-6 rounded flex items-center justify-center text-white font-bold text-sm ${slip.result === "WIN" ? "bg-green-500" : "bg-red-500"}`}>
-                      {slip.result === "WIN" ? "+" : "-"}
-                    </div>
-                    <div className="text-[10px] font-medium text-gray-500 mt-1">
-                      {slip.result === "WIN" ? "Profit: " : "Loss: "}
-                      <span className={`font-bold ${slip.result === "WIN" ? "text-green-500" : "text-red-500"}`}>
-                        {slip.profit || slip.loss}
-                      </span>
-                    </div>
-                  </div>
-                </>
-              )}
-            </div>
+      <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4 pb-24 -mt-4 relative z-20">
+        <h2 className="font-bold text-lg text-gray-900 ml-1">Recent Activity</h2>
+        
+        {trades.length === 0 ? (
+          <div className="text-center py-10 bg-white rounded-2xl shadow-sm border border-gray-100">
+            <span className="text-3xl block mb-2">📊</span>
+            <p className="text-sm font-bold text-gray-800">No predictions yet</p>
+            <p className="text-xs text-gray-400 mt-1">Make some predictions to see your history.</p>
           </div>
-        ))}
+        ) : (
+          <div className="space-y-3">
+            {trades.map((trade) => {
+              const isWon = trade.pnl && trade.pnl > 0;
+              const isLost = trade.pnl && trade.pnl <= 0;
+              const isPending = trade.status === "open";
+              
+              const badgeClass = isWon ? "bg-green-100 text-green-700" : isLost ? "bg-red-100 text-red-700" : "bg-gray-100 text-gray-700";
+              const badgeText = isWon ? "WON" : isLost ? "LOST" : "PENDING";
+
+              return (
+                <div key={trade.id} className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden relative group">
+                  <div className={`absolute left-0 top-0 bottom-0 w-1 ${isWon ? 'bg-green-500' : isLost ? 'bg-red-500' : 'bg-gray-300'}`}></div>
+                  
+                  <div className="p-3.5 pl-4 border-b border-gray-50 flex justify-between items-center">
+                    <span className={`text-[9px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider ${badgeClass}`}>
+                      {badgeText}
+                    </span>
+                    <span className="text-[10px] font-bold text-gray-400">
+                      {trade.market.toUpperCase()} - {trade.selection}
+                    </span>
+                  </div>
+
+                  <div className="p-3.5 pl-4 flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <div className="w-8 h-8 rounded-full bg-gray-50 border border-gray-100 flex items-center justify-center p-0.5 shrink-0">
+                         <TeamFlag teamName={trade.home} className="w-full h-full object-cover rounded-full" />
+                      </div>
+                      <div className="flex flex-col">
+                        <span className="text-xs font-bold text-gray-900 leading-tight">{trade.home}</span>
+                        <span className="text-[10px] text-gray-400 font-medium">vs {trade.away}</span>
+                      </div>
+                    </div>
+
+                    <div className="flex flex-col items-end">
+                      <span className="text-xs font-medium text-gray-500">Odds</span>
+                      <span className="text-sm font-black text-gray-900">{trade.odds.toFixed(2)}</span>
+                    </div>
+                  </div>
+
+                  <div className="bg-gray-50 p-3 pl-4 flex items-center justify-between">
+                     <span className="text-[10px] font-medium text-gray-500">{new Date(trade.kickoffUtc).toLocaleDateString()}</span>
+                     <div className="flex items-center gap-1.5 text-xs">
+                        <span className="text-gray-500 font-medium">PnL:</span>
+                        <span className={`font-black ${isWon ? 'text-green-600' : isLost ? 'text-red-600' : 'text-gray-800'}`}>
+                           {trade.pnl ? (trade.pnl > 0 ? `+${trade.pnl.toFixed(2)}` : trade.pnl.toFixed(2)) : '--'}
+                        </span>
+                     </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
       </div>
     </div>
   );

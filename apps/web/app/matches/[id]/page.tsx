@@ -253,7 +253,7 @@ export default async function MatchPage({ params }: { params: { id: string } }) 
               <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">HOME</span>
               <div className="w-full py-2 bg-[#0b132b] rounded-xl border border-blue-500/30 text-center">
                 <span className="text-xs font-bold text-white block mb-0.5">1 ({fixture.home.substring(0,3).toUpperCase()})</span>
-                <span className="text-lg font-black text-blue-400">{latestOdds.home ? latestOdds.home.toFixed(2) : "2.15"}</span>
+                <span className="text-lg font-black text-blue-400">{latestOdds.home ? latestOdds.home.toFixed(2) : "--"}</span>
               </div>
             </button>
 
@@ -270,7 +270,7 @@ export default async function MatchPage({ params }: { params: { id: string } }) 
               <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">DRAW</span>
               <div className="w-full py-2 bg-[#0b132b] rounded-xl border border-white/10 text-center">
                 <span className="text-xs font-bold text-white block mb-0.5">X (DRAW)</span>
-                <span className="text-lg font-black text-white">{latestOdds.draw ? latestOdds.draw.toFixed(2) : "3.40"}</span>
+                <span className="text-lg font-black text-white">{latestOdds.draw ? latestOdds.draw.toFixed(2) : "--"}</span>
               </div>
             </button>
 
@@ -282,20 +282,10 @@ export default async function MatchPage({ params }: { params: { id: string } }) 
               <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">AWAY</span>
               <div className="w-full py-2 bg-[#0b132b] rounded-xl border border-red-500/30 text-center">
                 <span className="text-xs font-bold text-white block mb-0.5">2 ({fixture.away.substring(0,3).toUpperCase()})</span>
-                <span className="text-lg font-black text-red-400">{latestOdds.away ? latestOdds.away.toFixed(2) : "3.10"}</span>
+                <span className="text-lg font-black text-red-400">{latestOdds.away ? latestOdds.away.toFixed(2) : "--"}</span>
               </div>
             </button>
           </div>
-
-          <p className="text-[10px] text-slate-500 text-center uppercase tracking-wider mt-6 mb-3">Full Time Odds</p>
-          <button className="w-full flex items-center justify-between bg-white/5 border border-white/10 rounded-xl p-4 hover:bg-white/10 transition">
-            <span className="text-sm font-bold text-slate-300">Over/Under 3.5 Goals</span>
-            <div className="flex items-center gap-3">
-              <span className="text-xs font-medium text-slate-400">O <span className="font-bold text-white text-sm">1.85</span></span>
-              <span className="text-slate-600">/</span>
-              <span className="text-xs font-medium text-slate-400">U <span className="font-bold text-white text-sm">1.95</span></span>
-            </div>
-          </button>
         </div>
 
         {/* Existing Components (TmaPanel, etc) hidden initially or placed below */}
