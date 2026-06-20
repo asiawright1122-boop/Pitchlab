@@ -1,0 +1,97 @@
+<style>
+  .comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+  }
+  .comparison-table th, .comparison-table td {
+    padding: 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .comparison-table th {
+    background: rgba(255, 255, 255, 0.02);
+    color: var(--text-primary);
+    font-weight: 600;
+  }
+  .term-old {
+    color: #ef4444;
+    text-decoration: line-through;
+    font-family: monospace;
+    font-size: 0.85rem;
+  }
+  .term-new {
+    color: #10b981;
+    font-weight: 600;
+  }
+  .example-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 0.75rem;
+    padding: 1rem;
+    margin-top: 1rem;
+  }
+</style>
+
+<h2>普通用户界面（非专业术语化）调整</h2>
+<p class="subtitle">收到您的反馈。为了让普通用户感觉更加亲切易用，我们将移除界面中生涩的学术与技术术语，替换为更加直观、通俗的词汇：</p>
+
+<table class="comparison-table">
+  <thead>
+    <tr>
+      <th>原英文/技术术语</th>
+      <th>优化后的中文（普通用户可见）</th>
+      <th>解释与用途</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><span class="term-old">Edge %</span></td>
+      <td><span class="term-new">胜率优势 / 偏离幅度</span></td>
+      <td>指模型预测胜率折算赔率后，比庄家高出的部分。</td>
+    </tr>
+    <tr>
+      <td><span class="term-old">RU Ledger / Balance</span></td>
+      <td><span class="term-new">测试筹码 / 模拟额度</span></td>
+      <td>用于模拟交易研究的点数，避免使用晦涩的 RU 缩写。</td>
+    </tr>
+    <tr>
+      <td><span class="term-old">Dixon-Coles Engine</span></td>
+      <td><span class="term-new">量化分析引擎 / 预测核心</span></td>
+      <td>在 Landing Page 和说明中用更直白的量化词汇替代学者名字。</td>
+    </tr>
+    <tr>
+      <td><span class="term-old">Published Artifacts</span></td>
+      <td><span class="term-new">系统数据包 / 离线数据包</span></td>
+      <td>在管理员后台也将其改写为易懂的运维词汇。</td>
+    </tr>
+    <tr>
+      <td><span class="term-old">Hermes Pipeline</span></td>
+      <td><span class="term-new">数据自动化计算流 / 调度管道</span></td>
+      <td>用功能直译取代代号名称。</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="example-card">
+  <h4 style="margin: 0 0 0.5rem 0; font-size: 0.85rem; color: #60a5fa;">💡 普通用户“个人管理”页面优化预览：</h4>
+  <div style="font-size: 0.8rem; line-height: 1.6; color: #d4d4d8;">
+    <div><strong>资产卡片：</strong> 模拟测试点数 10,000 <span style="color: #a1a1aa;">(可用模拟筹码)</span></div>
+    <div style="margin-top: 0.5rem;"><strong>策略配置：</strong> 设定您想关注的优势比赛。例如，当<strong>「模型预测优势」</strong>大于 <strong>2.0%</strong> 时，机器人会自动提醒您。</div>
+  </div>
+</div>
+
+<div class="section" style="margin-top: 1.5rem;">
+  <div class="label">您是否满意这次的去术语化调整？</div>
+</div>
+
+<div class="options">
+  <div class="option" data-choice="satisfy" onclick="toggleSelect(this)">
+    <div class="letter">✓</div>
+    <div class="content">
+      <h3>非常满意</h3>
+      <p>文案通俗易懂，以此进行设计方案与 spec 细化。</p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,16 @@
+{
+  "generated_at": "2026-06-16T14:19:23.024187+00:00",
+  "league": "I1",
+  "monitor": {
+    "n_holdout": 30,
+    "n_scored": 30,
+    "calibrated": true,
+    "brier": 0.6885,
+    "ece": 0.144,
+    "log_loss": 2.7979,
+    "brier_raw": 0.6398
+  },
+  "model": "Dixon-Coles",
+  "model_version": "dc-isotonic-v0.1",
+  "strategy": "devig + value edge>=2% + quarter-Kelly (analysis only)"
+}

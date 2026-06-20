@@ -1,0 +1,78 @@
+{
+  "name": "World Cup 2026",
+  "illustrative": false,
+  "groups": {
+    "A": [
+      "Czechia",
+      "Mexico",
+      "South Africa",
+      "South Korea"
+    ],
+    "B": [
+      "Bosnia-Herzegovina",
+      "Canada",
+      "Qatar",
+      "Switzerland"
+    ],
+    "C": [
+      "Brazil",
+      "Haiti",
+      "Morocco",
+      "Scotland"
+    ],
+    "D": [
+      "Australia",
+      "Paraguay",
+      "Turkey",
+      "United States"
+    ],
+    "E": [
+      "Curaçao",
+      "Ecuador",
+      "Germany",
+      "Ivory Coast"
+    ],
+    "F": [
+      "Japan",
+      "Netherlands",
+      "Sweden",
+      "Tunisia"
+    ],
+    "G": [
+      "Belgium",
+      "Egypt",
+      "Iran",
+      "New Zealand"
+    ],
+    "H": [
+      "Cape Verde Islands",
+      "Saudi Arabia",
+      "Spain",
+      "Uruguay"
+    ],
+    "I": [
+      "France",
+      "Iraq",
+      "Norway",
+      "Senegal"
+    ],
+    "J": [
+      "Algeria",
+      "Argentina",
+      "Austria",
+      "Jordan"
+    ],
+    "K": [
+      "Colombia",
+      "Congo DR",
+      "Portugal",
+      "Uzbekistan"
+    ],
+    "L": [
+      "Croatia",
+      "England",
+      "Ghana",
+      "Panama"
+    ]
+  }
+}

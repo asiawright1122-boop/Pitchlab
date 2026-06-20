@@ -1,0 +1,56 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: #f8f9fa;
+    --foreground: #333333;
+    
+    --navy: #1a1a2e;
+    --navy-light: #16213e;
+    --red: #e04039;
+    --red-hover: #c93a33;
+    
+    --card-bg: #ffffff;
+    --border: #e8e8e8;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: "Noto Sans SC", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center px-5 py-2.5 bg-[#e04039] text-white rounded-md font-semibold text-sm transition-all duration-200 hover:bg-[#1a1a2e];
+  }
+}
+
+@layer utilities {
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.4);
+  }
+}
+
+@layer components {
+  .btn-secondary {
+    @apply inline-flex items-center justify-center px-5 py-2.5 bg-white border border-[#e8e8e8] text-[#555] rounded-md font-semibold text-sm transition-all duration-200 hover:bg-[#f0f2f5] hover:border-[#ccc];
+  }
+  .card {
+    @apply bg-white border border-[#e8e8e8] rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.06)] overflow-hidden;
+  }
+}

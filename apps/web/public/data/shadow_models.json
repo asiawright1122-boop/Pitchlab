@@ -1,0 +1,537 @@
+{
+  "generated_at": "2026-06-16T14:28:34.932332+00:00",
+  "policy": {
+    "auto_promote": false,
+    "reason": "Auto-promote disabled (pass --auto-promote to arm).",
+    "promote_if": "avg_clv >= 0.0 for 90d (7+ snapshots) AND best challenger Brier beats champion AND ECE <= champion ECE + 0.02",
+    "promotion_eligible": false,
+    "promoted_model_id": null,
+    "gates": {
+      "clv": {
+        "ok": false,
+        "detail": "Negative CLV detected: -0.07"
+      },
+      "pnl": {
+        "ok": false,
+        "detail": "Negative CLV detected: -0.07"
+      },
+      "brier": {
+        "ok": true,
+        "detail": "Brier gate: challenger 0.5994 < champion 0.6299"
+      },
+      "ece": {
+        "ok": false,
+        "detail": "ECE gate: blocked (challenger ECE 0.1091 > champion 0.0692 + 0.02)"
+      }
+    }
+  },
+  "source": "football-data",
+  "seasons": [
+    2022,
+    2023,
+    2024
+  ],
+  "leagues": [
+    {
+      "league": "E0",
+      "league_name": "Premier League (ENG)",
+      "seasons": [
+        2022,
+        2023,
+        2024
+      ],
+      "holdout": 30,
+      "champion": {
+        "id": "dc-isotonic-v0.1",
+        "label": "Dixon-Coles + isotonic calibration",
+        "role": "champion",
+        "monitor": {
+          "n_holdout": 30,
+          "n_scored": 30,
+          "calibrated": true,
+          "brier": 0.6299,
+          "ece": 0.0692,
+          "log_loss": 1.0388,
+          "brier_raw": 0.6083
+        }
+      },
+      "challenger": {
+        "id": "dc-raw-v0.1",
+        "label": "Dixon-Coles (no calibration)",
+        "role": "challenger",
+        "monitor": {
+          "n_holdout": 30,
+          "n_scored": 30,
+          "calibrated": false,
+          "brier": 0.6083,
+          "ece": 0.0609,
+          "log_loss": 1.0073
+        }
+      },
+      "challenger_beta": {
+        "id": "dc-beta-calibrated-v0.1",
+        "label": "Dixon-Coles + Beta Calibration",
+        "role": "challenger",
+        "monitor": {
+          "n_holdout": 30,
+          "n_scored": 30,
+          "calibrated": true,
+          "brier": 0.6092,
+          "ece": 0.0566,
+          "log_loss": 1.0084,
+          "brier_raw": 0.6083
+        }
+      },
+      "shadow_ml_logreg": {
+        "id": "logreg-elo-v0",
+        "label": "Logistic regression (Elo features)",
+        "role": "shadow",
+        "status": "ok",
+        "monitor": {
+          "n": 30,
+          "brier": 0.5998,
+          "log_loss": 0.9887,
+          "ece": 0.0681
+        }
+      },
+      "shadow_ml_gbm": {
+        "id": "gbm-elo-v0",
+        "label": "HistGradientBoosting (Elo features)",
+        "role": "shadow",
+        "status": "ok",
+        "monitor": {
+          "n": 30,
+          "brier": 0.5994,
+          "log_loss": 0.9864,
+          "ece": 0.1091
+        }
+      },
+      "shadow_ml_residual": {
+        "id": "dc-ml-residual-v0.1",
+        "label": "Dixon-Coles + ML Residual Correction",
+        "role": "shadow",
+        "status": "ok",
+        "monitor": {
+          "n": 30,
+          "brier": 0.6171,
+          "log_loss": 1.0231,
+          "ece": 0.0771
+        }
+      },
+      "recommendation": "Challenger beats champion on Brier — still no auto-promote (CLV gate).",
+      "shadow_ml": {
+        "id": "gbm-elo-v0",
+        "label": "HistGradientBoosting (Elo features)",
+        "role": "shadow",
+        "status": "ok",
+        "monitor": {
+          "n": 30,
+          "brier": 0.5994,
+          "log_loss": 0.9864,
+          "ece": 0.1091
+        }
+      }
+    },
+    {
+      "league": "D1",
+      "league_name": "Bundesliga (GER)",
+      "seasons": [
+        2022,
+        2023,
+        2024
+      ],
+      "holdout": 30,
+      "champion": {
+        "id": "dc-isotonic-v0.1",
+        "label": "Dixon-Coles + isotonic calibration",
+        "role": "champion",
+        "monitor": {
+          "n_holdout": 30,
+          "n_scored": 30,
+          "calibrated": true,
+          "brier": 0.6553,
+          "ece": 0.1119,
+          "log_loss": 1.0829,
+          "brier_raw": 0.6619
+        }
+      },
+      "challenger": {
+        "id": "dc-raw-v0.1",
+        "label": "Dixon-Coles (no calibration)",
+        "role": "challenger",
+        "monitor": {
+          "n_holdout": 30,
+          "n_scored": 30,
+          "calibrated": false,
+          "brier": 0.6619,
+          "ece": 0.1544,
+          "log_loss": 1.0893
+        }
+      },
+      "challenger_beta": {
+        "id": "dc-beta-calibrated-v0.1",
+        "label": "Dixon-Coles + Beta Calibration",
+        "role": "challenger",
+        "monitor": {
+          "n_holdout": 30,
+          "n_scored": 30,
+          "calibrated": true,
+          "brier": 0.6465,
+          "ece": 0.0974,
+          "log_loss": 1.0713,
+          "brier_raw": 0.6619
+        }
+      },
+      "shadow_ml_logreg": {
+        "id": "logreg-elo-v0",
+        "label": "Logistic regression (Elo features)",
+        "role": "shadow",
+        "status": "ok",
+        "monitor": {
+          "n": 30,
+          "brier": 0.7062,
+          "log_loss": 1.1582,
+          "ece": 0.1549
+        }
+      },
+      "shadow_ml_gbm": {
+        "id": "gbm-elo-v0",
+        "label": "HistGradientBoosting (Elo features)",
+        "role": "shadow",
+        "status": "ok",
+        "monitor": {
+          "n": 30,
+          "brier": 0.7146,
+          "log_loss": 1.2422,
+          "ece": 0.1225
+        }
+      },
+      "shadow_ml_residual": {
+        "id": "dc-ml-residual-v0.1",
+        "label": "Dixon-Coles + ML Residual Correction",
+        "role": "shadow",
+        "status": "ok",
+        "monitor": {
+          "n": 30,
+          "brier": 0.6821,
+          "log_loss": 1.1217,
+          "ece": 0.1365
+        }
+      },
+      "recommendation": "Challenger beats champion on Brier — still no auto-promote (CLV gate).",
+      "shadow_ml": {
+        "id": "logreg-elo-v0",
+        "label": "Logistic regression (Elo features)",
+        "role": "shadow",
+        "status": "ok",
+        "monitor": {
+          "n": 30,
+          "brier": 0.7062,
+          "log_loss": 1.1582,
+          "ece": 0.1549
+        }
+      }
+    },
+    {
+      "league": "SP1",
+      "league_name": "La Liga (ESP)",
+      "seasons": [
+        2022,
+        2023,
+        2024
+      ],
+      "holdout": 30,
+      "champion": {
+        "id": "dc-isotonic-v0.1",
+        "label": "Dixon-Coles + isotonic calibration",
+        "role": "champion",
+        "monitor": {
+          "n_holdout": 30,
+          "n_scored": 30,
+          "calibrated": true,
+          "brier": 0.5494,
+          "ece": 0.1482,
+          "log_loss": 0.9432,
+          "brier_raw": 0.5163
+        }
+      },
+      "challenger": {
+        "id": "dc-raw-v0.1",
+        "label": "Dixon-Coles (no calibration)",
+        "role": "challenger",
+        "monitor": {
+          "n_holdout": 30,
+          "n_scored": 30,
+          "calibrated": false,
+          "brier": 0.5163,
+          "ece": 0.0929,
+          "log_loss": 0.8899
+        }
+      },
+      "challenger_beta": {
+        "id": "dc-beta-calibrated-v0.1",
+        "label": "Dixon-Coles + Beta Calibration",
+        "role": "challenger",
+        "monitor": {
+          "n_holdout": 30,
+          "n_scored": 30,
+          "calibrated": true,
+          "brier": 0.5243,
+          "ece": 0.0964,
+          "log_loss": 0.9008,
+          "brier_raw": 0.5163
+        }
+      },
+      "shadow_ml_logreg": {
+        "id": "logreg-elo-v0",
+        "label": "Logistic regression (Elo features)",
+        "role": "shadow",
+        "status": "ok",
+        "monitor": {
+          "n": 30,
+          "brier": 0.5209,
+          "log_loss": 0.8973,
+          "ece": 0.0897
+        }
+      },
+      "shadow_ml_gbm": {
+        "id": "gbm-elo-v0",
+        "label": "HistGradientBoosting (Elo features)",
+        "role": "shadow",
+        "status": "ok",
+        "monitor": {
+          "n": 30,
+          "brier": 0.5691,
+          "log_loss": 0.9732,
+          "ece": 0.1124
+        }
+      },
+      "shadow_ml_residual": {
+        "id": "dc-ml-residual-v0.1",
+        "label": "Dixon-Coles + ML Residual Correction",
+        "role": "shadow",
+        "status": "ok",
+        "monitor": {
+          "n": 30,
+          "brier": 0.5062,
+          "log_loss": 0.8824,
+          "ece": 0.0855
+        }
+      },
+      "recommendation": "Challenger beats champion on Brier — still no auto-promote (CLV gate).",
+      "shadow_ml": {
+        "id": "logreg-elo-v0",
+        "label": "Logistic regression (Elo features)",
+        "role": "shadow",
+        "status": "ok",
+        "monitor": {
+          "n": 30,
+          "brier": 0.5209,
+          "log_loss": 0.8973,
+          "ece": 0.0897
+        }
+      }
+    },
+    {
+      "league": "I1",
+      "league_name": "Serie A (ITA)",
+      "seasons": [
+        2022,
+        2023,
+        2024
+      ],
+      "holdout": 30,
+      "champion": {
+        "id": "dc-isotonic-v0.1",
+        "label": "Dixon-Coles + isotonic calibration",
+        "role": "champion",
+        "monitor": {
+          "n_holdout": 30,
+          "n_scored": 30,
+          "calibrated": true,
+          "brier": 0.6734,
+          "ece": 0.0931,
+          "log_loss": 2.7782,
+          "brier_raw": 0.6402
+        }
+      },
+      "challenger": {
+        "id": "dc-raw-v0.1",
+        "label": "Dixon-Coles (no calibration)",
+        "role": "challenger",
+        "monitor": {
+          "n_holdout": 30,
+          "n_scored": 30,
+          "calibrated": false,
+          "brier": 0.6402,
+          "ece": 0.076,
+          "log_loss": 1.0756
+        }
+      },
+      "challenger_beta": {
+        "id": "dc-beta-calibrated-v0.1",
+        "label": "Dixon-Coles + Beta Calibration",
+        "role": "challenger",
+        "monitor": {
+          "n_holdout": 30,
+          "n_scored": 30,
+          "calibrated": true,
+          "brier": 0.6491,
+          "ece": 0.1138,
+          "log_loss": 1.102,
+          "brier_raw": 0.6402
+        }
+      },
+      "shadow_ml_logreg": {
+        "id": "logreg-elo-v0",
+        "label": "Logistic regression (Elo features)",
+        "role": "shadow",
+        "status": "ok",
+        "monitor": {
+          "n": 30,
+          "brier": 0.6599,
+          "log_loss": 1.1235,
+          "ece": 0.0793
+        }
+      },
+      "shadow_ml_gbm": {
+        "id": "gbm-elo-v0",
+        "label": "HistGradientBoosting (Elo features)",
+        "role": "shadow",
+        "status": "ok",
+        "monitor": {
+          "n": 30,
+          "brier": 0.6851,
+          "log_loss": 1.2368,
+          "ece": 0.1068
+        }
+      },
+      "shadow_ml_residual": {
+        "id": "dc-ml-residual-v0.1",
+        "label": "Dixon-Coles + ML Residual Correction",
+        "role": "shadow",
+        "status": "ok",
+        "monitor": {
+          "n": 30,
+          "brier": 0.6566,
+          "log_loss": 1.1233,
+          "ece": 0.0874
+        }
+      },
+      "recommendation": "Challenger beats champion on Brier — still no auto-promote (CLV gate).",
+      "shadow_ml": {
+        "id": "logreg-elo-v0",
+        "label": "Logistic regression (Elo features)",
+        "role": "shadow",
+        "status": "ok",
+        "monitor": {
+          "n": 30,
+          "brier": 0.6599,
+          "log_loss": 1.1235,
+          "ece": 0.0793
+        }
+      }
+    },
+    {
+      "league": "F1",
+      "league_name": "Ligue 1 (FRA)",
+      "seasons": [
+        2022,
+        2023,
+        2024
+      ],
+      "holdout": 30,
+      "champion": {
+        "id": "dc-isotonic-v0.1",
+        "label": "Dixon-Coles + isotonic calibration",
+        "role": "champion",
+        "monitor": {
+          "n_holdout": 30,
+          "n_scored": 30,
+          "calibrated": true,
+          "brier": 0.5943,
+          "ece": 0.1095,
+          "log_loss": 0.9934,
+          "brier_raw": 0.5741
+        }
+      },
+      "challenger": {
+        "id": "dc-raw-v0.1",
+        "label": "Dixon-Coles (no calibration)",
+        "role": "challenger",
+        "monitor": {
+          "n_holdout": 30,
+          "n_scored": 30,
+          "calibrated": false,
+          "brier": 0.5741,
+          "ece": 0.0931,
+          "log_loss": 0.9733
+        }
+      },
+      "challenger_beta": {
+        "id": "dc-beta-calibrated-v0.1",
+        "label": "Dixon-Coles + Beta Calibration",
+        "role": "challenger",
+        "monitor": {
+          "n_holdout": 30,
+          "n_scored": 30,
+          "calibrated": true,
+          "brier": 0.5762,
+          "ece": 0.0562,
+          "log_loss": 0.9759,
+          "brier_raw": 0.5741
+        }
+      },
+      "shadow_ml_logreg": {
+        "id": "logreg-elo-v0",
+        "label": "Logistic regression (Elo features)",
+        "role": "shadow",
+        "status": "ok",
+        "monitor": {
+          "n": 30,
+          "brier": 0.5935,
+          "log_loss": 1.0023,
+          "ece": 0.0497
+        }
+      },
+      "shadow_ml_gbm": {
+        "id": "gbm-elo-v0",
+        "label": "HistGradientBoosting (Elo features)",
+        "role": "shadow",
+        "status": "ok",
+        "monitor": {
+          "n": 30,
+          "brier": 0.6902,
+          "log_loss": 1.1546,
+          "ece": 0.1463
+        }
+      },
+      "shadow_ml_residual": {
+        "id": "dc-ml-residual-v0.1",
+        "label": "Dixon-Coles + ML Residual Correction",
+        "role": "shadow",
+        "status": "ok",
+        "monitor": {
+          "n": 30,
+          "brier": 0.5971,
+          "log_loss": 1.005,
+          "ece": 0.0446
+        }
+      },
+      "recommendation": "Challenger beats champion on Brier — still no auto-promote (CLV gate).",
+      "shadow_ml": {
+        "id": "logreg-elo-v0",
+        "label": "Logistic regression (Elo features)",
+        "role": "shadow",
+        "status": "ok",
+        "monitor": {
+          "n": 30,
+          "brier": 0.5935,
+          "log_loss": 1.0023,
+          "ece": 0.0497
+        }
+      }
+    }
+  ],
+  "errors": {}
+}

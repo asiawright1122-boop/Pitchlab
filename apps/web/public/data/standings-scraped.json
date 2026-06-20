@@ -1,0 +1,169 @@
+{
+  "lastUpdated": "2026-06-18T06:13:41.314Z",
+  "scorers": [
+    {
+      "name": "Lionel Messi",
+      "team": "Argentina",
+      "goals": 3
+    },
+    {
+      "name": "Folarin Balogun",
+      "team": "United States",
+      "goals": 2
+    },
+    {
+      "name": "Kai Havertz",
+      "team": "Germany",
+      "goals": 2
+    },
+    {
+      "name": "Yasin Ayari",
+      "team": "Sweden",
+      "goals": 2
+    },
+    {
+      "name": "Elijah Just",
+      "team": "New Zealand",
+      "goals": 2
+    },
+    {
+      "name": "Kylian Mbappé",
+      "team": "France",
+      "goals": 2
+    },
+    {
+      "name": "Erling Haaland",
+      "team": "Norway",
+      "goals": 2
+    },
+    {
+      "name": "Harry Kane",
+      "team": "England",
+      "goals": 2
+    },
+    {
+      "name": "Julián Quiñones",
+      "team": "Mexico",
+      "goals": 1
+    },
+    {
+      "name": "Raúl Jiménez",
+      "team": "Mexico",
+      "goals": 1
+    }
+  ],
+  "assists": [
+    {
+      "name": "Chris Wood",
+      "team": "New Zealand",
+      "assists": 2
+    },
+    {
+      "name": "Alexander Isak",
+      "team": "Sweden",
+      "assists": 2
+    },
+    {
+      "name": "Joshua Kimmich",
+      "team": "Germany",
+      "assists": 2
+    },
+    {
+      "name": "Ryan Gravenberch",
+      "team": "Netherlands",
+      "assists": 2
+    },
+    {
+      "name": "Deniz Undav",
+      "team": "Germany",
+      "assists": 2
+    },
+    {
+      "name": "Amir Al-Ammari",
+      "team": "Iraq",
+      "assists": 1
+    },
+    {
+      "name": "Florian Wirtz",
+      "team": "Germany",
+      "assists": 1
+    },
+    {
+      "name": "Hannibal Mejbri",
+      "team": "Tunisia",
+      "assists": 1
+    },
+    {
+      "name": "Noor Al-Rawabdeh",
+      "team": "Jordan",
+      "assists": 1
+    },
+    {
+      "name": "Michael Olise",
+      "team": "France",
+      "assists": 1
+    }
+  ],
+  "cards": [
+    {
+      "name": "Sphephelo Sithole",
+      "team": "South Africa",
+      "yellow": 0,
+      "red": 1
+    },
+    {
+      "name": "César Montes",
+      "team": "Mexico",
+      "yellow": 0,
+      "red": 1
+    },
+    {
+      "name": "Themba Zwane",
+      "team": "South Africa",
+      "yellow": 0,
+      "red": 1
+    },
+    {
+      "name": "Jean-Ricner Bellegarde",
+      "team": "Haiti",
+      "yellow": 1,
+      "red": 0
+    },
+    {
+      "name": "Micky van de Ven",
+      "team": "Netherlands",
+      "yellow": 1,
+      "red": 0
+    },
+    {
+      "name": "Casemiro",
+      "team": "Brazil",
+      "yellow": 1,
+      "red": 0
+    },
+    {
+      "name": "Crysencio Summerville",
+      "team": "Netherlands",
+      "yellow": 1,
+      "red": 0
+    },
+    {
+      "name": "Miguel Almirón",
+      "team": "Paraguay",
+      "yellow": 1,
+      "red": 0
+    },
+    {
+      "name": "Timothy Castagne",
+      "team": "Belgium",
+      "yellow": 1,
+      "red": 0
+    },
+    {
+      "name": "Aaron Hickey",
+      "team": "Scotland",
+      "yellow": 1,
+      "red": 0
+    }
+  ]
+}

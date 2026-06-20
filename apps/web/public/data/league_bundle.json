@@ -1,0 +1,76 @@
+{
+  "generated_at": "2026-06-16T14:19:23.566230+00:00",
+  "seasons": [
+    2021,
+    2022,
+    2023,
+    2024
+  ],
+  "leagues": [
+    {
+      "code": "E0",
+      "name": "Premier League (ENG)",
+      "monitor": {
+        "n_holdout": 30,
+        "n_scored": 30,
+        "calibrated": true,
+        "brier": 0.6263,
+        "ece": 0.0785,
+        "log_loss": 1.0371,
+        "brier_raw": 0.6093
+      }
+    },
+    {
+      "code": "D1",
+      "name": "Bundesliga (GER)",
+      "monitor": {
+        "n_holdout": 30,
+        "n_scored": 30,
+        "calibrated": true,
+        "brier": 0.6566,
+        "ece": 0.1288,
+        "log_loss": 1.085,
+        "brier_raw": 0.6641
+      }
+    },
+    {
+      "code": "SP1",
+      "name": "La Liga (ESP)",
+      "monitor": {
+        "n_holdout": 30,
+        "n_scored": 30,
+        "calibrated": true,
+        "brier": 0.5489,
+        "ece": 0.1362,
+        "log_loss": 0.9366,
+        "brier_raw": 0.5193
+      }
+    },
+    {
+      "code": "I1",
+      "name": "Serie A (ITA)",
+      "monitor": {
+        "n_holdout": 30,
+        "n_scored": 30,
+        "calibrated": true,
+        "brier": 0.6885,
+        "ece": 0.144,
+        "log_loss": 2.7979,
+        "brier_raw": 0.6398
+      }
+    },
+    {
+      "code": "F1",
+      "name": "Ligue 1 (FRA)",
+      "monitor": {
+        "n_holdout": 30,
+        "n_scored": 30,
+        "calibrated": true,
+        "brier": 0.5791,
+        "ece": 0.0823,
+        "log_loss": 0.9711,
+        "brier_raw": 0.5727
+      }
+    }
+  ]
+}

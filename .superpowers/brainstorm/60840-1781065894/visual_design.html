@@ -1,0 +1,249 @@
+<style>
+  :root {
+    --pitch-dark: #09090b;
+    --pitch-card: rgba(20, 20, 25, 0.7);
+    --pitch-accent: #0071E3;
+    --pitch-accent-glow: rgba(0, 113, 227, 0.15);
+    --border-color: rgba(255, 255, 255, 0.08);
+    --text-primary: #f4f4f5;
+    --text-secondary: #a1a1aa;
+    --text-emerald: #10b981;
+  }
+  .mockup-container {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: var(--text-primary);
+    background: linear-gradient(135deg, #0f172a, #020617);
+    padding: 2rem;
+    border-radius: 1.5rem;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    margin-top: 1rem;
+  }
+  .mock-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  .mock-logo {
+    font-weight: 700;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .mock-logo span {
+    background: var(--pitch-accent);
+    color: white;
+    width: 1.8rem;
+    height: 1.8rem;
+    border-radius: 0.4rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+  }
+  .mock-nav {
+    display: flex;
+    gap: 0.5rem;
+  }
+  .mock-tab {
+    padding: 0.4rem 0.8rem;
+    border-radius: 9999px;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+  }
+  .mock-tab.active {
+    background: var(--pitch-accent);
+    color: white;
+    box-shadow: 0 0 12px var(--pitch-accent-glow);
+  }
+  .mock-tab.admin {
+    border: 1px dashed rgba(168, 85, 247, 0.4);
+    color: #c084fc;
+  }
+  .mock-grid {
+    display: grid;
+    grid-template-cols: 1fr;
+    gap: 1.5rem;
+  }
+  @media(min-width: 768px) {
+    .mock-grid {
+      grid-template-cols: repeat(12, 1fr);
+    }
+  }
+  .mock-card {
+    background: var(--pitch-card);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--border-color);
+    border-radius: 1rem;
+    padding: 1.25rem;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s, border-color 0.2s;
+  }
+  .mock-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(255, 255, 255, 0.15);
+  }
+  .span-4 { grid-column: span 4; }
+  .span-8 { grid-column: span 8; }
+  .span-12 { grid-column: span 12; }
+  
+  .card-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    color: var(--text-primary);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .card-desc {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    line-height: 1.4;
+  }
+  .status-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.7rem;
+    color: var(--text-emerald);
+    background: rgba(16, 185, 129, 0.1);
+    padding: 0.2rem 0.5rem;
+    border-radius: 9999px;
+  }
+  .status-dot {
+    width: 6px;
+    height: 6px;
+    background: var(--text-emerald);
+    border-radius: 50%;
+  }
+  .mock-drawer-container {
+    position: relative;
+    overflow: hidden;
+    min-height: 250px;
+  }
+  .mock-drawer {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 250px;
+    height: 100%;
+    background: #111827;
+    border-left: 1px solid var(--border-color);
+    padding: 1rem;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    animation: slideIn 0.3s ease-out;
+  }
+  @keyframes slideIn {
+    from { transform: translateX(100%); }
+    to { transform: translateX(0); }
+  }
+  .badge {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-color);
+    padding: 0.15rem 0.4rem;
+    border-radius: 0.25rem;
+    font-size: 0.7rem;
+    font-family: monospace;
+  }
+</style>
+
+<h2>后台重构视觉原型预览 (方案 A)</h2>
+<p class="subtitle">根据您的选择，我们设计了包含<strong>“系统运维”新 Tab</strong>与<strong>侧边详情抽屉</strong>的后台管理系统。请在下方预览页面架构设计：</p>
+
+<div class="mockup-container">
+  <!-- Nav header -->
+  <div class="mock-header">
+    <div class="mock-logo"><span>P</span> PitchLab</div>
+    <div class="mock-nav">
+      <div class="mock-tab">冠军概率</div>
+      <div class="mock-tab">赛事预测</div>
+      <div class="mock-tab">模拟交易</div>
+      <div class="mock-tab">个人管理</div>
+      <div class="mock-tab active admin">⚙️ 系统运维</div>
+    </div>
+  </div>
+
+  <div class="mock-drawer-container">
+    <div class="mock-grid">
+      <!-- Card 1: DC Status -->
+      <div class="mock-card span-8">
+        <div class="card-title">
+          <span>Dixon-Coles 算法状态</span>
+          <span class="status-indicator"><span class="status-dot"></span>Healthy</span>
+        </div>
+        <p class="card-desc" style="margin-bottom: 0.8rem;">Hermes 离线自动计算与数据同步引擎当前处于健康状态。</p>
+        <div style="display:flex; gap: 1rem; font-size:0.75rem; color: var(--text-secondary)">
+          <span>Pipeline: <strong style="color:white">Hermes</strong></span>
+          <span>Run: <strong style="color:white">#1028</strong></span>
+          <span>最后同步: <strong style="color:white">5分钟前</strong></span>
+        </div>
+      </div>
+
+      <!-- Card 2: Sync Stats -->
+      <div class="mock-card span-4" style="cursor: pointer; border-color: var(--pitch-accent);">
+        <div class="card-title">
+          <span>数据同步 (Data Sync)</span>
+          <span class="badge" style="background: var(--pitch-accent-glow); color: #60a5fa; border-color: rgba(96, 165, 250, 0.3)">22 Artifacts</span>
+        </div>
+        <p class="card-desc">展示已发布的 JSON Artifacts。<strong>点击卡片可以右侧滑出抽屉查看详细列表与生成源。</strong></p>
+      </div>
+    </div>
+
+    <!-- Mock Drawer Overlay -->
+    <div class="mock-drawer">
+      <div>
+        <h4 style="margin: 0 0 0.5rem 0; font-size: 0.85rem;">Artifacts 详细日志</h4>
+        <div style="font-size: 0.7rem; color: var(--text-secondary); space-y: 0.5rem;">
+          <div style="border-bottom: 1px solid rgba(255,255,255,0.05); padding: 0.4rem 0;">
+            <div style="color: #fff; font-family: monospace;">predictions.json</div>
+            <div>2m ago • dixon-coles</div>
+          </div>
+          <div style="border-bottom: 1px solid rgba(255,255,255,0.05); padding: 0.4rem 0;">
+            <div style="color: #fff; font-family: monospace;">value.json</div>
+            <div>5m ago • value_finder</div>
+          </div>
+          <div style="border-bottom: 1px solid rgba(255,255,255,0.05); padding: 0.4rem 0;">
+            <div style="color: #fff; font-family: monospace;">status.json</div>
+            <div>5m ago • system</div>
+          </div>
+        </div>
+      </div>
+      <div style="font-size: 0.65rem; color: #a1a1aa; text-align: center;">
+        ← 点击遮罩或抽屉外区域关闭
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section" style="margin-top: 1.5rem;">
+  <div class="label">确认重构设计规范</div>
+  <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">
+    如果您同意此结构，我们将开始编写设计文档 `YYYY-MM-DD-dashboard-redesign-design.md`，并在其中定义：
+    1. 在 `Dashboard.tsx` 中向管理员展示 `system_admin` 顶级 Tab 的逻辑。
+    2. 新建独立的 `components/SystemAdmin.tsx` 组件，并将原 `PersonalHub` 内的 `me.isAdmin` 运维面板迁移至此。
+    3. 重构 `DataSyncPanel.tsx`，卡片网格化，并使用 React State 管理侧边详情抽屉。
+    4. 对 `PersonalHub.tsx` 进行“瘦身”，精简普通用户卡片（TG绑定卡片、通知卡片）的 CSS 呼吸感与阴影。
+  </p>
+</div>
+
+<div class="options">
+  <div class="option" data-choice="approve" onclick="toggleSelect(this)">
+    <div class="letter">✓</div>
+    <div class="content">
+      <h3>确认此设计规范</h3>
+      <p>开始撰写正式的设计 spec 文档。</p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,50 @@
+{
+  "generated_at": "2026-06-16T14:19:03.354859+00:00",
+  "source": "football-data.co.uk (open vs Pinnacle close)",
+  "seasons": [
+    2021,
+    2022,
+    2023,
+    2024
+  ],
+  "avg_clv_all": -0.0641,
+  "n_outcomes": 21465,
+  "leagues": [
+    {
+      "code": "E0",
+      "name": "Premier League (ENG)",
+      "n_matches_with_odds": 1520,
+      "n_outcomes": 4560,
+      "avg_clv": -0.0656
+    },
+    {
+      "code": "D1",
+      "name": "Bundesliga (GER)",
+      "n_matches_with_odds": 1224,
+      "n_outcomes": 3672,
+      "avg_clv": -0.0654
+    },
+    {
+      "code": "SP1",
+      "name": "La Liga (ESP)",
+      "n_matches_with_odds": 1520,
+      "n_outcomes": 4560,
+      "avg_clv": -0.0651
+    },
+    {
+      "code": "I1",
+      "name": "Serie A (ITA)",
+      "n_matches_with_odds": 1519,
+      "n_outcomes": 4557,
+      "avg_clv": -0.0619
+    },
+    {
+      "code": "F1",
+      "name": "Ligue 1 (FRA)",
+      "n_matches_with_odds": 1372,
+      "n_outcomes": 4116,
+      "avg_clv": -0.0626
+    }
+  ],
+  "note": "Historical open vs close on all outcomes — not the value-bet subset."
+}

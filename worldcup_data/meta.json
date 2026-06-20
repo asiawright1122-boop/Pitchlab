@@ -1,0 +1,8 @@
+{
+  "name": "World Cup 2026 (ILLUSTRATIVE sample)",
+  "illustrative": true,
+  "generated_at": "2026-06-08T07:41:52.280386+00:00",
+  "n_sims": 10000,
+  "model": "International Elo -> Poisson score matrix -> Monte Carlo",
+  "disclaimer": "Probabilities for information/analysis only. Not betting advice."
+}

@@ -1,0 +1,32 @@
+{
+  "name": "pitchlab",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": [
+    "apps/web",
+    "apps/worker"
+  ],
+  "scripts": {
+    "db:up": "docker compose up -d",
+    "db:down": "docker compose down",
+    "db:migrate": "prisma migrate deploy",
+    "db:migrate:dev": "prisma migrate dev",
+    "db:generate": "prisma generate",
+    "db:sync": "npm run sync -w pitchlab-worker",
+    "db:sync:correct-scores": "npm run sync:correct-scores -w pitchlab-web",
+    "notify": "npm run notify -w pitchlab-worker",
+    "alerts": "npm run alerts -w pitchlab-worker",
+    "shadow": "cd engine && . .venv/bin/activate && pitchlab models shadow --all --seasons 2022 2023 2024 --source football-data --export-json ../apps/web/public/data",
+    "db:seed": "npx tsx prisma/seed.ts",
+    "db:pull-config": "npm run db:pull-config -w pitchlab-worker",
+    "pipeline": "bash scripts/pipeline.sh",
+    "fixtures:live": "bash scripts/fixtures-live.sh",
+    "telegram:poll": "npm run telegram:poll -w pitchlab-web",
+    "dev:web": "npm run dev -w pitchlab-web",
+    "auto-sync": "npx tsx scripts/auto-sync.ts",
+    "postinstall": "prisma generate"
+  },
+  "devDependencies": {
+    "prisma": "^5.22.0"
+  }
+}

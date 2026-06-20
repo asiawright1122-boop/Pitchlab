@@ -1,0 +1,28 @@
+<h2>技术实现方案对比</h2>
+<p class="subtitle">我们应当如何在 Next.js 项目中构建这个路由和组件结构？</p>
+
+<div class="options">
+  <div class="option" data-choice="isolated" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>方案一：完全独立的组件与路由（彻底解耦）</h3>
+      <p>在新页面 <code>odds/page.tsx</code> 中编写独立的赔率展示组件，不修改现有的 <code>Dashboard.tsx</code>。</p>
+      <div style="font-size: 11px; color: #a1a1aa; margin-top: 8px;">
+        <strong>优点：</strong> 独立性强，代码修改局限在单个新页面文件，不影响现有其他 Tab 逻辑。<br/>
+        <strong>缺点：</strong> 用户在查看赔率时，无法与积分榜（Standings）、预测（Predictions）等 Tab 一键顺畅切换，需要手动回退或通过额外导航。
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="integrated" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>方案二：路由与 Dashboard Tab 双集成（推荐 🌟）</h3>
+      <p>在新页面 <code>odds/page.tsx</code> 中，以 <code>tab="odds"</code> 形式引入 <code>Dashboard</code>；在 <code>Dashboard.tsx</code> 中增加 "odds" Tab 逻辑和精致毛玻璃表格。</p>
+      <div style="font-size: 11px; color: #a1a1aa; margin-top: 8px;">
+        <strong>优点：</strong> 既有独立的 URL 页面（可做独立 SEO 路由），又与其他 Tab 无缝连通。用户在赔率页一键点击 Tab 就能切去积分榜或回测，体验极其丝滑。<br/>
+        <strong>缺点：</strong> 需要稍微修改 <code>Dashboard.tsx</code> 以增加 Tab 和其配置（难度极低）。
+      </div>
+    </div>
+  </div>
+</div>

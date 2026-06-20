@@ -1,0 +1,109 @@
+{
+  "generated_at": "2026-06-16T14:19:23.565214+00:00",
+  "league": "F1",
+  "league_name": "Ligue 1 (FRA)",
+  "seasons": [
+    2021,
+    2022,
+    2023,
+    2024
+  ],
+  "teams": [
+    {
+      "team": "Paris Saint-Germain",
+      "elo": 1769.3
+    },
+    {
+      "team": "Monaco",
+      "elo": 1629.5
+    },
+    {
+      "team": "Lille",
+      "elo": 1619.9
+    },
+    {
+      "team": "Marseille",
+      "elo": 1614.3
+    },
+    {
+      "team": "Nice",
+      "elo": 1610.9
+    },
+    {
+      "team": "Lyon",
+      "elo": 1600.1
+    },
+    {
+      "team": "Lens",
+      "elo": 1576.3
+    },
+    {
+      "team": "Strasbourg",
+      "elo": 1569.8
+    },
+    {
+      "team": "Brest",
+      "elo": 1559.7
+    },
+    {
+      "team": "Toulouse",
+      "elo": 1502.0
+    },
+    {
+      "team": "Rennes",
+      "elo": 1499.5
+    },
+    {
+      "team": "Auxerre",
+      "elo": 1480.5
+    },
+    {
+      "team": "Reims",
+      "elo": 1455.5
+    },
+    {
+      "team": "Nantes",
+      "elo": 1454.0
+    },
+    {
+      "team": "Le Havre",
+      "elo": 1447.6
+    },
+    {
+      "team": "Clermont",
+      "elo": 1438.8
+    },
+    {
+      "team": "Lorient",
+      "elo": 1432.1
+    },
+    {
+      "team": "Bordeaux",
+      "elo": 1414.7
+    },
+    {
+      "team": "St Etienne",
+      "elo": 1412.1
+    },
+    {
+      "team": "Angers",
+      "elo": 1399.7
+    },
+    {
+      "team": "Metz",
+      "elo": 1399.6
+    },
+    {
+      "team": "Ajaccio",
+      "elo": 1386.6
+    },
+    {
+      "team": "Montpellier",
+      "elo": 1364.7
+    },
+    {
+      "team": "Troyes",
+      "elo": 1362.7
+    }
+  ]
+}

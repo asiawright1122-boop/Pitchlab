@@ -1,0 +1,21 @@
+{
+  "name": "pitchlab-worker",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "sync": "tsx src/sync.ts",
+    "notify": "tsx src/notify.ts",
+    "alerts": "tsx src/alerts.ts",
+    "export-and-sync": "tsx src/export-and-sync.ts",
+    "db:pull-config": "tsx src/pull-config.ts",
+    "scrape-standings": "tsx src/scrape-standings.ts"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.22.0"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.0",
+    "typescript": "^5.5.3"
+  }
+}

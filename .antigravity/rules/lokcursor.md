@@ -1,0 +1,33 @@
+---
+description: "Lokcursor MCP 通信规则"
+globs: "**/*"
+alwaysApply: true
+---
+
+> **⚠️ SUBAGENT 专属指令（通过 Task 工具启动的子代理必读）**
+> 你是 subagent（子代理），**严禁调用任何 Lokcursor MCP 工具**（含 check_messages、ask_question 等）。完成任务后直接返回结果即可。下方规则仅适用于主 Agent。
+
+# MCP 工具调用规则（仅主 Agent 适用）
+
+以下规则**仅适用于主 Agent**，subagent（通过 Task 工具启动的子代理）**必须忽略以下所有规则**，完成任务后直接返回结果。
+
+1. 每轮对话回复**完整输出后**，最后一步必须调用 `check_messages`，适用于 Agent/Plan/Debug/Ask 所有模式，无一例外
+2. `check_messages` 会持续等待直到用户发来新消息；收到后处理并回复，然后再次调用 `check_messages`，形成永续循环：回复 → check_messages → 收到消息 → 回复 → check_messages
+3. **新对话**：若对话中尚无用户消息（如从 Lokcursor 发起、Antigravity 面板 刚打开），**应先调用** `check_messages` 获取消息。严禁在已有用户消息且回复未完成时调用；唯一豁免：用户明确要求结束对话
+4. Plan 模式写完方案后、Debug 模式分析完问题后、Ask 模式回答完问题后，均不得直接结束对话，必须调用 `check_messages` 等待用户反馈
+5. 需要用户做选择或确认时（选方案、选框架、确认操作等），必须调用 `ask_question`；严禁使用 Antigravity 内置的 ask_question 工具
+6. `ask_question` 参数格式: `{ "questions": [{ "question": "问题文本", "options": [{ "id": "a", "label": "选项A" }, { "id": "b", "label": "选项B" }], "allow_multiple": false }] }`
+7. 单选: `allow_multiple: false`（用户只能选一个）；多选: `allow_multiple: true`（用户可选多个）；同一 `questions` 数组可混合包含单选题和多选题
+8. 用户在每道题中均可额外输入自定义补充文本（Other 输入框），无需为此添加额外选项
+9. `ask_question` 收到用户回答后，处理完毕仍需调用 `check_messages` 继续监听
+10. 禁止在每轮结束时用 `ask_question` 问"还有别的需要吗"，回合结束只用 `check_messages`；`ask_question` 仅限任务中确实需要用户决策时使用
+11. `check_messages` 的 `reply` 参数：传入**本轮回复的摘要/结论**（将自动显示在 Lokcursor 面板对话时间线的助手气泡中），不是给用户的完整正文。严禁把工具参数 JSON 或「已确认规则」这类话术当成正常回复输出
+12. 回合结束时必须带上 `session_id`；`reply` 仅在本轮有明确摘要/结论时再附带。正常回答应直接写在主回复正文里，而不是写成 `{"reply": ...}` 这样的参数格式
+13. **严禁 subagent 调用 Lokcursor MCP 工具**。主 Agent 可以使用 subagent 执行搜索、分析等独立任务，但所有 Lokcursor MCP 工具必须由主 Agent 调用
+14. 如果 `check_messages` 或 `ask_question` 因客户端取消、连接抖动或内部异常而意外返回/报错，且用户未明确要求结束对话，严禁把这类内部提示直接输出给用户，必须立刻再次调用对应工具继续等待
+15. `export_chat` 用于导出当前会话的完整对话记录（一问一答格式），仅当用户要求"导出对话"时才调用
+16. 首次调用 `check_messages` 后会返回一个 `session_id`，**此后每次**调用任何 Lokcursor 工具时**都必须**在 arguments 中带上 `session_id` 参数
+17. **server 标识**：Antigravity 会将 Lokcursor 注册为 `lokcursor`。调用时 server 参数使用 `"lokcursor"` 即可。
+
+---
+**回合结束（强制，仅主 Agent）**: 仅当**主 Agent**回复**完整输出完毕后**，最后一步必须调用 Lokcursor MCP 的 `check_messages`（CallMcpTool，server 为名称以 `lokcursor` 结尾的 MCP 服务器标识，toolName 为 "check_messages"）。`ask_question` 仅用于需要用户做选择时。subagent 完成任务后直接返回，不调用任何 Lokcursor MCP 工具。

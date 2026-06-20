@@ -1,0 +1,16 @@
+{
+  "mcpServers": {
+    "lokcursor": {
+      "command": "/usr/local/bin/node",
+      "args": [
+        "/Users/kaka/.antigravity-ide/extensions/local.lokcursor-2.0.11/dist/mcp-server.mjs"
+      ],
+      "env": {
+        "LOKCURSOR_DIR": "/Users/kaka/.lokcursor-antigravity",
+        "LOKCURSOR_EXTENSION_ROOT": "/Users/kaka/.antigravity-ide/extensions/local.lokcursor-2.0.11",
+        "LOKCURSOR_HOST_IDE": "antigravity"
+      },
+      "$typeName": "exa.cascade_plugins_pb.CascadePluginCommandTemplate"
+    }
+  }
+}

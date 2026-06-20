@@ -1,0 +1,91 @@
+{
+  "generated_at": "2026-06-16T14:19:20.641876+00:00",
+  "week_ending": "2026-06-16",
+  "title": "PitchLab Weekly Research Digest",
+  "headline": "Week ending 2026-06-16: sample-out CLV -6.77% (-9.27% vs prior run). Research only — not betting advice.",
+  "sections": [
+    {
+      "id": "summary",
+      "title": "Executive summary",
+      "bullets": [
+        "No league shows out-of-sample +CLV vs sharp closing odds — confirms the honest no-edge conclusion. Product value is the transparent tool, not betting alpha.",
+        "Pipeline: worldcup · ok=True"
+      ]
+    },
+    {
+      "id": "backtest",
+      "title": "Walk-forward backtest",
+      "metrics": {
+        "avg_clv": -0.0677,
+        "roi": -0.1241,
+        "brier": 0.5782,
+        "n_bets": 903,
+        "clv_delta_vs_prior": -0.0927
+      }
+    },
+    {
+      "id": "leagues",
+      "title": "League CLV (snapshot)",
+      "rows": [
+        {
+          "code": "E0",
+          "avg_clv": -0.0876,
+          "brier": 0.5902
+        },
+        {
+          "code": "D1",
+          "avg_clv": -0.069,
+          "brier": 0.5991
+        },
+        {
+          "code": "SP1",
+          "avg_clv": -0.0774,
+          "brier": 0.5898
+        },
+        {
+          "code": "I1",
+          "avg_clv": -0.0626,
+          "brier": 0.5948
+        },
+        {
+          "code": "F1",
+          "avg_clv": -0.0657,
+          "brier": 0.6037
+        },
+        {
+          "code": "E1",
+          "avg_clv": -0.0727,
+          "brier": 0.629
+        }
+      ],
+      "highlight": {
+        "best_code": "I1",
+        "worst_code": "E0"
+      }
+    },
+    {
+      "id": "champion_challenger",
+      "title": "Champion vs challenger",
+      "champion": {
+        "label": "walk-forward CLV (Phase 0 truth machine)",
+        "metric": "avg_clv",
+        "value": -0.0677,
+        "n_bets": 903,
+        "verdict": "negative CLV -> no edge. Pivot to pure tool (C)."
+      },
+      "challenger": {
+        "label": "Dixon-Coles (no calibration)",
+        "metric": "brier",
+        "value": 0.6093,
+        "league": "E0",
+        "model_id": "dc-raw-v0.1"
+      },
+      "note": "Auto-promote ENABLED — gates passed."
+    }
+  ],
+  "body_markdown": "# PitchLab Weekly Digest · 2026-06-16\n\nWeek ending 2026-06-16: sample-out CLV -6.77% (-9.27% vs prior run). Research only — not betting advice.\n\n## Executive summary\n\n- No league shows out-of-sample +CLV vs sharp closing odds — confirms the honest no-edge conclusion. Product value is the transparent tool, not betting alpha.\n\n## Walk-forward backtest\n\n- Avg CLV: -6.77% (Δ -9.27% vs prior pipeline run)\n- ROI (flat): -12.41%\n- Brier: 0.5782\n- Bets: 903\n\n## League CLV\n\n- **E0**: CLV -8.76% · Brier 0.5902\n- **D1**: CLV -6.90% · Brier 0.5991\n- **SP1**: CLV -7.74% · Brier 0.5898\n- **I1**: CLV -6.26% · Brier 0.5948\n- **F1**: CLV -6.57% · Brier 0.6037\n- **E1**: CLV -7.27% · Brier 0.629\n\n_Best (least negative): I1_ · _Weakest: E0_\n\n## Champion / challenger\n\n- Champion: walk-forward CLV (Phase 0 truth machine)\n- Challenger: Dixon-Coles (no calibration)\n- Note: Auto-promote ENABLED — gates passed.\n\n---\n\nFull public metrics: /record · PitchLab research sandbox only.",
+  "share_paths": {
+    "record": "/record",
+    "weekly": "/weekly"
+  }
+}

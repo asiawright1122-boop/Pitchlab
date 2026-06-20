@@ -1,0 +1,126 @@
+{
+  "generated_at": "2026-06-16T14:19:20.639910+00:00",
+  "agent": {
+    "pipeline": "worldcup",
+    "ok": true,
+    "run_id": "cd7ca7530488"
+  },
+  "backtest_summary": {
+    "source": "football-data:E0",
+    "avg_clv": -0.0677,
+    "roi": -0.1241,
+    "brier": 0.5782,
+    "n_bets": 903,
+    "verdict": "negative CLV -> no edge. Pivot to pure tool (C)."
+  },
+  "leagues_clv": [
+    {
+      "code": "E0",
+      "avg_clv": -0.0876,
+      "brier": 0.5902
+    },
+    {
+      "code": "D1",
+      "avg_clv": -0.069,
+      "brier": 0.5991
+    },
+    {
+      "code": "SP1",
+      "avg_clv": -0.0774,
+      "brier": 0.5898
+    },
+    {
+      "code": "I1",
+      "avg_clv": -0.0626,
+      "brier": 0.5948
+    },
+    {
+      "code": "F1",
+      "avg_clv": -0.0657,
+      "brier": 0.6037
+    },
+    {
+      "code": "E1",
+      "avg_clv": -0.0727,
+      "brier": 0.629
+    }
+  ],
+  "leagues_holdout_brier": [
+    {
+      "code": "E0",
+      "brier": 0.6263,
+      "ece": 0.0785
+    },
+    {
+      "code": "D1",
+      "brier": 0.6559,
+      "ece": 0.1286
+    },
+    {
+      "code": "SP1",
+      "brier": 0.5489,
+      "ece": 0.1362
+    },
+    {
+      "code": "I1",
+      "brier": 0.6886,
+      "ece": 0.144
+    },
+    {
+      "code": "F1",
+      "brier": 0.5791,
+      "ece": 0.0823
+    }
+  ],
+  "champion_challenger": {
+    "champion": {
+      "label": "walk-forward CLV (Phase 0 truth machine)",
+      "metric": "avg_clv",
+      "value": -0.0677,
+      "n_bets": 903,
+      "verdict": "negative CLV -> no edge. Pivot to pure tool (C)."
+    },
+    "challenger": {
+      "label": "Dixon-Coles (no calibration)",
+      "metric": "brier",
+      "value": 0.6093,
+      "league": "E0",
+      "model_id": "dc-raw-v0.1"
+    },
+    "note": "Auto-promote ENABLED — gates passed.",
+    "auto_promote": true
+  },
+  "shadow_models": {
+    "n_leagues": 5,
+    "policy": {
+      "auto_promote": true,
+      "reason": "Auto-promote ENABLED — gates passed.",
+      "promote_if": "avg_clv >= 0.0 for 90d (7+ snapshots) AND best challenger Brier beats champion",
+      "promotion_eligible": true,
+      "promoted_model_id": "logreg-elo-v0",
+      "gates": {
+        "clv": {
+          "ok": true,
+          "detail": "OK"
+        },
+        "pnl": {
+          "ok": true,
+          "detail": "OK"
+        },
+        "brier": {
+          "ok": true,
+          "detail": "Brier gate: challenger 0.6019 < champion 0.6263"
+        }
+      }
+    },
+    "e0_recommendation": "Challenger beats champion on Brier — still no auto-promote (CLV gate).",
+    "e0_champion_brier": 0.6263,
+    "e0_challenger_brier": 0.6093
+  },
+  "summary_verdict": "No league shows out-of-sample +CLV vs sharp closing odds — confirms the honest no-edge conclusion. Product value is the transparent tool, not betting alpha.",
+  "prediction_snapshots": {
+    "league_holdout_n": 30,
+    "worldcup_fixtures_n": 72,
+    "model_version": "pitchlab-dc-v0.1"
+  }
+}

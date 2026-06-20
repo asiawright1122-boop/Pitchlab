@@ -1,0 +1,96 @@
+{
+  "generated_at": "2026-05-31T04:20:27.388515+00:00",
+  "seasons": [
+    2021,
+    2022,
+    2023,
+    2024
+  ],
+  "config": {
+    "min_train": 380,
+    "refit_every": 30,
+    "edge_threshold": 0.02,
+    "calibrate": true
+  },
+  "leagues": [
+    {
+      "code": "E0",
+      "name": "Premier League (ENG)",
+      "n_matches": 1520,
+      "n_predicted": 1130,
+      "n_bets": 975,
+      "avg_clv": -0.0876,
+      "roi": -0.1385,
+      "kelly_growth": -0.9955,
+      "brier": 0.5902,
+      "ece": 0.0111,
+      "verdict": "negative CLV -> no edge. Pivot to pure tool (C)."
+    },
+    {
+      "code": "D1",
+      "name": "Bundesliga (GER)",
+      "n_matches": 1224,
+      "n_predicted": 837,
+      "n_bets": 649,
+      "avg_clv": -0.069,
+      "roi": -0.1318,
+      "kelly_growth": -0.9872,
+      "brier": 0.5991,
+      "ece": 0.0224,
+      "verdict": "negative CLV -> no edge. Pivot to pure tool (C)."
+    },
+    {
+      "code": "SP1",
+      "name": "La Liga (ESP)",
+      "n_matches": 1520,
+      "n_predicted": 1132,
+      "n_bets": 770,
+      "avg_clv": -0.0774,
+      "roi": -0.1372,
+      "kelly_growth": -0.9672,
+      "brier": 0.5898,
+      "ece": 0.0136,
+      "verdict": "negative CLV -> no edge. Pivot to pure tool (C)."
+    },
+    {
+      "code": "I1",
+      "name": "Serie A (ITA)",
+      "n_matches": 1520,
+      "n_predicted": 1129,
+      "n_bets": 805,
+      "avg_clv": -0.0626,
+      "roi": -0.1429,
+      "kelly_growth": -0.9645,
+      "brier": 0.5948,
+      "ece": 0.013,
+      "verdict": "negative CLV -> no edge. Pivot to pure tool (C)."
+    },
+    {
+      "code": "F1",
+      "name": "Ligue 1 (FRA)",
+      "n_matches": 1372,
+      "n_predicted": 987,
+      "n_bets": 813,
+      "avg_clv": -0.0657,
+      "roi": -0.1254,
+      "kelly_growth": -0.9524,
+      "brier": 0.6037,
+      "ece": 0.0141,
+      "verdict": "negative CLV -> no edge. Pivot to pure tool (C)."
+    },
+    {
+      "code": "E1",
+      "name": "Championship (ENG 2nd)",
+      "n_matches": 2208,
+      "n_predicted": 1804,
+      "n_bets": 1291,
+      "avg_clv": -0.0727,
+      "roi": -0.003,
+      "kelly_growth": -0.8862,
+      "brier": 0.629,
+      "ece": 0.0074,
+      "verdict": "negative CLV -> no edge. Pivot to pure tool (C)."
+    }
+  ],
+  "summary_verdict": "No league shows out-of-sample +CLV vs sharp closing odds — confirms the honest no-edge conclusion. Product value is the transparent tool, not betting alpha."
+}

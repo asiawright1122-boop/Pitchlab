@@ -1,0 +1,40 @@
+<h2>系统运维 Tab 的视觉与布局优化</h2>
+<p class="subtitle">对于“系统运维”Tab 下的 Dixon-Coles 同步监控和 Artifacts 列表，我们将以更加现代、富有呼吸感的方式重构它们。您更倾向于以下哪种信息交互形式？</p>
+
+<div class="options">
+  <div class="option" data-choice="1" onclick="toggleSelect(this)">
+    <div class="letter">1</div>
+    <div class="content">
+      <h3>方式一：折叠面板与分类聚合 (Accordion Groups)</h3>
+      <p>将 20 多个 Published Artifacts 按模块（如基础元数据、历史回测、实时预测）分为 3-4 个大组。</p>
+      <ul style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem; padding-left: 1.2rem; list-style-type: disc;">
+        <li>点击组标题时，平滑展开显示组内的 Key、同步时间与来源。</li>
+        <li><strong>质感：</strong>极其整洁，默认状态只占用很小的纵向空间，带来极佳的呼吸感。</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="option" data-choice="2" onclick="toggleSelect(this)">
+    <div class="letter">2</div>
+    <div class="content">
+      <h3>方式二：状态卡片 + 侧边详情抽屉 (Drawer)</h3>
+      <p>以精美的卡片网格（Grid）展示各主要引擎模块的同步状态（如 Elo 评级、赛事预测、回测等）。</p>
+      <ul style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem; padding-left: 1.2rem; list-style-type: disc;">
+        <li>卡片上展示最近同步时间和运行状态（绿点/红点）。点击卡片时，屏幕右侧滑出抽屉，展示其下具体的 Artifact 数据明细。</li>
+        <li><strong>质感：</strong>高度互动，呈现极具专业水准的高端仪表盘感。</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="option" data-choice="3" onclick="toggleSelect(this)">
+    <div class="letter">3</div>
+    <div class="content">
+      <h3>方式三：流式步骤与管道流程图 (Pipeline View)</h3>
+      <p>将数据从同步到模型计算的 Hermes 管道以图形化步骤（数据获取 → 模型运行 → 网页导出）串联展示。</p>
+      <ul style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem; padding-left: 1.2rem; list-style-type: disc;">
+        <li>各节点可交互，Hover 会浮现其生成的 Artifact 文件信息和耗时。</li>
+        <li><strong>质感：</strong>富有科技感和动态美感，便于监控整个离线/在线数据链路的运作。</li>
+      </ul>
+    </div>
+  </div>
+</div>

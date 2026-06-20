@@ -1,0 +1,28 @@
+{
+  "pipeline": "daily",
+  "run_id": "2ad4b76b28c7",
+  "ok": true,
+  "generated_at": "2026-06-16T14:19:23.566507+00:00",
+  "tasks": [
+    {
+      "task": "settle",
+      "status": "ok",
+      "ms": 1753
+    },
+    {
+      "task": "shadow_models",
+      "status": "ok",
+      "ms": 16597
+    },
+    {
+      "task": "feedback_snapshot",
+      "status": "ok",
+      "ms": 7
+    },
+    {
+      "task": "league_export",
+      "status": "ok",
+      "ms": 2923
+    }
+  ]
+}

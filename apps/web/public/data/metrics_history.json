@@ -1,0 +1,682 @@
+[
+  {
+    "generated_at": "2026-06-17T06:54:06.855Z",
+    "agent": {
+      "pipeline": "daily",
+      "ok": true,
+      "run_id": "run-mock-0"
+    },
+    "backtest_summary": {
+      "source": "mock",
+      "avg_clv": 0.025,
+      "roi": 0.05,
+      "brier": 0.22,
+      "n_bets": 42,
+      "verdict": "profit"
+    },
+    "leagues_clv": {
+      "E0": 0.025
+    },
+    "leagues_holdout_brier": {
+      "E0": 0.22
+    },
+    "champion_challenger": {
+      "champion": {
+        "label": "champion",
+        "metric": "brier",
+        "value": 0.23,
+        "league": "E0",
+        "model_id": "dc-isotonic-v0.1"
+      },
+      "challenger": {
+        "label": "challenger",
+        "metric": "brier",
+        "value": 0.22,
+        "league": "E0",
+        "model_id": "dc-raw-v0.1"
+      },
+      "note": "Different protocols — compare trends only, not raw numbers.",
+      "auto_promote": true
+    },
+    "shadow_models": {
+      "n_leagues": 1,
+      "policy": {
+        "auto_promote": true,
+        "promotion_eligible": true,
+        "promoted_model_id": "dc-raw-v0.1",
+        "gates": {
+          "clv": {
+            "ok": true,
+            "detail": "OK"
+          },
+          "pnl": {
+            "ok": true,
+            "detail": "OK"
+          },
+          "brier": {
+            "ok": true,
+            "detail": "Brier gate: challenger 0.2200 < champion 0.2300"
+          }
+        },
+        "promote_if": "avg_clv >= 0.0 for 90d (7+ snapshots) AND best challenger Brier beats champion",
+        "reason": "Auto-promote ENABLED — gates passed."
+      },
+      "e0_recommendation": "promote",
+      "e0_champion_brier": 0.23,
+      "e0_challenger_brier": 0.22
+    },
+    "summary_verdict": "profit"
+  },
+  {
+    "generated_at": "2026-06-16T06:54:06.855Z",
+    "agent": {
+      "pipeline": "daily",
+      "ok": true,
+      "run_id": "run-mock-1"
+    },
+    "backtest_summary": {
+      "source": "mock",
+      "avg_clv": 0.025,
+      "roi": 0.05,
+      "brier": 0.22,
+      "n_bets": 42,
+      "verdict": "profit"
+    },
+    "leagues_clv": {
+      "E0": 0.025
+    },
+    "leagues_holdout_brier": {
+      "E0": 0.22
+    },
+    "champion_challenger": {
+      "champion": {
+        "label": "champion",
+        "metric": "brier",
+        "value": 0.23,
+        "league": "E0",
+        "model_id": "dc-isotonic-v0.1"
+      },
+      "challenger": {
+        "label": "challenger",
+        "metric": "brier",
+        "value": 0.22,
+        "league": "E0",
+        "model_id": "dc-raw-v0.1"
+      },
+      "note": "Different protocols — compare trends only, not raw numbers.",
+      "auto_promote": true
+    },
+    "shadow_models": {
+      "n_leagues": 1,
+      "policy": {
+        "auto_promote": true,
+        "promotion_eligible": true,
+        "promoted_model_id": "dc-raw-v0.1",
+        "gates": {
+          "clv": {
+            "ok": true,
+            "detail": "OK"
+          },
+          "pnl": {
+            "ok": true,
+            "detail": "OK"
+          },
+          "brier": {
+            "ok": true,
+            "detail": "Brier gate: challenger 0.2200 < champion 0.2300"
+          }
+        },
+        "promote_if": "avg_clv >= 0.0 for 90d (7+ snapshots) AND best challenger Brier beats champion",
+        "reason": "Auto-promote ENABLED — gates passed."
+      },
+      "e0_recommendation": "promote",
+      "e0_champion_brier": 0.23,
+      "e0_challenger_brier": 0.22
+    },
+    "summary_verdict": "profit"
+  },
+  {
+    "generated_at": "2026-06-15T06:54:06.855Z",
+    "agent": {
+      "pipeline": "daily",
+      "ok": true,
+      "run_id": "run-mock-2"
+    },
+    "backtest_summary": {
+      "source": "mock",
+      "avg_clv": 0.025,
+      "roi": 0.05,
+      "brier": 0.22,
+      "n_bets": 42,
+      "verdict": "profit"
+    },
+    "leagues_clv": {
+      "E0": 0.025
+    },
+    "leagues_holdout_brier": {
+      "E0": 0.22
+    },
+    "champion_challenger": {
+      "champion": {
+        "label": "champion",
+        "metric": "brier",
+        "value": 0.23,
+        "league": "E0",
+        "model_id": "dc-isotonic-v0.1"
+      },
+      "challenger": {
+        "label": "challenger",
+        "metric": "brier",
+        "value": 0.22,
+        "league": "E0",
+        "model_id": "dc-raw-v0.1"
+      },
+      "note": "Different protocols — compare trends only, not raw numbers.",
+      "auto_promote": true
+    },
+    "shadow_models": {
+      "n_leagues": 1,
+      "policy": {
+        "auto_promote": true,
+        "promotion_eligible": true,
+        "promoted_model_id": "dc-raw-v0.1",
+        "gates": {
+          "clv": {
+            "ok": true,
+            "detail": "OK"
+          },
+          "pnl": {
+            "ok": true,
+            "detail": "OK"
+          },
+          "brier": {
+            "ok": true,
+            "detail": "Brier gate: challenger 0.2200 < champion 0.2300"
+          }
+        },
+        "promote_if": "avg_clv >= 0.0 for 90d (7+ snapshots) AND best challenger Brier beats champion",
+        "reason": "Auto-promote ENABLED — gates passed."
+      },
+      "e0_recommendation": "promote",
+      "e0_champion_brier": 0.23,
+      "e0_challenger_brier": 0.22
+    },
+    "summary_verdict": "profit"
+  },
+  {
+    "generated_at": "2026-06-14T06:54:06.855Z",
+    "agent": {
+      "pipeline": "daily",
+      "ok": true,
+      "run_id": "run-mock-3"
+    },
+    "backtest_summary": {
+      "source": "mock",
+      "avg_clv": 0.025,
+      "roi": 0.05,
+      "brier": 0.22,
+      "n_bets": 42,
+      "verdict": "profit"
+    },
+    "leagues_clv": {
+      "E0": 0.025
+    },
+    "leagues_holdout_brier": {
+      "E0": 0.22
+    },
+    "champion_challenger": {
+      "champion": {
+        "label": "champion",
+        "metric": "brier",
+        "value": 0.23,
+        "league": "E0",
+        "model_id": "dc-isotonic-v0.1"
+      },
+      "challenger": {
+        "label": "challenger",
+        "metric": "brier",
+        "value": 0.22,
+        "league": "E0",
+        "model_id": "dc-raw-v0.1"
+      },
+      "note": "Different protocols — compare trends only, not raw numbers.",
+      "auto_promote": true
+    },
+    "shadow_models": {
+      "n_leagues": 1,
+      "policy": {
+        "auto_promote": true,
+        "promotion_eligible": true,
+        "promoted_model_id": "dc-raw-v0.1",
+        "gates": {
+          "clv": {
+            "ok": true,
+            "detail": "OK"
+          },
+          "pnl": {
+            "ok": true,
+            "detail": "OK"
+          },
+          "brier": {
+            "ok": true,
+            "detail": "Brier gate: challenger 0.2200 < champion 0.2300"
+          }
+        },
+        "promote_if": "avg_clv >= 0.0 for 90d (7+ snapshots) AND best challenger Brier beats champion",
+        "reason": "Auto-promote ENABLED — gates passed."
+      },
+      "e0_recommendation": "promote",
+      "e0_champion_brier": 0.23,
+      "e0_challenger_brier": 0.22
+    },
+    "summary_verdict": "profit"
+  },
+  {
+    "generated_at": "2026-06-13T06:54:06.855Z",
+    "agent": {
+      "pipeline": "daily",
+      "ok": true,
+      "run_id": "run-mock-4"
+    },
+    "backtest_summary": {
+      "source": "mock",
+      "avg_clv": 0.025,
+      "roi": 0.05,
+      "brier": 0.22,
+      "n_bets": 42,
+      "verdict": "profit"
+    },
+    "leagues_clv": {
+      "E0": 0.025
+    },
+    "leagues_holdout_brier": {
+      "E0": 0.22
+    },
+    "champion_challenger": {
+      "champion": {
+        "label": "champion",
+        "metric": "brier",
+        "value": 0.23,
+        "league": "E0",
+        "model_id": "dc-isotonic-v0.1"
+      },
+      "challenger": {
+        "label": "challenger",
+        "metric": "brier",
+        "value": 0.22,
+        "league": "E0",
+        "model_id": "dc-raw-v0.1"
+      },
+      "note": "Different protocols — compare trends only, not raw numbers.",
+      "auto_promote": true
+    },
+    "shadow_models": {
+      "n_leagues": 1,
+      "policy": {
+        "auto_promote": true,
+        "promotion_eligible": true,
+        "promoted_model_id": "dc-raw-v0.1",
+        "gates": {
+          "clv": {
+            "ok": true,
+            "detail": "OK"
+          },
+          "pnl": {
+            "ok": true,
+            "detail": "OK"
+          },
+          "brier": {
+            "ok": true,
+            "detail": "Brier gate: challenger 0.2200 < champion 0.2300"
+          }
+        },
+        "promote_if": "avg_clv >= 0.0 for 90d (7+ snapshots) AND best challenger Brier beats champion",
+        "reason": "Auto-promote ENABLED — gates passed."
+      },
+      "e0_recommendation": "promote",
+      "e0_champion_brier": 0.23,
+      "e0_challenger_brier": 0.22
+    },
+    "summary_verdict": "profit"
+  },
+  {
+    "generated_at": "2026-06-12T06:54:06.855Z",
+    "agent": {
+      "pipeline": "daily",
+      "ok": true,
+      "run_id": "run-mock-5"
+    },
+    "backtest_summary": {
+      "source": "mock",
+      "avg_clv": 0.025,
+      "roi": 0.05,
+      "brier": 0.22,
+      "n_bets": 42,
+      "verdict": "profit"
+    },
+    "leagues_clv": {
+      "E0": 0.025
+    },
+    "leagues_holdout_brier": {
+      "E0": 0.22
+    },
+    "champion_challenger": {
+      "champion": {
+        "label": "champion",
+        "metric": "brier",
+        "value": 0.23,
+        "league": "E0",
+        "model_id": "dc-isotonic-v0.1"
+      },
+      "challenger": {
+        "label": "challenger",
+        "metric": "brier",
+        "value": 0.22,
+        "league": "E0",
+        "model_id": "dc-raw-v0.1"
+      },
+      "note": "Different protocols — compare trends only, not raw numbers.",
+      "auto_promote": true
+    },
+    "shadow_models": {
+      "n_leagues": 1,
+      "policy": {
+        "auto_promote": true,
+        "promotion_eligible": true,
+        "promoted_model_id": "dc-raw-v0.1",
+        "gates": {
+          "clv": {
+            "ok": true,
+            "detail": "OK"
+          },
+          "pnl": {
+            "ok": true,
+            "detail": "OK"
+          },
+          "brier": {
+            "ok": true,
+            "detail": "Brier gate: challenger 0.2200 < champion 0.2300"
+          }
+        },
+        "promote_if": "avg_clv >= 0.0 for 90d (7+ snapshots) AND best challenger Brier beats champion",
+        "reason": "Auto-promote ENABLED — gates passed."
+      },
+      "e0_recommendation": "promote",
+      "e0_champion_brier": 0.23,
+      "e0_challenger_brier": 0.22
+    },
+    "summary_verdict": "profit"
+  },
+  {
+    "generated_at": "2026-06-11T06:54:06.855Z",
+    "agent": {
+      "pipeline": "daily",
+      "ok": true,
+      "run_id": "run-mock-6"
+    },
+    "backtest_summary": {
+      "source": "mock",
+      "avg_clv": 0.025,
+      "roi": 0.05,
+      "brier": 0.22,
+      "n_bets": 42,
+      "verdict": "profit"
+    },
+    "leagues_clv": {
+      "E0": 0.025
+    },
+    "leagues_holdout_brier": {
+      "E0": 0.22
+    },
+    "champion_challenger": {
+      "champion": {
+        "label": "champion",
+        "metric": "brier",
+        "value": 0.23,
+        "league": "E0",
+        "model_id": "dc-isotonic-v0.1"
+      },
+      "challenger": {
+        "label": "challenger",
+        "metric": "brier",
+        "value": 0.22,
+        "league": "E0",
+        "model_id": "dc-raw-v0.1"
+      },
+      "note": "Different protocols — compare trends only, not raw numbers.",
+      "auto_promote": true
+    },
+    "shadow_models": {
+      "n_leagues": 1,
+      "policy": {
+        "auto_promote": true,
+        "promotion_eligible": true,
+        "promoted_model_id": "dc-raw-v0.1",
+        "gates": {
+          "clv": {
+            "ok": true,
+            "detail": "OK"
+          },
+          "pnl": {
+            "ok": true,
+            "detail": "OK"
+          },
+          "brier": {
+            "ok": true,
+            "detail": "Brier gate: challenger 0.2200 < champion 0.2300"
+          }
+        },
+        "promote_if": "avg_clv >= 0.0 for 90d (7+ snapshots) AND best challenger Brier beats champion",
+        "reason": "Auto-promote ENABLED — gates passed."
+      },
+      "e0_recommendation": "promote",
+      "e0_champion_brier": 0.23,
+      "e0_challenger_brier": 0.22
+    },
+    "summary_verdict": "profit"
+  },
+  {
+    "generated_at": "2026-06-10T06:54:06.855Z",
+    "agent": {
+      "pipeline": "daily",
+      "ok": true,
+      "run_id": "run-mock-7"
+    },
+    "backtest_summary": {
+      "source": "mock",
+      "avg_clv": 0.025,
+      "roi": 0.05,
+      "brier": 0.22,
+      "n_bets": 42,
+      "verdict": "profit"
+    },
+    "leagues_clv": {
+      "E0": 0.025
+    },
+    "leagues_holdout_brier": {
+      "E0": 0.22
+    },
+    "champion_challenger": {
+      "champion": {
+        "label": "champion",
+        "metric": "brier",
+        "value": 0.23,
+        "league": "E0",
+        "model_id": "dc-isotonic-v0.1"
+      },
+      "challenger": {
+        "label": "challenger",
+        "metric": "brier",
+        "value": 0.22,
+        "league": "E0",
+        "model_id": "dc-raw-v0.1"
+      },
+      "note": "Different protocols — compare trends only, not raw numbers.",
+      "auto_promote": true
+    },
+    "shadow_models": {
+      "n_leagues": 1,
+      "policy": {
+        "auto_promote": true,
+        "promotion_eligible": true,
+        "promoted_model_id": "dc-raw-v0.1",
+        "gates": {
+          "clv": {
+            "ok": true,
+            "detail": "OK"
+          },
+          "pnl": {
+            "ok": true,
+            "detail": "OK"
+          },
+          "brier": {
+            "ok": true,
+            "detail": "Brier gate: challenger 0.2200 < champion 0.2300"
+          }
+        },
+        "promote_if": "avg_clv >= 0.0 for 90d (7+ snapshots) AND best challenger Brier beats champion",
+        "reason": "Auto-promote ENABLED — gates passed."
+      },
+      "e0_recommendation": "promote",
+      "e0_champion_brier": 0.23,
+      "e0_challenger_brier": 0.22
+    },
+    "summary_verdict": "profit"
+  },
+  {
+    "generated_at": "2026-06-09T06:54:06.855Z",
+    "agent": {
+      "pipeline": "daily",
+      "ok": true,
+      "run_id": "run-mock-8"
+    },
+    "backtest_summary": {
+      "source": "mock",
+      "avg_clv": 0.025,
+      "roi": 0.05,
+      "brier": 0.22,
+      "n_bets": 42,
+      "verdict": "profit"
+    },
+    "leagues_clv": {
+      "E0": 0.025
+    },
+    "leagues_holdout_brier": {
+      "E0": 0.22
+    },
+    "champion_challenger": {
+      "champion": {
+        "label": "champion",
+        "metric": "brier",
+        "value": 0.23,
+        "league": "E0",
+        "model_id": "dc-isotonic-v0.1"
+      },
+      "challenger": {
+        "label": "challenger",
+        "metric": "brier",
+        "value": 0.22,
+        "league": "E0",
+        "model_id": "dc-raw-v0.1"
+      },
+      "note": "Different protocols — compare trends only, not raw numbers.",
+      "auto_promote": true
+    },
+    "shadow_models": {
+      "n_leagues": 1,
+      "policy": {
+        "auto_promote": true,
+        "promotion_eligible": true,
+        "promoted_model_id": "dc-raw-v0.1",
+        "gates": {
+          "clv": {
+            "ok": true,
+            "detail": "OK"
+          },
+          "pnl": {
+            "ok": true,
+            "detail": "OK"
+          },
+          "brier": {
+            "ok": true,
+            "detail": "Brier gate: challenger 0.2200 < champion 0.2300"
+          }
+        },
+        "promote_if": "avg_clv >= 0.0 for 90d (7+ snapshots) AND best challenger Brier beats champion",
+        "reason": "Auto-promote ENABLED — gates passed."
+      },
+      "e0_recommendation": "promote",
+      "e0_champion_brier": 0.23,
+      "e0_challenger_brier": 0.22
+    },
+    "summary_verdict": "profit"
+  },
+  {
+    "generated_at": "2026-06-08T06:54:06.855Z",
+    "agent": {
+      "pipeline": "daily",
+      "ok": true,
+      "run_id": "run-mock-9"
+    },
+    "backtest_summary": {
+      "source": "mock",
+      "avg_clv": 0.025,
+      "roi": 0.05,
+      "brier": 0.22,
+      "n_bets": 42,
+      "verdict": "profit"
+    },
+    "leagues_clv": {
+      "E0": 0.025
+    },
+    "leagues_holdout_brier": {
+      "E0": 0.22
+    },
+    "champion_challenger": {
+      "champion": {
+        "label": "champion",
+        "metric": "brier",
+        "value": 0.23,
+        "league": "E0",
+        "model_id": "dc-isotonic-v0.1"
+      },
+      "challenger": {
+        "label": "challenger",
+        "metric": "brier",
+        "value": 0.22,
+        "league": "E0",
+        "model_id": "dc-raw-v0.1"
+      },
+      "note": "Different protocols — compare trends only, not raw numbers.",
+      "auto_promote": true
+    },
+    "shadow_models": {
+      "n_leagues": 1,
+      "policy": {
+        "auto_promote": true,
+        "promotion_eligible": true,
+        "promoted_model_id": "dc-raw-v0.1",
+        "gates": {
+          "clv": {
+            "ok": true,
+            "detail": "OK"
+          },
+          "pnl": {
+            "ok": true,
+            "detail": "OK"
+          },
+          "brier": {
+            "ok": true,
+            "detail": "Brier gate: challenger 0.2200 < champion 0.2300"
+          }
+        },
+        "promote_if": "avg_clv >= 0.0 for 90d (7+ snapshots) AND best challenger Brier beats champion",
+        "reason": "Auto-promote ENABLED — gates passed."
+      },
+      "e0_recommendation": "promote",
+      "e0_champion_brier": 0.23,
+      "e0_challenger_brier": 0.22
+    },
+    "summary_verdict": "profit"
+  }
+]

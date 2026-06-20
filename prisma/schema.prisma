@@ -1,0 +1,300 @@
+// PitchLab Phase 1 — shared contract between Web (Next.js) and Worker.
+// Platform artifacts are global (no user_id) until Entitlements land in Phase 4.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+/// One engine/cron execution (audit + idempotent sync grouping).
+model PipelineRun {
+  id         String   @id @default(cuid())
+  pipeline   String
+  status     String   @default("running") // running | ok | failed
+  startedAt  DateTime @default(now()) @map("started_at")
+  finishedAt DateTime? @map("finished_at")
+  log        Json?
+
+  artifacts PublishedArtifact[]
+
+  @@index([pipeline, startedAt(sort: Desc)])
+  @@map("pipeline_runs")
+}
+
+/// Latest published JSON blob for the web dashboard (meta, backtest, …).
+model PublishedArtifact {
+  key         String   @id
+  payload     Json
+  source      String?
+  generatedAt DateTime? @map("generated_at")
+  syncedAt    DateTime @default(now()) @updatedAt @map("synced_at")
+  runId       String?  @map("run_id")
+
+  run PipelineRun? @relation(fields: [runId], references: [id], onDelete: SetNull)
+
+  @@map("published_artifacts")
+}
+
+/// Reserved for Phase 2+ live fixtures (schema stub).
+model Fixture {
+  id         String   @id @default(cuid())
+  league     String
+  home       String
+  away       String
+  kickoffUtc DateTime @map("kickoff_utc")
+  status     String   @default("scheduled")
+  homeGoals  Int?     @map("home_goals")
+  awayGoals  Int?     @map("away_goals")
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+
+  predictions   Prediction[]
+  oddsSnapshots OddsSnapshot[]
+  paperTrades   PaperTrade[]
+  matchUnlocks  MatchUnlock[]
+
+  @@index([league, kickoffUtc])
+  @@map("fixtures")
+}
+
+/// Per-fixture odds at decision time vs closing line (Phase 3+ prediction-level CLV).
+model OddsSnapshot {
+  id            String   @id @default(cuid())
+  fixtureId     String   @map("fixture_id")
+  book          String   @default("pinnacle")
+  market        String
+  selection     String
+  price         Float
+  closeFairProb Float?   @map("close_fair_prob")
+  clv           Float?
+  won           Boolean?
+  takenAt       DateTime @map("taken_at")
+  createdAt     DateTime @default(now()) @map("created_at")
+
+  fixture Fixture @relation(fields: [fixtureId], references: [id], onDelete: Cascade)
+
+  @@unique([fixtureId, book, market, selection, takenAt])
+  @@index([fixtureId])
+  @@index([takenAt(sort: Desc)])
+  @@map("odds_snapshots")
+}
+
+/// Reserved for per-fixture model output (Phase 2+).
+model Prediction {
+  id           String   @id @default(cuid())
+  fixtureId    String?  @map("fixture_id")
+  modelVersion String   @map("model_version")
+  market       String
+  selection    String
+  prob         Float
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  fixture Fixture? @relation(fields: [fixtureId], references: [id], onDelete: Cascade)
+
+  @@index([fixtureId, market])
+  @@map("predictions")
+}
+
+// --- Phase 4: users & entitlements ---
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  invitedById      String?   @map("invited_by_id")
+  lastLoginBonusAt DateTime? @map("last_login_bonus_at")
+
+  invitedBy           User?               @relation("UserInvites", fields: [invitedById], references: [id])
+  invitedUsers        User[]              @relation("UserInvites")
+  subscription        Subscription?
+  channelBindings     ChannelBinding[]
+  paperWallet         PaperWallet?
+  paperTrades         PaperTrade[]
+  alertSubscriptions  AlertSubscription[]
+  userStrategies      UserStrategy[]
+  matchUnlocks        MatchUnlock[]
+  tasks               UserTask[]
+
+  @@map("users")
+}
+
+/// TMA Users unlocking specific fixture predictions
+model MatchUnlock {
+  id         String   @id @default(cuid())
+  userId     String   @map("user_id")
+  fixtureId  String   @map("fixture_id")
+  method     String   @default("stars") // stars | adsgram
+  amount     Int?     
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  fixture    Fixture  @relation(fields: [fixtureId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, fixtureId])
+  @@index([userId])
+  @@index([fixtureId])
+  @@map("match_unlocks")
+}
+
+/// Virtual research bankroll (not real money).
+model PaperWallet {
+  id        String   @id @default(cuid())
+  userId    String   @unique @map("user_id")
+  balance   Float    @default(10000)
+  currency  String   @default("research_units")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("paper_wallets")
+}
+
+/// Simulated 1X2 bet for research (paper only).
+model PaperTrade {
+  id         String    @id @default(cuid())
+  userId     String    @map("user_id")
+  fixtureId  String    @map("fixture_id")
+  league     String
+  home       String
+  away       String
+  kickoffUtc DateTime  @map("kickoff_utc")
+  market     String    @default("1x2")
+  selection  String
+  odds       Float
+  stake      Float
+  status     String    @default("open")
+  pnl        Float?
+  settledAt  DateTime? @map("settled_at")
+  createdAt  DateTime  @default(now()) @map("created_at")
+
+  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  fixture Fixture? @relation(fields: [fixtureId], references: [id], onDelete: Cascade)
+
+  @@index([userId, status])
+  @@index([fixtureId])
+  @@map("paper_trades")
+}
+
+model Plan {
+  id             String @id
+  name           String
+  entitlements   Json
+  priceCents     Int    @default(0) @map("price_cents")
+  stripePriceId  String? @map("stripe_price_id")
+
+  subscriptions Subscription[]
+
+  @@map("plans")
+}
+
+model Subscription {
+  id         String    @id @default(cuid())
+  userId     String    @unique @map("user_id")
+  planId     String    @map("plan_id")
+  status     String    @default("active")
+  periodEnd  DateTime? @map("period_end")
+  createdAt  DateTime  @default(now()) @map("created_at")
+  updatedAt  DateTime  @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  plan Plan @relation(fields: [planId], references: [id])
+
+  @@index([planId, status])
+  @@map("subscriptions")
+}
+
+/// Multi-channel push binding (Telegram / Discord / WeChat — Phase 4 stub).
+model ChannelBinding {
+  id         String    @id @default(cuid())
+  userId     String    @map("user_id")
+  channel    String
+  externalId String    @map("external_id")
+  verifiedAt DateTime? @map("verified_at")
+  createdAt  DateTime  @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, channel])
+  @@map("channel_bindings")
+}
+
+/// User-defined match/league alert (Phase 6 SaaS).
+model AlertSubscription {
+  id          String   @id @default(cuid())
+  userId      String   @map("user_id")
+  scopeType   String   @map("scope_type") // all | league
+  scopeLeague String?  @map("scope_league")
+  kinds       Json     // kickoff | result | value_hit
+  minEdge     Float?   @map("min_edge")
+  active      Boolean  @default(true)
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  user       User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  deliveries AlertDelivery[]
+
+  @@index([userId, active])
+  @@map("alert_subscriptions")
+}
+
+/// Idempotent alert send log (avoid duplicate Telegram messages).
+model AlertDelivery {
+  id             String   @id @default(cuid())
+  subscriptionId String   @map("subscription_id")
+  dedupeKey      String   @map("dedupe_key")
+  kind           String
+  sentAt         DateTime @default(now()) @map("sent_at")
+
+  subscription AlertSubscription @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
+
+  @@unique([subscriptionId, dedupeKey])
+  @@map("alert_deliveries")
+}
+
+/// User strategy rules — drives value_hit alerts and paper hints (Phase 6).
+model UserStrategy {
+  id        String   @id @default(cuid())
+  userId    String   @map("user_id")
+  name      String
+  rules     Json
+  notify    Boolean  @default(true)
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, active])
+  @@map("user_strategies")
+}
+
+/// Global system settings (e.g., AI model provider configuration).
+model SystemSetting {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     Json
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("system_settings")
+}
+
+model UserTask {
+  id            String   @id @default(cuid())
+  userId        String   @map("user_id")
+  taskId        String   @map("task_id")
+  rewardClaimed Boolean  @default(true) @map("reward_claimed")
+  completedAt   DateTime @default(now()) @map("completed_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, taskId])
+  @@index([userId])
+  @@map("user_tasks")
+}

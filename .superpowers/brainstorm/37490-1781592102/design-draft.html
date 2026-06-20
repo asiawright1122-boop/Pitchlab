@@ -1,0 +1,44 @@
+<h2>设计方案草案 (Design Draft)</h2>
+<p class="subtitle">请仔细阅读以下各个设计模块，并在下方做出确认：</p>
+
+<div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 16px; padding: 20px; color: #d4d4d8; font-size: 14px; line-height: 1.6; max-height: 50vh; overflow-y: auto;">
+  
+  <h3 style="color: #fff; border-left: 3px solid #10b981; padding-left: 8px; margin-bottom: 10px;">1. 路由与入口设计</h3>
+  <p>
+    建立新页面：<code>apps/web/app/[sport]/league/[leagueId]/odds/page.tsx</code><br/>
+    当用户访问 <code>/soccer/league/wc2026/odds</code> 时，该页面会解析参数并渲染 <code>Dashboard</code>，同时传递 <code>initialTab="odds"</code> 以便默认打开“即时赔率”板块。
+  </p>
+  
+  <h3 style="color: #fff; border-left: 3px solid #10b981; padding-left: 8px; margin-top: 20px; margin-bottom: 10px;">2. Dashboard 状态集成</h3>
+  <p>
+    修改 <code>apps/web/components/Dashboard.tsx</code>：<br/>
+    - 在 <code>Tab</code> 类型声明中增加 <code>"odds"</code>。<br/>
+    - 在 Tabs 切换按钮行，新增“即时赔率”标签按钮。<br/>
+    - 新增组件挂载逻辑：当 <code>tab === "odds"</code> 时，渲染 <code>&lt;OddsTableView leagueId={leagueId} /&gt;</code>。
+  </p>
+
+  <h3 style="color: #fff; border-left: 3px solid #10b981; padding-left: 8px; margin-top: 20px; margin-bottom: 10px;">3. 前端组件 <code>OddsTableView</code></h3>
+  <p>
+    新建 <code>apps/web/components/OddsTableView.tsx</code>，使用 PitchLab 渐变暗色系统与高对比毛玻璃表格容器：<br/>
+    - <strong>完赛折叠</strong>：将比赛按日期分组。已完赛的比赛默认收起为折叠栏（如 "＋ 已完赛 · 6月12日 · 2场"），点击即可展开详情。<br/>
+    - <strong>赔率与箭头</strong>：获取 Pinnacle 的 1X2 赔率。对比最新赔率快照与基准快照，计算箭头升降（升高为 <code>↑</code>，降低为 <code>↓</code>）。<br/>
+    - <strong>投注链接与阶段</strong>：保留 "🔗" 投注外链和阶段分组超链接（如点击 "A组" 一键切回积分榜 Tab 的 A组区域）。
+  </p>
+
+  <h3 style="color: #fff; border-left: 3px solid #10b981; padding-left: 8px; margin-top: 20px; margin-bottom: 10px;">4. 健壮的动态数据拉取 (API)</h3>
+  <p>
+    数据获取支持双重容灾保障：<br/>
+    - <strong>Prisma 数据库</strong>：查询 <code>Fixture</code> 及关联的 <code>OddsSnapshot</code> 数据（仅加载 1X2 pinnacle 赔率）。<br/>
+    - <strong>本地 JSON 容灾</strong>：如果数据库连接失败，自动 fallback 到 <code>public/data/odds_snapshots.json</code> 和 <code>fixtures.json</code> 文件以保证渲染可用性。
+  </p>
+</div>
+
+<div class="options" style="margin-top: 25px;">
+  <div class="option" data-choice="approve" onclick="toggleSelect(this)">
+    <div class="letter">✓</div>
+    <div class="content">
+      <h3>确认并批准设计方案</h3>
+      <p>方案设计合理，可以生成正式的 Spec 文档并进入开发准备阶段。</p>
+    </div>
+  </div>
+</div>

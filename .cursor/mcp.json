@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "lokcursor": {
+      "command": "/usr/local/bin/node",
+      "args": [
+        "/Users/kaka/.cursor/extensions/local.lokcursor-2.0.7/dist/mcp-server.mjs"
+      ],
+      "env": {
+        "LOKCURSOR_DIR": "/Users/kaka/.lokcursor",
+        "LOKCURSOR_EXTENSION_ROOT": "/Users/kaka/.cursor/extensions/local.lokcursor-2.0.7"
+      },
+      "timeoutMs": 1800000
+    }
+  }
+}

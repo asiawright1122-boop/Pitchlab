@@ -1,0 +1,43 @@
+<h2>后台架构重构方向评估</h2>
+<p class="subtitle">针对当前“个人管理”页面密度过大、普通用户与管理员功能堆叠的问题，我们建议将功能进行结构化分离。</p>
+
+<div class="section">
+  <div class="label">当前痛点分析</div>
+  <ul style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.6; margin-top: 0.5rem;">
+    <li><strong>角色功能混杂：</strong>普通用户设置（余额、TG绑定、推送规则）与管理员运维（Data Sync, Pipeline监控）堆叠在同一页面。</li>
+    <li><strong>表格占用垂直空间过大：</strong>Published Artifacts 列表未加折叠与优化，直接占据大量屏幕面积。</li>
+    <li><strong>排版缺乏“呼吸感”：</strong>界面密度过高，缺乏合理的卡片分区与现代交互体验。</li>
+  </ul>
+</div>
+
+<div class="section">
+  <div class="label">请选择您期望的重构方向</div>
+</div>
+
+<div class="options">
+  <div class="option" data-choice="a" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>方案 A：顶部 Tab 彻底剥离（推荐）</h3>
+      <p>在顶部主导航栏新增<strong>“系统运维”Tab</strong>（仅管理员可见）。</p>
+      <ul style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem; padding-left: 1.2rem; list-style-type: disc;">
+        <li>“个人管理”Tab 瘦身：仅保留用户余额、TG绑定、订阅通知、超额策略。</li>
+        <li>新增“系统运维”Tab：展示 Dixon-Coles 算法状态与 Data Sync 分步控制。</li>
+        <li><strong>优势：</strong>普通用户界面极简清爽；管理员运维有专门的宽敞工作流面板。</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="option" data-choice="b" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>方案 B：个人中心内部二级 Side Nav 隔离</h3>
+      <p>保留单一的“个人管理”Tab，但内部引入<strong>左侧子菜单/侧边栏导航</strong>。</p>
+      <ul style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem; padding-left: 1.2rem; list-style-type: disc;">
+        <li>左侧子菜单：【账户与通知】、【量化策略】、【数据同步 (Admin)】、【状态监控 (Admin)】。</li>
+        <li>点击左侧不同子菜单，右侧切换展示对应模块。</li>
+        <li><strong>优势：</strong>主 Tab 数量不增加，将运维复杂度收拢在二级菜单中。</li>
+      </ul>
+    </div>
+  </div>
+</div>
