@@ -95,9 +95,11 @@ export async function loginWithTelegram(initData: string): Promise<AuthUser> {
     const dummyEmail = `tg_${externalId}@tma.pitchlab.io`;
     
     // Find if dummy email already exists (edge case)
-    user = await prisma.user.findUnique({ where: { email: dummyEmail } });
+    const existingUser = await prisma.user.findUnique({ where: { email: dummyEmail } });
 
-    if (!user) {
+    if (existingUser) {
+      user = existingUser;
+    } else {
       user = await prisma.user.create({ data: { email: dummyEmail } });
       await prisma.subscription.create({
         data: { userId: user.id, planId: "free", status: "active" },

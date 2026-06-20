@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Script from "next/script";
 import { TmaAuthProvider } from "@/components/TmaAuthProvider";
+import { BottomNav } from "@/components/BottomNav";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -24,6 +25,7 @@ export default function RootLayout({
             <main className="flex-1 flex flex-col overflow-y-auto pb-20">
               {children}
             </main>
+            <BottomNav />
           </TmaAuthProvider>
         </div>
       </body>

@@ -468,7 +468,7 @@ export async function handleTelegramUpdate(update: TelegramUpdate): Promise<void
       ].join("\n"),
       {
         inline_keyboard: [
-          [{ text: "⚡ 打开 PitchLab 小程序", web_app: { url: `${appUrl}/dashboard` } }]
+          [{ text: "⚡ 打开 PitchLab 小程序", web_app: { url: `${appUrl}/` } }]
         ]
       }
     );
@@ -545,7 +545,7 @@ export async function handleTelegramUpdate(update: TelegramUpdate): Promise<void
         "⚽ <b>今日焦点赛事</b>\n\n数据由 Quant Edge 量化引擎驱动。下方为精选比赛盘口，点击即可直接使用 <b>100 RU</b> 虚拟金币进行预测验证。\n\n<i>🏆 世界杯 (WC) 赛事已置顶。</i>",
         {
           inline_keyboard: [
-            [{ text: "⚡ 进入 PitchLab 完整版", web_app: { url: `${appUrl}/dashboard` } }]
+            [{ text: "⚡ 进入 PitchLab 完整版", web_app: { url: `${appUrl}/` } }]
           ]
         }
       );
