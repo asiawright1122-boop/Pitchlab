@@ -9,6 +9,21 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        graphite: {
+          900: "#0d1114",
+          800: "#151a1e",
+          700: "#1e252a",
+          600: "#272f35",
+        },
+        emerald: {
+          500: "#10b981",
+          600: "#059669",
+          700: "#047857",
+          900: "#064e3b",
+        },
+        gold: {
+          500: "#d4af37",
+        },
         edge: {
           bg: "rgb(var(--edge-bg) / <alpha-value>)",
           panel: "rgb(var(--edge-panel) / <alpha-value>)",
@@ -20,25 +35,15 @@ const config: Config = {
           gold: "rgb(var(--edge-gold) / <alpha-value>)",
           danger: "rgb(var(--edge-danger) / <alpha-value>)",
         },
-        zinc: {
-          50: "rgb(var(--zinc-50) / <alpha-value>)",
-          100: "rgb(var(--zinc-100) / <alpha-value>)",
-          200: "rgb(var(--zinc-200) / <alpha-value>)",
-          300: "rgb(var(--zinc-300) / <alpha-value>)",
-          400: "rgb(var(--zinc-400) / <alpha-value>)",
-          500: "rgb(var(--zinc-500) / <alpha-value>)",
-          600: "rgb(var(--zinc-600) / <alpha-value>)",
-          700: "rgb(var(--zinc-700) / <alpha-value>)",
-        },
       },
       fontFamily: {
-        display: ["var(--font-display)", "ui-sans-serif", "system-ui", "sans-serif"],
-        sans: ["var(--font-sans)", "ui-sans-serif", "system-ui", "sans-serif"],
-        mono: ["var(--font-mono)", "ui-monospace", "SFMono-Regular", "monospace"],
+        display: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
+        sans: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
+        mono: ["ui-monospace", "SFMono-Regular", "monospace"],
       },
       boxShadow: {
-        glow: "0 0 0 1px rgba(74,222,128,0.12), 0 18px 50px -20px rgba(21,163,74,0.35)",
-        card: "0 1px 0 0 rgba(255,255,255,0.03) inset, 0 24px 60px -32px rgba(0,0,0,0.8)",
+        glow: "0 0 15px rgba(16, 185, 129, 0.4)",
+        card: "0 10px 30px -10px rgba(0, 0, 0, 0.5)",
       },
       keyframes: {
         "fade-up": {
@@ -49,20 +54,10 @@ const config: Config = {
           "0%": { opacity: "0" },
           "100%": { opacity: "1" },
         },
-        "grow-x": {
-          "0%": { transform: "scaleX(0)" },
-          "100%": { transform: "scaleX(1)" },
-        },
-        float: {
-          "0%,100%": { transform: "translateY(0)" },
-          "50%": { transform: "translateY(-8px)" },
-        },
       },
       animation: {
-        "fade-up": "fade-up 0.7s cubic-bezier(0.16,1,0.3,1) both",
-        "fade-in": "fade-in 0.9s ease both",
-        "grow-x": "grow-x 0.9s cubic-bezier(0.16,1,0.3,1) both",
-        float: "float 7s ease-in-out infinite",
+        "fade-up": "fade-up 0.5s cubic-bezier(0.16,1,0.3,1) both",
+        "fade-in": "fade-in 0.5s ease both",
       },
     },
   },

@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
-import { Fixture } from "@prisma/client";
+import type { Fixture } from "@prisma/client";
 import TeamFlag from "./TeamFlag";
 
 export function MyTeamsClient({ allFixtures }: { allFixtures: Fixture[] }) {

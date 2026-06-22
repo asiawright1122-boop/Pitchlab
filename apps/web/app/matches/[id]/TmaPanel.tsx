@@ -62,31 +62,32 @@ export default function TmaPanel({ fixtureId, isUnlocked: initialUnlocked }: Tma
 
   if (isUnlocked) {
     return (
-      <div className="bg-white/75 backdrop-blur-md border border-slate-200/50 rounded-2xl p-6 shadow-[0_8px_30px_rgb(0,0,0,0.02)]">
-        <div className="flex justify-between items-start mb-6 border-b border-slate-100 pb-4">
-          <h2 className="text-xl font-black text-slate-900 flex items-center gap-2">
-            <span className="w-2 h-6 bg-[#e04039] rounded-full inline-block animate-pulse"></span>
-            TMA 量化研报 (Quant Edge)
+      <div className="bg-[#0d1114] border border-[#272f35] rounded-2xl p-6 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/5 rounded-full blur-2xl pointer-events-none"></div>
+        <div className="flex justify-between items-start mb-6 border-b border-[#272f35] pb-4 relative z-10">
+          <h2 className="text-xl font-black text-white flex items-center gap-2">
+            <span className="w-2 h-6 bg-emerald-500 rounded-full inline-block animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.5)]"></span>
+            TMA Quant Edge Report
           </h2>
-          <span className="px-3 py-1 bg-green-550/10 text-green-600 rounded-full text-xs font-bold border border-green-500/20">
-            ✓ 已解锁
+          <span className="px-3 py-1 bg-emerald-500/10 text-emerald-500 rounded-full text-xs font-bold border border-emerald-500/20">
+            ✓ UNLOCKED
           </span>
         </div>
 
         {error && (
-          <div className="p-4 bg-red-50 text-red-650 rounded-xl text-sm mb-6 border border-red-100 font-semibold">
+          <div className="p-4 bg-red-950/30 text-red-400 rounded-xl text-sm mb-6 border border-red-900/50 font-semibold relative z-10">
             ⚠️ {error}
-            <button onClick={loadReport} className="ml-4 underline hover:text-red-800">重试</button>
+            <button onClick={loadReport} className="ml-4 underline hover:text-red-300">Retry</button>
           </div>
         )}
 
         {isLoadingReport || !reportText ? (
-          <div className="py-12 flex flex-col items-center justify-center gap-4 text-slate-400">
-            <div className="w-8 h-8 border-4 border-[#e04039]/20 border-t-[#e04039] rounded-full animate-spin"></div>
-            <p className="text-sm font-semibold animate-pulse text-slate-500">正在生成模型洞察分析...</p>
+          <div className="py-12 flex flex-col items-center justify-center gap-4 text-gray-400 relative z-10">
+            <div className="w-8 h-8 border-4 border-emerald-500/20 border-t-emerald-500 rounded-full animate-spin"></div>
+            <p className="text-sm font-semibold animate-pulse tracking-widest uppercase">Generating AI Insights...</p>
           </div>
         ) : (
-          <div className="prose prose-slate prose-red max-w-none text-sm md:text-base prose-headings:font-black prose-headings:text-slate-900 prose-p:text-slate-700 prose-li:text-slate-700 prose-strong:text-[#e04039] prose-code:bg-slate-100 prose-code:text-slate-800 prose-code:px-1 prose-code:rounded">
+          <div className="prose prose-invert prose-emerald max-w-none text-sm md:text-base prose-headings:font-black prose-headings:text-white prose-p:text-gray-300 prose-li:text-gray-300 prose-strong:text-emerald-400 prose-code:bg-[#151a1e] prose-code:text-emerald-300 prose-code:px-1 prose-code:rounded relative z-10">
             <ReactMarkdown>{reportText}</ReactMarkdown>
           </div>
         )}
@@ -95,21 +96,23 @@ export default function TmaPanel({ fixtureId, isUnlocked: initialUnlocked }: Tma
   }
 
   return (
-    <div className="bg-white/75 backdrop-blur-md border border-slate-200/50 rounded-2xl p-6 shadow-[0_8px_30px_rgb(0,0,0,0.02)]">
-      <div className="flex justify-between items-start mb-6">
-        <h2 className="text-xl font-black text-slate-900 flex items-center gap-2">
-          <span className="w-2 h-6 bg-[#e04039] rounded-full inline-block"></span>
-          TMA 智能量化研报
+    <div className="bg-[#0d1114] border border-[#272f35] rounded-2xl p-6 relative overflow-hidden">
+      <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/5 rounded-full blur-2xl pointer-events-none"></div>
+      
+      <div className="flex justify-between items-start mb-6 relative z-10">
+        <h2 className="text-xl font-black text-white flex items-center gap-2">
+          <span className="w-2 h-6 bg-emerald-500 rounded-full inline-block shadow-[0_0_8px_rgba(16,185,129,0.5)]"></span>
+          TMA Quant Edge
         </h2>
-        <span className="px-2.5 py-0.5 bg-slate-100 text-slate-650 rounded-full text-xs font-bold border border-slate-200/50">Premium</span>
+        <span className="px-2.5 py-0.5 bg-[#151a1e] text-emerald-500 rounded-full text-xs font-bold border border-emerald-500/20 uppercase tracking-widest">Premium</span>
       </div>
       
-      <p className="text-slate-500 text-sm font-medium mb-6 leading-relaxed">
-        PitchLab 量化引擎已收集本场赛事的历史 CLV 波动、预期进球数据 (xG) 与市场价值偏差。使用 TMA 大模型解锁深度战术走势解读。
+      <p className="text-gray-400 text-sm font-medium mb-6 leading-relaxed relative z-10">
+        PitchLab engine has collected historical CLV movements, expected goals (xG), and market value deviations for this match. Use TMA large models to unlock deep tactical insights.
       </p>
 
       {error && (
-        <div className="p-3 bg-red-50 text-red-650 rounded-xl text-sm mb-4 border border-red-100 font-semibold">
+        <div className="p-3 bg-red-950/30 text-red-400 rounded-xl text-sm mb-4 border border-red-900/50 font-semibold relative z-10">
           ⚠️ {error}
         </div>
       )}
@@ -117,17 +120,17 @@ export default function TmaPanel({ fixtureId, isUnlocked: initialUnlocked }: Tma
       <button 
         onClick={handleUnlock}
         disabled={isUnlocking}
-        className="w-full py-4 rounded-xl border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-800 transition-colors font-bold flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full py-4 rounded-xl border border-[#272f35] bg-[#151a1e] hover:border-emerald-500/50 hover:bg-emerald-500/10 text-white transition-all font-bold flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed relative z-10 group"
       >
         {isUnlocking ? (
-          <span className="flex items-center gap-2 text-slate-600 font-bold">
-            <div className="w-4 h-4 border-2 border-slate-350 border-t-slate-800 rounded-full animate-spin"></div>
-            正在处理支付...
+          <span className="flex items-center gap-2 text-emerald-500 font-bold tracking-widest uppercase">
+            <div className="w-4 h-4 border-2 border-emerald-500/30 border-t-emerald-500 rounded-full animate-spin"></div>
+            Processing...
           </span>
         ) : (
           <>
-            <span>解锁该赛事深度报告</span>
-            <span className="px-2.5 py-0.5 bg-[#e04039] text-white text-xs rounded-full font-bold shadow-sm shadow-[#e04039]/10">-2000 RU</span>
+            <span className="tracking-widest uppercase text-sm">Unlock Match Report</span>
+            <span className="px-2.5 py-0.5 bg-emerald-500 text-[#0d1114] text-xs rounded-full font-black shadow-[0_0_10px_rgba(16,185,129,0.3)] group-hover:shadow-[0_0_15px_rgba(16,185,129,0.5)] transition-shadow">-2000 RU</span>
           </>
         )}
       </button>

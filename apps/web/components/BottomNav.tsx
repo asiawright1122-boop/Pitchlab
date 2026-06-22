@@ -2,33 +2,49 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Trophy, Users, User, LayoutGrid } from "lucide-react";
 
 export default function BottomNav() {
   const pathname = usePathname();
 
+  const navItems = [
+    { href: "/", label: "Quant Hub", icon: LayoutGrid },
+    { href: "/standings", label: "Leaderboard", icon: Trophy },
+    { href: "/groups", label: "Groups", icon: Users },
+    { href: "/profile", label: "Portfolio", icon: User },
+  ];
+
   return (
-    <div className="fixed bottom-6 left-0 right-0 mx-auto w-[calc(100%-2rem)] max-w-[360px] bg-white rounded-full shadow-[0_8px_30px_rgba(0,0,0,0.12)] p-2 z-50 flex items-center">
-      <Link 
-        href="/predictions" 
-        className={`flex-1 flex items-center justify-center gap-1.5 py-3 rounded-full font-bold text-[13px] transition ${pathname === '/predictions' ? 'bg-[#007aff] text-white shadow-sm' : 'text-gray-500 hover:bg-gray-50'}`}
-      >
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-          <circle cx="12" cy="12" r="10"></circle>
-          <circle cx="12" cy="12" r="5"></circle>
-          <circle cx="12" cy="12" r="1"></circle>
-        </svg>
-        Predictions
-      </Link>
-      <Link 
-        href="/my-teams" 
-        className={`flex-1 flex items-center justify-center gap-1.5 py-3 rounded-full font-bold text-[13px] transition ${pathname === '/my-teams' ? 'bg-[#007aff] text-white shadow-sm' : 'text-gray-500 hover:bg-gray-50'}`}
-      >
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-          <circle cx="12" cy="7" r="4"></circle>
-        </svg>
-        My Teams
-      </Link>
+    <div className="fixed bottom-0 left-0 right-0 w-full bg-[#070a0b]/90 backdrop-blur-md border-t border-[#202b30] p-2 pb-6.5 z-50 flex items-center justify-around select-none">
+      {navItems.map((item) => {
+        const Icon = item.icon;
+        // 支持模糊路径匹配
+        const active = item.href === "/" 
+          ? pathname === "/" 
+          : pathname.startsWith(item.href);
+
+        return (
+          <Link
+            key={item.href}
+            href={item.href}
+            className={`flex flex-col items-center justify-center gap-1 w-16 h-12 rounded-xl transition-all duration-300 active:scale-95 ${
+              active 
+                ? "text-emerald-400 font-black" 
+                : "text-gray-500 hover:text-gray-300"
+            }`}
+          >
+            <Icon 
+              size={18} 
+              className={`transition-all duration-300 ${
+                active ? "drop-shadow-[0_0_8px_rgba(16,185,129,0.6)] stroke-[2.5px]" : "stroke-[2px]"
+              }`}
+            />
+            <span className="text-[9px] uppercase tracking-widest leading-none font-bold mt-1">
+              {item.label}
+            </span>
+          </Link>
+        );
+      })}
     </div>
   );
 }

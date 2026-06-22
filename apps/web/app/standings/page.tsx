@@ -403,72 +403,89 @@ export default async function StandingsPage() {
   });
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-slate-100 to-blue-50/50 text-slate-800 pb-24">
-      {/* Hero */}
-      <div className="relative pt-24 pb-12 overflow-hidden">
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px] pointer-events-none" />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#e04039]/5 to-transparent pointer-events-none" />
-        
-        <div className="max-w-6xl mx-auto px-4 relative z-10">
-          <h1 className="text-4xl md:text-5xl font-black mb-4 text-slate-900 tracking-tight leading-none">数据与统计中心</h1>
-          <p className="text-slate-500 text-lg font-medium">实时追踪真实赛果及各小组出线形势</p>
-        </div>
-      </div>
+    <div className="min-h-screen bg-[#070a0b] text-white pb-28 relative overflow-x-hidden select-none">
+      {/* 🟢 Ambient background decorations */}
+      <div className="absolute inset-0 bg-quant-mesh opacity-15 pointer-events-none"></div>
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[350px] bg-emerald-500/5 rounded-full blur-3xl pointer-events-none"></div>
 
-      <div className="max-w-6xl mx-auto px-4 space-y-16 relative z-10">
+      {/* Mini App Sticky Header */}
+      <header className="px-5 py-5 flex items-center justify-between sticky top-0 z-40 bg-[#070a0b]/90 backdrop-blur-md border-b border-[#202b30]">
+        <div className="flex items-center gap-3">
+          <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-[0_0_12px_#10b981] animate-pulse"></div>
+          <span className="text-[13px] font-black text-white tracking-[0.25em] uppercase">
+            QUANT DATA HUB
+          </span>
+        </div>
+        <span className="text-[8px] font-black text-emerald-400 bg-emerald-500/10 px-2.5 py-1 border border-emerald-500/20 rounded-full tracking-widest uppercase">
+          Live Stats
+        </span>
+      </header>
+
+      {/* Main Container - Optimized for mobile view width */}
+      <div className="max-w-md mx-auto px-4 py-6 space-y-8 relative z-10">
         
         {/* 球队积分榜 */}
-        <div id="teams" className="scroll-mt-24 space-y-8">
-          <div className="flex items-center gap-3">
-            <h2 className="text-2xl font-black text-slate-800 tracking-tight">🏆 世界杯小组赛积分榜 (Group Stage)</h2>
+        <div id="teams" className="scroll-mt-24 space-y-4">
+          <div className="flex items-center gap-2 px-1">
+            <span className="w-1.5 h-4.5 bg-emerald-500 rounded-full inline-block"></span>
+            <h2 className="text-[13px] font-black text-white uppercase tracking-wider">Group Stage Standings</h2>
           </div>
 
           {finalGroups.length === 0 ? (
-            <div className="bg-white/80 backdrop-blur-md border border-slate-200/50 rounded-2xl p-16 text-center text-slate-400 shadow-[0_8px_30px_rgb(0,0,0,0.02)]">
-               暂无有效的分组数据
+            <div className="bg-[#0a0f12]/70 backdrop-blur-md border border-[#202b30]/80 rounded-3xl p-12 text-center text-gray-500 text-xs">
+              暂无有效的分组数据
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="flex flex-col gap-6">
               {finalGroups.map((group) => (
-                <div key={group.id} className="bg-white/75 backdrop-blur-md border border-slate-200/50 rounded-2xl overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.02)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)] transition-all duration-300">
-                  <div className="bg-[#e04039]/5 px-6 py-4 border-b border-slate-200/50 flex justify-between items-center">
-                    <h3 className="text-lg font-black text-[#e04039]">{group.name}</h3>
+                <div key={group.id} className="bg-[#0a0f12]/70 backdrop-blur-md border border-[#202b30] rounded-3xl overflow-hidden shadow-[0_10px_35px_rgba(0,0,0,0.55)]">
+                  <div className="bg-emerald-500/5 px-5 py-3 border-b border-[#202b30] flex justify-between items-center">
+                    <h3 className="text-xs font-black text-emerald-400 uppercase tracking-wider">{group.name}</h3>
+                    <span className="text-[7.5px] font-black text-gray-500 uppercase tracking-widest">Promotion Zone</span>
                   </div>
                   <div className="overflow-x-auto">
-                    <table className="w-full text-left text-sm whitespace-nowrap">
-                      <thead className="bg-slate-50/50 text-slate-450 border-b border-slate-100 text-xs font-semibold">
+                    <table className="w-full text-left text-xs whitespace-nowrap">
+                      <thead className="bg-[#0f1416]/50 text-gray-550 border-b border-[#202b30]/50 text-[9px] font-black uppercase tracking-widest">
                         <tr>
-                          <th className="px-4 py-3 w-10 text-center">排</th>
-                          <th className="px-4 py-3">球队</th>
-                          <th className="px-2 py-3 text-center">P</th>
-                          <th className="px-2 py-3 text-center">W</th>
-                          <th className="px-2 py-3 text-center">D</th>
-                          <th className="px-2 py-3 text-center">L</th>
-                          <th className="px-2 py-3 text-center">+/-</th>
-                          <th className="px-4 py-3 text-bold text-center text-slate-700">Pts</th>
+                          <th className="px-4 py-3 w-10 text-center text-gray-500">Pos</th>
+                          <th className="px-4 py-3 text-gray-500">Team</th>
+                          <th className="px-2 py-3 text-center text-gray-500">P</th>
+                          <th className="px-2 py-3 text-center text-gray-500">W</th>
+                          <th className="px-2 py-3 text-center text-gray-500">D</th>
+                          <th className="px-2 py-3 text-center text-gray-500">L</th>
+                          <th className="px-2 py-3 text-center text-gray-500">+/-</th>
+                          <th className="px-4 py-3 text-bold text-center text-emerald-400">Pts</th>
                         </tr>
                       </thead>
-                      <tbody className="divide-y divide-slate-100">
+                      <tbody className="divide-y divide-[#202b30]/50">
                         {group.teams.map((row, index) => {
                           const rank = index + 1;
                           const isTopTwo = rank <= 2;
                           return (
-                            <tr key={row.team} className="hover:bg-slate-50/50 transition-colors">
-                              <td className="px-4 py-3 text-center">
-                                <span className={`inline-block w-5 h-5 rounded-full text-[10px] leading-5 font-bold ${isTopTwo ? 'bg-[#e04039] text-white' : 'bg-slate-100 text-slate-400'}`}>
+                            <tr key={row.team} className="hover:bg-emerald-500/5 transition-colors">
+                              <td className="px-4 py-2.5 text-center">
+                                <span className={`inline-flex w-4.5 h-4.5 items-center justify-center rounded-full text-[9px] font-black ${
+                                  isTopTwo 
+                                    ? 'bg-emerald-500 text-[#070a0b] shadow-[0_0_8px_rgba(16,185,129,0.3)]' 
+                                    : 'bg-[#162024] text-gray-400 border border-[#202b30]/50'
+                                }`}>
                                   {rank}
                                 </span>
                               </td>
-                              <td className="px-4 py-3 flex items-center gap-3">
-                                <TeamFlag teamName={row.team} className="w-7 h-5 rounded shadow-sm" />
-                                <span className="font-bold text-slate-800 text-sm">{row.team}</span>
+                              <td className="px-4 py-2.5 flex items-center gap-2">
+                                <TeamFlag teamName={row.team} className="w-5.5 h-4 rounded shadow-sm object-cover border border-[#202b30]/50" />
+                                <span className="font-extrabold text-white text-xs uppercase truncate max-w-[90px]">{row.team}</span>
                               </td>
-                              <td className="px-2 py-3 text-center text-slate-500 font-medium">{row.p}</td>
-                              <td className="px-2 py-3 text-center text-slate-600 font-medium">{row.w}</td>
-                              <td className="px-2 py-3 text-center text-slate-600 font-medium">{row.d}</td>
-                              <td className="px-2 py-3 text-center text-slate-600 font-medium">{row.l}</td>
-                              <td className="px-2 py-3 text-center font-mono text-slate-600 font-medium">{row.gd > 0 ? `+${row.gd}` : row.gd}</td>
-                              <td className="px-4 py-3 text-center font-black text-base text-[#e04039]">{row.pts}</td>
+                              <td className="px-2 py-2.5 text-center text-gray-400 font-bold">{row.p}</td>
+                              <td className="px-2 py-2.5 text-center text-gray-500">{row.w}</td>
+                              <td className="px-2 py-2.5 text-center text-gray-500">{row.d}</td>
+                              <td className="px-2 py-2.5 text-center text-gray-500">{row.l}</td>
+                              <td className={`px-2 py-2.5 text-center font-mono text-xs font-black ${
+                                row.gd > 0 ? 'text-emerald-400' : row.gd < 0 ? 'text-rose-500' : 'text-gray-500'
+                              }`}>
+                                {row.gd > 0 ? `+${row.gd}` : row.gd}
+                              </td>
+                              <td className="px-4 py-2.5 text-center font-black text-xs text-emerald-400">{row.pts}</td>
                             </tr>
                           );
                         })}
@@ -481,116 +498,111 @@ export default async function StandingsPage() {
           )}
         </div>
 
-        {/* 射手榜 & 助攻榜 二合一双栏 */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          
-          {/* 射手榜 */}
-          <div id="scorers" className="scroll-mt-24 space-y-4">
-            <h2 className="text-2xl font-black text-slate-850 tracking-tight flex items-center gap-2">
-              <span className="w-2 h-6 bg-[#e04039] rounded-full inline-block"></span>
-              ⚽ 射手榜 (Top Scorers)
-            </h2>
-            <div className="bg-white/75 backdrop-blur-md border border-slate-200/50 rounded-2xl overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.02)]">
-              {sortedScorers.length === 0 ? (
-                <div className="p-12 text-center text-slate-400 font-semibold text-sm">暂无进球数据</div>
-              ) : (
-                <table className="w-full text-left text-sm whitespace-nowrap">
-                  <thead className="bg-slate-50/50 text-slate-450 border-b border-slate-100 text-xs font-semibold">
-                    <tr>
-                      <th className="px-6 py-3.5 w-12 text-center">排名</th>
-                      <th className="px-6 py-3.5">球员</th>
-                      <th className="px-6 py-3.5">球队</th>
-                      <th className="px-6 py-3.5 text-right pr-8">进球数</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-slate-100">
-                    {sortedScorers.map((row, idx) => (
-                      <tr key={row.name} className="hover:bg-slate-50/50 transition-colors">
-                        <td className="px-6 py-3.5 text-center text-slate-450 font-bold">{idx + 1}</td>
-                        <td className="px-6 py-3.5 font-bold text-slate-800">{row.name}</td>
-                        <td className="px-6 py-3.5 flex items-center gap-2">
-                          <TeamFlag teamName={row.team} className="w-6 h-4 rounded shadow-sm" />
-                          <span className="text-slate-600 font-medium text-xs">{row.team}</span>
-                        </td>
-                        <td className="px-6 py-3.5 text-right pr-8 font-black text-base text-[#e04039]">{row.goals}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              )}
-            </div>
+        {/* 射手榜 */}
+        <div id="scorers" className="scroll-mt-24 space-y-4">
+          <div className="flex items-center gap-2 px-1">
+            <span className="w-1.5 h-4.5 bg-emerald-500 rounded-full inline-block"></span>
+            <h2 className="text-[13px] font-black text-white uppercase tracking-wider">Top Scorers</h2>
           </div>
+          <div className="bg-[#0a0f12]/70 backdrop-blur-md border border-[#202b30] rounded-3xl overflow-hidden shadow-[0_10px_35px_rgba(0,0,0,0.55)]">
+            {sortedScorers.length === 0 ? (
+              <div className="p-12 text-center text-gray-500 font-semibold text-xs">暂无进球数据</div>
+            ) : (
+              <table className="w-full text-left text-xs whitespace-nowrap">
+                <thead className="bg-[#0f1416]/50 text-gray-550 border-b border-[#202b30]/50 text-[9px] font-black uppercase tracking-widest">
+                  <tr>
+                    <th className="px-5 py-3 w-12 text-center text-gray-500">Rank</th>
+                    <th className="px-5 py-3 text-gray-500">Player</th>
+                    <th className="px-5 py-3 text-gray-500">Team</th>
+                    <th className="px-5 py-3 text-right pr-6 text-emerald-400">Goals</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-[#202b30]/50">
+                  {sortedScorers.map((row, idx) => (
+                    <tr key={row.name} className="hover:bg-emerald-500/5 transition-colors">
+                      <td className="px-5 py-3 text-center text-gray-400 font-black">{idx + 1}</td>
+                      <td className="px-5 py-3 font-extrabold text-white text-xs uppercase truncate max-w-[120px]">{row.name}</td>
+                      <td className="px-5 py-3 flex items-center gap-2.5">
+                        <TeamFlag teamName={row.team} className="w-5.5 h-4 rounded shadow-sm object-cover border border-[#202b30]/30" />
+                        <span className="text-gray-400 font-extrabold text-[10px] uppercase truncate max-w-[80px]">{row.team}</span>
+                      </td>
+                      <td className="px-5 py-3 text-right pr-6 font-black text-sm text-emerald-400">{row.goals}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
+          </div>
+        </div>
 
-          {/* 助攻榜 */}
-          <div id="assists" className="scroll-mt-24 space-y-4">
-            <h2 className="text-2xl font-black text-slate-850 tracking-tight flex items-center gap-2">
-              <span className="w-2 h-6 bg-[#e04039] rounded-full inline-block"></span>
-              🎯 助攻榜 (Top Assists)
-            </h2>
-            <div className="bg-white/75 backdrop-blur-md border border-slate-200/50 rounded-2xl overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.02)]">
-              {sortedAssisters.length === 0 ? (
-                <div className="p-12 text-center text-slate-400 font-semibold text-sm">暂无助攻数据</div>
-              ) : (
-                <table className="w-full text-left text-sm whitespace-nowrap">
-                  <thead className="bg-slate-50/50 text-slate-450 border-b border-slate-100 text-xs font-semibold">
-                    <tr>
-                      <th className="px-6 py-3.5 w-12 text-center">排名</th>
-                      <th className="px-6 py-3.5">球员</th>
-                      <th className="px-6 py-3.5">球队</th>
-                      <th className="px-6 py-3.5 text-right pr-8">助攻数</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-slate-100">
-                    {sortedAssisters.map((row, idx) => (
-                      <tr key={row.name} className="hover:bg-slate-50/50 transition-colors">
-                        <td className="px-6 py-3.5 text-center text-slate-450 font-bold">{idx + 1}</td>
-                        <td className="px-6 py-3.5 font-bold text-slate-800">{row.name}</td>
-                        <td className="px-6 py-3.5 flex items-center gap-2">
-                          <TeamFlag teamName={row.team} className="w-6 h-4 rounded shadow-sm" />
-                          <span className="text-slate-600 font-medium text-xs">{row.team}</span>
-                        </td>
-                        <td className="px-6 py-3.5 text-right pr-8 font-black text-base text-green-600">{row.assists}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              )}
-            </div>
+        {/* 助攻榜 */}
+        <div id="assists" className="scroll-mt-24 space-y-4">
+          <div className="flex items-center gap-2 px-1">
+            <span className="w-1.5 h-4.5 bg-emerald-500 rounded-full inline-block"></span>
+            <h2 className="text-[13px] font-black text-white uppercase tracking-wider">Top Assists</h2>
           </div>
-          
+          <div className="bg-[#0a0f12]/70 backdrop-blur-md border border-[#202b30] rounded-3xl overflow-hidden shadow-[0_10px_35px_rgba(0,0,0,0.55)]">
+            {sortedAssisters.length === 0 ? (
+              <div className="p-12 text-center text-gray-500 font-semibold text-xs">暂无助攻数据</div>
+            ) : (
+              <table className="w-full text-left text-xs whitespace-nowrap">
+                <thead className="bg-[#0f1416]/50 text-gray-550 border-b border-[#202b30]/50 text-[9px] font-black uppercase tracking-widest">
+                  <tr>
+                    <th className="px-5 py-3 w-12 text-center text-gray-500">Rank</th>
+                    <th className="px-5 py-3 text-gray-500">Player</th>
+                    <th className="px-5 py-3 text-gray-500">Team</th>
+                    <th className="px-5 py-3 text-right pr-6 text-emerald-500">Assists</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-[#202b30]/50">
+                  {sortedAssisters.map((row, idx) => (
+                    <tr key={row.name} className="hover:bg-emerald-500/5 transition-colors">
+                      <td className="px-5 py-3 text-center text-gray-400 font-black">{idx + 1}</td>
+                      <td className="px-5 py-3 font-extrabold text-white text-xs uppercase truncate max-w-[120px]">{row.name}</td>
+                      <td className="px-5 py-3 flex items-center gap-2.5">
+                        <TeamFlag teamName={row.team} className="w-5.5 h-4 rounded shadow-sm object-cover border border-[#202b30]/30" />
+                        <span className="text-gray-400 font-extrabold text-[10px] uppercase truncate max-w-[80px]">{row.team}</span>
+                      </td>
+                      <td className="px-5 py-3 text-right pr-6 font-black text-sm text-emerald-500">{row.assists}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
+          </div>
         </div>
 
         {/* 红黄牌统计 */}
         <div id="cards" className="scroll-mt-24 space-y-4">
-          <h2 className="text-2xl font-black text-slate-850 tracking-tight flex items-center gap-2">
-            <span className="w-2 h-6 bg-[#e04039] rounded-full inline-block"></span>
-            🟨 红黄牌统计 (Cards)
-          </h2>
-          <div className="bg-white/75 backdrop-blur-md border border-slate-200/50 rounded-2xl overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.02)]">
+          <div className="flex items-center gap-2 px-1">
+            <span className="w-1.5 h-4.5 bg-emerald-500 rounded-full inline-block"></span>
+            <h2 className="text-[13px] font-black text-white uppercase tracking-wider">Discipline & Cards</h2>
+          </div>
+          <div className="bg-[#0a0f12]/70 backdrop-blur-md border border-[#202b30] rounded-3xl overflow-hidden shadow-[0_10px_35px_rgba(0,0,0,0.55)]">
             {sortedCards.length === 0 ? (
-              <div className="p-12 text-center text-slate-400 font-semibold text-sm">暂无纪律数据</div>
+              <div className="p-12 text-center text-gray-500 font-semibold text-xs">暂无纪律数据</div>
             ) : (
-              <table className="w-full text-left text-sm whitespace-nowrap">
-                <thead className="bg-slate-50/50 text-slate-450 border-b border-slate-100 text-xs font-semibold">
+              <table className="w-full text-left text-xs whitespace-nowrap">
+                <thead className="bg-[#0f1416]/50 text-gray-550 border-b border-[#202b30]/50 text-[9px] font-black uppercase tracking-widest">
                   <tr>
-                    <th className="px-6 py-3.5 w-12 text-center">排名</th>
-                    <th className="px-6 py-3.5">球员</th>
-                    <th className="px-6 py-3.5">球队</th>
-                    <th className="px-6 py-3.5 text-center w-24">🟨 黄牌</th>
-                    <th className="px-6 py-3.5 text-center w-24">🟥 红牌</th>
+                    <th className="px-5 py-3 w-12 text-center text-gray-500">Rank</th>
+                    <th className="px-5 py-3 text-gray-500">Player</th>
+                    <th className="px-5 py-3 text-gray-500">Team</th>
+                    <th className="px-4 py-3 text-center w-16 text-[#e0a904]">Yellow</th>
+                    <th className="px-4 py-3 text-center w-16 text-rose-500">Red</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-100">
+                <tbody className="divide-y divide-[#202b30]/50">
                   {sortedCards.map((row, idx) => (
-                    <tr key={row.name} className="hover:bg-slate-50/50 transition-colors">
-                      <td className="px-6 py-3.5 text-center text-slate-450 font-bold">{idx + 1}</td>
-                      <td className="px-6 py-3.5 font-bold text-slate-800">{row.name}</td>
-                      <td className="px-6 py-3.5 flex items-center gap-2">
-                        <TeamFlag teamName={row.team} className="w-6 h-4 rounded shadow-sm" />
-                        <span className="text-slate-600 font-medium text-xs">{row.team}</span>
+                    <tr key={row.name} className="hover:bg-emerald-500/5 transition-colors">
+                      <td className="px-5 py-3 text-center text-gray-400 font-black">{idx + 1}</td>
+                      <td className="px-5 py-3 font-extrabold text-white text-xs uppercase truncate max-w-[120px]">{row.name}</td>
+                      <td className="px-5 py-3 flex items-center gap-2.5">
+                        <TeamFlag teamName={row.team} className="w-5.5 h-4 rounded shadow-sm object-cover border border-[#202b30]/30" />
+                        <span className="text-gray-400 font-extrabold text-[10px] uppercase truncate max-w-[80px]">{row.team}</span>
                       </td>
-                      <td className="px-6 py-3.5 text-center font-bold text-[#e0a904]">{row.yellow}</td>
-                      <td className="px-6 py-3.5 text-center font-bold text-red-600">{row.red}</td>
+                      <td className="px-4 py-3 text-center font-black text-sm text-[#e0a904]">{row.yellow}</td>
+                      <td className="px-4 py-3 text-center font-black text-sm text-rose-500">{row.red}</td>
                     </tr>
                   ))}
                 </tbody>

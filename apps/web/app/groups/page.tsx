@@ -36,38 +36,46 @@ export default async function GroupsDirectory() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-slate-100 to-blue-50/50 text-slate-800 pb-24">
+    <div className="min-h-screen bg-[#070a0b] text-white pb-28 relative overflow-x-hidden select-none">
       {/* Decorative grids */}
-      <div className="relative pt-24 pb-12 overflow-hidden">
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px] pointer-events-none" />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#e04039]/5 to-transparent pointer-events-none" />
-        
-        <div className="max-w-6xl mx-auto px-4 relative z-10 text-center">
-          <h1 className="text-4xl md:text-5xl font-black mb-4 text-slate-900 tracking-tight leading-none">Groups Directory</h1>
-          <p className="text-slate-500 text-lg font-medium">Browse official World Cup groups and teams</p>
+      <div className="absolute inset-0 bg-quant-mesh opacity-15 pointer-events-none"></div>
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[350px] bg-emerald-500/5 rounded-full blur-3xl pointer-events-none"></div>
+      
+      {/* Mini App Sticky Header */}
+      <header className="px-5 py-5 flex items-center justify-between sticky top-0 z-40 bg-[#070a0b]/90 backdrop-blur-md border-b border-[#202b30]">
+        <div className="flex items-center gap-3">
+          <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-[0_0_12px_#10b981] animate-pulse"></div>
+          <span className="text-[13px] font-black text-white tracking-[0.25em] uppercase">
+            GROUPS DIRECTORY
+          </span>
         </div>
-      </div>
+        <span className="text-[8px] font-black text-emerald-400 bg-emerald-500/10 px-2.5 py-1 border border-emerald-500/20 rounded-full tracking-widest uppercase">
+          World Cup
+        </span>
+      </header>
 
-      <div className="max-w-6xl mx-auto px-4">
+      {/* Main Container - Optimized for mobile width */}
+      <div className="max-w-md mx-auto px-4 py-6 space-y-6 relative z-10">
         {officialGroups.length === 0 ? (
-          <div className="bg-white/80 backdrop-blur-md border border-slate-200/50 rounded-2xl p-16 text-center text-slate-400 shadow-[0_8px_30px_rgb(0,0,0,0.02)]">
+          <div className="bg-[#0a0f12]/70 backdrop-blur-md border border-[#202b30] rounded-3xl p-16 text-center text-gray-500 text-xs">
              暂无有效的分组数据
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="flex flex-col gap-6">
             {officialGroups.map((group) => (
-              <div key={group.name} id={group.id} className="bg-white/75 backdrop-blur-md border border-slate-200/50 rounded-2xl overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.02)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)] transition-all duration-300 scroll-mt-24">
-                <div className="bg-[#e04039]/5 px-6 py-4 border-b border-slate-200/50 flex justify-between items-center">
-                  <h2 className="text-xl font-black text-[#e04039]">{group.name}</h2>
+              <div key={group.name} id={group.id} className="bg-[#0a0f12]/70 backdrop-blur-md border border-[#202b30] rounded-3xl overflow-hidden shadow-[0_10px_35px_rgba(0,0,0,0.55)] transition-all duration-300 scroll-mt-24">
+                <div className="bg-emerald-500/5 px-5 py-3.5 border-b border-[#202b30] flex justify-between items-center">
+                  <h2 className="text-xs font-black text-emerald-400 uppercase tracking-wider">{group.name}</h2>
+                  <span className="text-[7.5px] font-black text-gray-500 uppercase tracking-widest">Official Teams</span>
                 </div>
                 
-                <ul className="divide-y divide-slate-100">
+                <ul className="divide-y divide-[#202b30]/50">
                   {group.teams.map((team, idx) => (
-                    <li key={idx} className="px-6 py-4 flex items-center justify-between hover:bg-slate-50/50 transition-colors">
+                    <li key={idx} className="px-5 py-3.5 flex items-center justify-between hover:bg-emerald-500/5 transition-colors">
                       <div className="flex items-center gap-4">
-                        <span className="text-sm font-bold text-slate-450 w-4">{idx + 1}</span>
-                        <TeamFlag teamName={team} className="w-8 h-5.5 rounded shadow-sm" />
-                        <span className="font-bold text-slate-800">{team}</span>
+                        <span className="text-[10px] font-black text-gray-500 w-4">{idx + 1}</span>
+                        <TeamFlag teamName={team} className="w-6.5 h-4.5 rounded shadow-sm object-cover border border-[#202b30]/40" />
+                        <span className="font-extrabold text-white text-xs uppercase tracking-wide">{team}</span>
                       </div>
                     </li>
                   ))}

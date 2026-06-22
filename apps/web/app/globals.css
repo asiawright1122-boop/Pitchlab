@@ -4,53 +4,118 @@
 
 @layer base {
   :root {
-    --background: #f8f9fa;
-    --foreground: #333333;
+    --background: #070a0b; /* 更深邃的炭黑 */
+    --foreground: #f3f4f6; /* 清晰高对比度文字 */
     
-    --navy: #1a1a2e;
-    --navy-light: #16213e;
-    --red: #e04039;
-    --red-hover: #c93a33;
+    /* 祖母绿 (Emerald) 核心配色 */
+    --emerald-primary: #10b981;
+    --emerald-dark: #065f46;
+    --emerald-light: #34d399;
+    --emerald-glow: rgba(16, 185, 129, 0.25);
     
-    --card-bg: #ffffff;
-    --border: #e8e8e8;
+    /* 极致磨砂与石墨面板 */
+    --panel-bg: #0f1416;
+    --panel-border: #202b30;
+    --panel-hover: #161e22;
   }
 
   body {
     background-color: var(--background);
     color: var(--foreground);
-    font-family: "Noto Sans SC", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-family: "Outfit", "Inter", "Noto Sans SC", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     -webkit-font-smoothing: antialiased;
-  }
-}
-
-@layer components {
-  .btn-primary {
-    @apply inline-flex items-center justify-center px-5 py-2.5 bg-[#e04039] text-white rounded-md font-semibold text-sm transition-all duration-200 hover:bg-[#1a1a2e];
+    /* 顶层向下渐变的隐约绿意 */
+    background-image: radial-gradient(circle at 50% 0%, #0d261a 0%, #070a0b 70%);
+    background-attachment: fixed;
+    min-height: 100vh;
   }
 }
 
 @layer utilities {
+  /* 高端绿茵底纹：带有朦胧斜线和网格 */
+  .bg-pitch {
+    background-image: 
+      linear-gradient(180deg, rgba(7, 10, 11, 0.96) 0%, rgba(7, 10, 11, 0.99) 100%),
+      url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h80v80H0z' fill='none'/%3E%3Cpath d='M0 40h80M40 0v80M20 40a20 20 0 0 0 40 0M30 40a10 10 0 0 1 20 0' stroke='rgba(16, 185, 129, 0.04)' stroke-width='1' fill='none'/%3E%3C/svg%3E");
+    background-size: cover, 160px 160px;
+    background-position: center, center;
+  }
+  
+  /* 比赛详情页顶部的绿茵场高光质感 */
+  .bg-pitch-green {
+    background-image: 
+      linear-gradient(180deg, rgba(7, 10, 11, 0.2) 0%, #070a0b 100%),
+      radial-gradient(circle at 50% 20%, rgba(16, 185, 129, 0.25) 0%, transparent 60%),
+      url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 60h120M60 0v120M30 60a30 30 0 0 0 60 0' stroke='rgba(255,255,255,0.035)' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+    background-size: 100% 100%, 100% 100%, 240px 240px;
+    background-position: top center;
+  }
+
   .custom-scrollbar::-webkit-scrollbar {
-    width: 6px;
+    height: 4px;
+    width: 4px;
   }
   .custom-scrollbar::-webkit-scrollbar-track {
     background: transparent;
   }
   .custom-scrollbar::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 99px;
   }
   .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.4);
+    background: rgba(16, 185, 129, 0.3);
+  }
+
+  /* 金融量化网噪背景 */
+  .bg-quant-mesh {
+    background-image: 
+      radial-gradient(circle at 50% 30%, rgba(16, 185, 129, 0.08) 0%, transparent 60%),
+      linear-gradient(rgba(32, 43, 48, 0.15) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(32, 43, 48, 0.15) 1px, transparent 1px);
+    background-size: 100% 100%, 20px 20px, 20px 20px;
+    background-position: center;
+  }
+
+  /* 3D 战术沙盘透视容器 */
+  .isometric-perspective {
+    perspective: 1000px;
+  }
+  
+  .isometric-pitch {
+    transform: rotateX(55deg) rotateZ(-35deg) translateZ(0);
+    transform-style: preserve-3d;
+    box-shadow: 
+      -15px 15px 40px rgba(0, 0, 0, 0.8),
+      0 0 120px rgba(16, 185, 129, 0.08) inset;
+  }
+
+  /* 3D 浮动战术卡片 */
+  .isometric-float {
+    transform: translateZ(28px) rotateZ(35deg) rotateX(-55deg);
+    transform-style: preserve-3d;
+    filter: drop-shadow(0 12px 12px rgba(0, 0, 0, 0.7));
+  }
+
+  /* Edge 荧光发光效果 */
+  .border-edge-glow {
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.3);
+    border-color: rgba(16, 185, 129, 0.6) !important;
+  }
+
+  /* 保险金盾金色流光 */
+  .bg-gold-glow {
+    background: linear-gradient(135deg, #c5a059 0%, #f3e5ab 50%, #9e782f 100%);
+    box-shadow: 0 0 15px rgba(243, 229, 171, 0.3);
   }
 }
 
 @layer components {
-  .btn-secondary {
-    @apply inline-flex items-center justify-center px-5 py-2.5 bg-white border border-[#e8e8e8] text-[#555] rounded-md font-semibold text-sm transition-all duration-200 hover:bg-[#f0f2f5] hover:border-[#ccc];
+  /* 磨砂玻璃感的极简面板 */
+  .card-matte {
+    @apply bg-[#0f1416]/80 backdrop-blur-xl border border-[#202b30] rounded-2xl shadow-[0_4px_24px_rgba(0,0,0,0.4)] overflow-hidden transition-all duration-300 hover:border-[#10b981]/20 hover:bg-[#131b1e]/90;
   }
-  .card {
-    @apply bg-white border border-[#e8e8e8] rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.06)] overflow-hidden;
+  .input-matte {
+    @apply bg-[#070a0b] border border-[#202b30] text-white rounded-xl px-4 py-2.5 focus:outline-none focus:border-[#10b981] focus:ring-1 focus:ring-[#10b981] transition-all;
   }
 }
+

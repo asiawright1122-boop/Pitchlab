@@ -41,6 +41,57 @@ export async function loginWithEmail(email: string): Promise<AuthUser> {
       data: { userId: user.id, planId: "free", status: "active" },
     });
     await ensurePaperWallet(prisma, user.id);
+
+    // 💻 如果是开发测试沙箱账号，自动为他灌注几笔已结算的模拟交易记录，用于在 /profile 展现权益资产曲线
+    if (normalized === "sandbox_master@pitchlab.io") {
+      let targetFixture = await prisma.fixture.findFirst();
+      if (!targetFixture) {
+        targetFixture = await prisma.fixture.create({
+          data: {
+            league: "Premier League",
+            home: "Arsenal",
+            away: "Chelsea",
+            kickoffUtc: new Date(Date.now() - 3 * 24 * 3600 * 1000),
+            status: "finished",
+            homeGoals: 2,
+            awayGoals: 1,
+          }
+        });
+      }
+
+      const dummyTrades = [
+        { league: "Premier League", home: "Arsenal", away: "Chelsea", selection: "H", odds: 1.85, stake: 500, pnl: 425, status: "settled", kickoffUtc: new Date(Date.now() - 3 * 24 * 3600 * 1000) },
+        { league: "La Liga", home: "Real Madrid", away: "Barcelona", selection: "D", odds: 3.40, stake: 300, pnl: -300, status: "settled", kickoffUtc: new Date(Date.now() - 2 * 24 * 3600 * 1000) },
+        { league: "Serie A", home: "Juventus", away: "Inter", selection: "A", odds: 2.20, stake: 600, pnl: 720, status: "settled", kickoffUtc: new Date(Date.now() - 1 * 24 * 3600 * 1000) },
+        { league: "Champions League", home: "Bayern", away: "PSG", selection: "H", odds: 1.95, stake: 800, pnl: 760, status: "settled", kickoffUtc: new Date(Date.now() - 12 * 3600 * 1000) }
+      ];
+
+      for (const t of dummyTrades) {
+        await prisma.paperTrade.create({
+          data: {
+            userId: user.id,
+            fixtureId: targetFixture.id,
+            league: t.league,
+            home: t.home,
+            away: t.away,
+            kickoffUtc: t.kickoffUtc,
+            market: "1x2",
+            selection: t.selection,
+            odds: t.odds,
+            stake: t.stake,
+            status: t.status,
+            pnl: t.pnl,
+            settledAt: new Date(t.kickoffUtc.getTime() + 2 * 3600 * 1000)
+          }
+        });
+      }
+
+      // 同时，把他的钱包初始金额调大一点以覆盖模拟 PnL 变动
+      await prisma.paperWallet.update({
+        where: { userId: user.id },
+        data: { balance: 11605 } // 10000 + 425 - 300 + 720 + 760 = 11605
+      });
+    }
   } else {
     await ensurePaperWallet(prisma, user.id);
   }

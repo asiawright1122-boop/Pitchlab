@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useRouter } from "next/navigation";
+import { Shield, Sparkles, HelpCircle } from "lucide-react";
 
 type BetSlipProps = {
   fixtureId: string;
@@ -21,10 +22,15 @@ export default function BetSlip({ fixtureId, home, away, league, kickoffUtc, lat
     odds: number;
   } | null>(null);
   const [stake, setStake] = useState<number>(100);
+  const [balance, setBalance] = useState<number>(1000);
+  const [useInsurance, setUseInsurance] = useState<boolean>(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<boolean>(false);
 
+  const hasBet = !!(selection || customSelection);
+
+  // 1. 监听盘口选择广播事件
   useEffect(() => {
     const handleSelectBet = (e: Event) => {
       const detail = (e as CustomEvent).detail;
@@ -49,6 +55,26 @@ export default function BetSlip({ fixtureId, home, away, league, kickoffUtc, lat
     };
   }, [fixtureId]);
 
+  // 2. 自动获取用户的真实虚拟账户余额
+  useEffect(() => {
+    const fetchBalance = async () => {
+      try {
+        const res = await fetch("/api/paper/wallet");
+        if (res.ok) {
+          const data = await res.json();
+          // 处理不同的 API 返回结构
+          const bal = typeof data.balance === "number" ? data.balance : (data.wallet?.balance ?? 1000);
+          setBalance(bal);
+        }
+      } catch (e) {
+        console.error("Failed to fetch balance:", e);
+      }
+    };
+    if (hasBet) {
+      fetchBalance();
+    }
+  }, [hasBet]);
+
   const oddsValue = customSelection
     ? customSelection.odds
     : selection === "H"
@@ -58,6 +84,12 @@ export default function BetSlip({ fixtureId, home, away, league, kickoffUtc, lat
     : selection === "A"
     ? latestOdds.away
     : 0;
+
+  const insuranceFee = useMemo(() => {
+    return useInsurance ? Math.round(stake * 0.1) : 0;
+  }, [useInsurance, stake]);
+
+  const totalCost = stake + insuranceFee;
   const potentialPayout = stake * oddsValue;
 
   const handleSubmit = async () => {
@@ -65,6 +97,13 @@ export default function BetSlip({ fixtureId, home, away, league, kickoffUtc, lat
     if (!selection && !isCustom) return;
     setIsSubmitting(true);
     setError(null);
+
+    // 校验余额是否足够扣除本金 + 保险费
+    if (balance < totalCost) {
+      setError("Insufficient balance to cover stake and insurance premium.");
+      setIsSubmitting(false);
+      return;
+    }
 
     try {
       const res = await fetch("/api/paper/trades", {
@@ -75,17 +114,18 @@ export default function BetSlip({ fixtureId, home, away, league, kickoffUtc, lat
           league,
           home,
           away,
-          kickoff_utc: kickoffUtc.toISOString(),
+          kickoff_utc: typeof kickoffUtc === "string" ? kickoffUtc : kickoffUtc.toISOString(),
           market: isCustom ? customSelection.marketName : "1x2",
           selection: isCustom ? customSelection.selectionName : selection,
           odds: oddsValue,
-          stake: Number(stake)
+          stake: Number(stake),
+          insurance: useInsurance
         })
       });
 
       const data = await res.json();
       if (!res.ok) {
-        throw new Error(data.error || "提交失败");
+        throw new Error(data.error || "Failed to confirm trade.");
       }
 
       setSuccess(true);
@@ -101,111 +141,160 @@ export default function BetSlip({ fixtureId, home, away, league, kickoffUtc, lat
 
   if (success) {
     return (
-      <div className="bg-green-50/70 backdrop-blur-md border border-green-200/60 rounded-2xl p-6 flex flex-col items-center justify-center text-center shadow-[0_8px_30px_rgb(0,0,0,0.02)]">
-        <div className="w-16 h-16 rounded-full bg-green-100 text-green-650 flex items-center justify-center text-3xl mb-4 font-bold">
+      <div className="fixed bottom-0 left-0 right-0 z-50 bg-[#0f1416]/95 backdrop-blur-xl border-t border-emerald-500/35 p-7 pb-12 rounded-t-3xl flex flex-col items-center justify-center text-center shadow-[0_-12px_45px_rgba(0,0,0,0.8)] relative overflow-hidden animate-slide-up select-none">
+        <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div className="w-14 h-14 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-2xl mb-4 font-black border border-emerald-500/30 shadow-[0_0_20px_rgba(16,185,129,0.3)]">
           ✓
         </div>
-        <h3 className="text-xl font-black text-slate-900 mb-2">下注成功!</h3>
-        <p className="text-slate-500 text-sm font-medium">正在跳转至资金面板...</p>
+        <h3 className="text-sm font-black text-white uppercase tracking-widest mb-1.5 flex items-center gap-1.5">
+          <Sparkles size={14} className="text-emerald-400 animate-spin" /> Bet Confirmed!
+        </h3>
+        <p className="text-gray-500 text-[9px] uppercase tracking-[0.2em] font-extrabold">Synchronizing Portfolio...</p>
       </div>
     );
   }
 
   return (
-    <div className="bg-white/75 backdrop-blur-md border border-slate-200/50 rounded-2xl p-6 flex flex-col gap-6 shadow-[0_8px_30px_rgb(0,0,0,0.02)]">
-      <div>
-        <h3 className="text-lg font-black text-slate-900 mb-1">Interactive Bet Slip</h3>
-        <p className="text-sm text-slate-500 font-medium">Paper Trading Simulator</p>
+    <div 
+      className={`fixed bottom-0 left-0 right-0 z-50 bg-[#0f1416]/95 backdrop-blur-xl border-t border-[#202b30]/85 p-5 pb-8 rounded-t-3xl shadow-[0_-12px_36px_rgba(0,0,0,0.7)] transition-all duration-300 ease-out select-none ${
+        hasBet ? "translate-y-0" : "translate-y-[calc(100%-52px)]"
+      }`}
+    >
+      {/* Drawer Drag Handle */}
+      <div className="flex flex-col items-center justify-center pb-4 -mt-1 cursor-pointer">
+        <div className="w-9.5 h-1 bg-[#202b30] rounded-full mb-1.5"></div>
+        <span className="text-[9px] font-black text-gray-500 uppercase tracking-[0.2em] flex items-center gap-1.5">
+          QUANT BETSLIP {hasBet ? "(1 ACTIVE TRADE)" : "(EMPTY)"}
+        </span>
       </div>
 
-      <div className="grid grid-cols-3 gap-2">
-        <button
-          onClick={() => {
-            setSelection("H");
-            setCustomSelection(null);
-          }}
-          className={`flex flex-col items-center justify-center p-3 rounded-xl border-2 transition-all ${
-            selection === "H" ? "border-[#e04039] bg-[#e04039]/5 text-[#e04039]" : "border-slate-200 bg-slate-50/50 hover:border-slate-350 text-slate-700"
-          }`}
-        >
-          <span className="text-xs text-slate-400 mb-1 truncate w-full text-center font-bold">主胜 {home}</span>
-          <span className="font-extrabold text-lg">{latestOdds.home ? latestOdds.home.toFixed(2) : "-"}</span>
-        </button>
-        <button
-          onClick={() => {
-            setSelection("D");
-            setCustomSelection(null);
-          }}
-          className={`flex flex-col items-center justify-center p-3 rounded-xl border-2 transition-all ${
-            selection === "D" ? "border-[#e04039] bg-[#e04039]/5 text-[#e04039]" : "border-slate-200 bg-slate-50/50 hover:border-slate-350 text-slate-700"
-          }`}
-        >
-          <span className="text-xs text-slate-400 mb-1 font-bold">平局 Draw</span>
-          <span className="font-extrabold text-lg">{latestOdds.draw ? latestOdds.draw.toFixed(2) : "-"}</span>
-        </button>
-        <button
-          onClick={() => {
-            setSelection("A");
-            setCustomSelection(null);
-          }}
-          className={`flex flex-col items-center justify-center p-3 rounded-xl border-2 transition-all ${
-            selection === "A" ? "border-[#e04039] bg-[#e04039]/5 text-[#e04039]" : "border-slate-200 bg-slate-50/50 hover:border-slate-350 text-slate-700"
-          }`}
-        >
-          <span className="text-xs text-slate-400 mb-1 truncate w-full text-center font-bold">客胜 {away}</span>
-          <span className="font-extrabold text-lg">{latestOdds.away ? latestOdds.away.toFixed(2) : "-"}</span>
-        </button>
-      </div>
+      <div className="flex flex-col gap-4">
+        {/* Selection Details Card */}
+        {hasBet ? (
+          customSelection ? (
+            <div className="bg-[#161e22] border border-[#202b30] rounded-2xl p-4 flex flex-col gap-2 relative overflow-hidden">
+              <div className="flex justify-between items-center text-[9px] font-black text-gray-500 uppercase tracking-widest">
+                <span>{customSelection.marketName}</span>
+                <span className="text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20 text-[8px]">
+                  Custom Market
+                </span>
+              </div>
+              <div className="flex justify-between items-end mt-1 border-b border-[#202b30]/50 pb-2">
+                <span className="font-bold text-white text-xs">{customSelection.selectionName}</span>
+                <span className="font-black text-emerald-400 text-lg">{customSelection.odds.toFixed(2)}</span>
+              </div>
+              <p className="text-[7.5px] text-gray-500 uppercase font-black tracking-widest mt-1">
+                ✓ Auto-settled paper trade simulation
+              </p>
+            </div>
+          ) : (
+            <div className="bg-[#161e22] border border-[#202b30] rounded-2xl p-4 flex flex-col gap-2 relative overflow-hidden">
+              <div className="flex justify-between items-center text-[9px] font-black text-gray-500 uppercase tracking-widest">
+                <span>Match Winner (1X2)</span>
+                <span className="text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20 text-[8px]">
+                  Model Popular
+                </span>
+              </div>
+              <div className="flex justify-between items-end mt-1 border-b border-[#202b30]/50 pb-2">
+                <span className="font-bold text-white text-xs">
+                  {selection === "H" ? `${home} Win` : selection === "D" ? "Draw" : `${away} Win`}
+                </span>
+                <span className="font-black text-emerald-400 text-lg">{oddsValue.toFixed(2)}</span>
+              </div>
+              <p className="text-[7.5px] text-gray-500 uppercase font-black tracking-widest mt-1">
+                ✓ Auto-settled paper trade simulation
+              </p>
+            </div>
+          )
+        ) : (
+          <div className="py-2 text-center text-[9px] text-gray-600 uppercase font-black tracking-widest">
+            Please pick an odds button to slip
+          </div>
+        )}
 
-      {customSelection && (
-        <div className="bg-[#e04039]/5 border border-[#e04039]/15 rounded-xl p-4 flex flex-col gap-2">
-          <div className="flex justify-between items-center text-xs">
-            <span className="text-slate-500 font-bold">{customSelection.marketName}</span>
-            <span className="bg-[#e04039]/10 text-[#e04039] text-[10px] font-extrabold px-2 py-0.5 rounded-full">
-              模拟交易
+        {/* 🛡️ 90+ Fergie Time Insurance Card */}
+        {hasBet && (
+          <div className={`p-3.5 rounded-2xl border transition-all duration-300 flex items-center justify-between ${
+            useInsurance 
+              ? 'border-[#c5a059]/40 bg-[#c5a059]/5 text-white' 
+              : 'border-[#202b30] bg-[#161e22] text-gray-400'
+          }`}>
+            <div className="flex items-center gap-3">
+              <div className={`w-9 h-9 rounded-xl flex items-center justify-center transition-all ${
+                useInsurance ? 'bg-gold-glow text-[#070a0b]' : 'bg-[#0f1416] text-gray-500'
+              }`}>
+                <Shield size={15} className={useInsurance ? "animate-pulse" : ""} />
+              </div>
+              <div className="flex flex-col">
+                <span className="text-[10px] font-black uppercase tracking-wider text-white">90+ Time Insurance</span>
+                <span className="text-[7.5px] text-gray-500 uppercase tracking-widest mt-0.5">Protect against 90+ min heartbreaks</span>
+              </div>
+            </div>
+            
+            <button 
+              type="button"
+              onClick={() => setUseInsurance(!useInsurance)}
+              className={`w-9.5 h-5 rounded-full p-0.5 transition-colors duration-300 relative ${
+                useInsurance ? 'bg-[#c5a059]' : 'bg-gray-700'
+              }`}
+            >
+              <div className={`w-4 h-4 rounded-full bg-white transition-transform duration-300 ${
+                useInsurance ? 'translate-x-4.5' : 'translate-x-0'
+              }`}></div>
+            </button>
+          </div>
+        )}
+
+        {/* Stake Input Area */}
+        <div className="flex flex-col gap-2 mt-1">
+          <div className="flex justify-between items-center">
+            <span className="text-[9px] font-black text-gray-500 uppercase tracking-widest">Virtual Stake</span>
+            <span className="text-[9px] font-black text-gray-400 uppercase tracking-wider">
+              Avail Bal: {balance.toFixed(0)} RU
             </span>
           </div>
-          <div className="flex justify-between items-end mt-1">
-            <span className="font-extrabold text-slate-800 text-sm">{customSelection.selectionName}</span>
-            <span className="font-extrabold text-[#e04039] text-base">{customSelection.odds.toFixed(2)}</span>
+          
+          <div className="relative">
+            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 font-black text-xs uppercase tracking-wider">RU</span>
+            <input
+              type="number"
+              value={stake}
+              onChange={(e) => setStake(Math.max(1, Number(e.target.value)))}
+              disabled={!hasBet}
+              className="w-full pl-12 pr-4 py-3 rounded-2xl border border-[#202b30] bg-[#070a0b] text-right font-black text-white focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 disabled:opacity-30 text-sm transition-all"
+              min={1}
+            />
           </div>
-          <p className="text-[10px] text-green-600 font-semibold mt-1">
-            ✓ 模拟结算引擎已适配该玩法的自动结算规则。
-          </p>
+          
+          <div className="flex justify-between text-xs mt-1.5 items-center bg-[#161e22]/50 p-3.5 rounded-2xl border border-[#202b30]/60">
+            <div className="flex flex-col">
+              <span className="text-gray-500 font-black text-[9px] tracking-widest uppercase">Est. Returns:</span>
+              {useInsurance && (
+                <span className="text-[7.5px] font-bold text-[#c5a059] uppercase tracking-wider mt-0.5">
+                  Premium: {insuranceFee} RU
+                </span>
+              )}
+            </div>
+            <span className="font-black text-emerald-400 text-base">
+              {hasBet ? potentialPayout.toFixed(2) : "0.00"} <span className="text-xs text-gray-500 font-bold">RU</span>
+            </span>
+          </div>
         </div>
-      )}
 
-      <div className="flex flex-col gap-2">
-        <label className="text-sm font-semibold text-slate-600">虚拟本金 (RU)</label>
-        <div className="relative">
-          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-450 font-bold text-xs">RU</span>
-          <input
-            type="number"
-            value={stake}
-            onChange={(e) => setStake(Number(e.target.value))}
-            className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 bg-slate-50/50 text-right font-black focus:outline-none focus:border-[#e04039] focus:ring-1 focus:ring-[#e04039] text-slate-800 transition-all"
-            min={1}
-          />
-        </div>
-        <div className="flex justify-between text-sm mt-2">
-          <span className="text-slate-500 font-semibold">潜在回报:</span>
-          <span className="font-extrabold text-[#e04039]">{selection || customSelection ? potentialPayout.toFixed(2) : "0.00"}</span>
-        </div>
+        {error && (
+          <div className="p-3.5 bg-rose-950/20 text-rose-400 rounded-xl text-xs border border-rose-900/40 font-bold select-text">
+            ⚠️ {error}
+          </div>
+        )}
+
+        <button
+          onClick={handleSubmit}
+          disabled={!hasBet || isSubmitting}
+          className="w-full py-4 text-xs mt-1 bg-emerald-500 hover:bg-emerald-400 text-[#070a0b] transition-all duration-300 font-black uppercase tracking-widest rounded-2xl shadow-[0_0_15px_rgba(16,185,129,0.35)] disabled:opacity-40 disabled:cursor-not-allowed disabled:shadow-none"
+        >
+          {isSubmitting ? "Processing..." : hasBet ? "Confirm Trade" : "Select Odds First"}
+        </button>
       </div>
-
-      {error && (
-        <div className="p-3 bg-red-50 text-red-650 rounded-xl text-sm border border-red-100 font-semibold">
-          ⚠️ {error}
-        </div>
-      )}
-
-      <button
-        onClick={handleSubmit}
-        disabled={(!selection && !customSelection) || isSubmitting}
-        className="w-full py-4 text-base mt-2 bg-[#e04039] hover:bg-slate-900 text-white transition-colors font-bold rounded-xl shadow-sm shadow-[#e04039]/20 disabled:opacity-50 disabled:cursor-not-allowed"
-      >
-        {isSubmitting ? "处理中..." : (!selection && !customSelection) ? "请选择赛果" : "确认虚拟下注"}
-      </button>
     </div>
   );
 }
