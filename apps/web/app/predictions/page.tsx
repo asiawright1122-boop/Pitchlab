@@ -2,6 +2,8 @@ import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import TeamFlag from "@/components/TeamFlag";
 
+export const dynamic = "force-dynamic";
+
 export default async function PredictionsPage() {
   // Fetch real trades from database
   const trades = await prisma.paperTrade.findMany({

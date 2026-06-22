@@ -1,6 +1,8 @@
 import { prisma } from "@/lib/prisma";
 import { DashboardClient } from "@/components/DashboardClient";
 
+export const dynamic = "force-dynamic";
+
 export default async function TmaAppPage() {
   const fixtures = await prisma.fixture.findMany({
     where: { status: "scheduled" },
