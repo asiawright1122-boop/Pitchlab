@@ -4,49 +4,49 @@
 
 @layer base {
   :root {
-    --background: #070a0b; /* 更深邃的炭黑 */
-    --foreground: #f3f4f6; /* 清晰高对比度文字 */
+    --background: #f2f2f7; /* iOS System Background Secondary */
+    --foreground: #1c1c1e; /* iOS System Label */
     
-    /* 祖母绿 (Emerald) 核心配色 */
-    --emerald-primary: #10b981;
-    --emerald-dark: #065f46;
-    --emerald-light: #34d399;
-    --emerald-glow: rgba(16, 185, 129, 0.25);
+    /* Apple / iOS 经典翠绿与核心色彩 */
+    --emerald-primary: #34c759; /* iOS green */
+    --emerald-dark: #248a3d;
+    --emerald-light: #30d158;
+    --emerald-glow: rgba(52, 199, 89, 0.08);
     
-    /* 极致磨砂与石墨面板 */
-    --panel-bg: #0f1416;
-    --panel-border: #202b30;
-    --panel-hover: #161e22;
+    /* iOS 干净浅色面板 */
+    --panel-bg: #ffffff;
+    --panel-border: #e5e5ea; /* iOS separator line */
+    --panel-hover: #f2f2f7;
   }
 
   body {
     background-color: var(--background);
     color: var(--foreground);
-    font-family: "Outfit", "Inter", "Noto Sans SC", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Icons", "Helvetica Neue", Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
-    /* 顶层向下渐变的隐约绿意 */
-    background-image: radial-gradient(circle at 50% 0%, #0d261a 0%, #070a0b 70%);
+    /* 苹果风格淡雅渐变层叠 */
+    background-image: radial-gradient(circle at 50% 0%, #e2f5e8 0%, #f2f2f7 65%);
     background-attachment: fixed;
     min-height: 100vh;
   }
 }
 
 @layer utilities {
-  /* 高端绿茵底纹：带有朦胧斜线和网格 */
+  /* 苹果浅色绿茵底纹 */
   .bg-pitch {
     background-image: 
-      linear-gradient(180deg, rgba(7, 10, 11, 0.96) 0%, rgba(7, 10, 11, 0.99) 100%),
-      url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h80v80H0z' fill='none'/%3E%3Cpath d='M0 40h80M40 0v80M20 40a20 20 0 0 0 40 0M30 40a10 10 0 0 1 20 0' stroke='rgba(16, 185, 129, 0.04)' stroke-width='1' fill='none'/%3E%3C/svg%3E");
+      linear-gradient(180deg, rgba(242, 242, 247, 0.95) 0%, rgba(255, 255, 255, 0.98) 100%),
+      url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h80v80H0z' fill='none'/%3E%3Cpath d='M0 40h80M40 0v80M20 40a20 20 0 0 0 40 0M30 40a10 10 0 0 1 20 0' stroke='rgba(52, 199, 89, 0.03)' stroke-width='1' fill='none'/%3E%3C/svg%3E");
     background-size: cover, 160px 160px;
     background-position: center, center;
   }
   
-  /* 比赛详情页顶部的绿茵场高光质感 */
+  /* 详情页苹果浅绿色 3D Isometric 沙盘渐变 */
   .bg-pitch-green {
     background-image: 
-      linear-gradient(180deg, rgba(7, 10, 11, 0.2) 0%, #070a0b 100%),
-      radial-gradient(circle at 50% 20%, rgba(16, 185, 129, 0.25) 0%, transparent 60%),
-      url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 60h120M60 0v120M30 60a30 30 0 0 0 60 0' stroke='rgba(255,255,255,0.035)' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+      linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, #f2f2f7 100%),
+      radial-gradient(circle at 50% 20%, rgba(52, 199, 89, 0.12) 0%, transparent 60%),
+      url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 60h120M60 0v120M30 60a30 30 0 0 0 60 0' stroke='rgba(0,0,0,0.015)' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
     background-size: 100% 100%, 100% 100%, 240px 240px;
     background-position: top center;
   }
@@ -59,19 +59,19 @@
     background: transparent;
   }
   .custom-scrollbar::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(0, 0, 0, 0.05);
     border-radius: 99px;
   }
   .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: rgba(16, 185, 129, 0.3);
+    background: rgba(52, 199, 89, 0.2);
   }
 
-  /* 金融量化网噪背景 */
+  /* 苹果轻量金融量化网格 */
   .bg-quant-mesh {
     background-image: 
-      radial-gradient(circle at 50% 30%, rgba(16, 185, 129, 0.08) 0%, transparent 60%),
-      linear-gradient(rgba(32, 43, 48, 0.15) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(32, 43, 48, 0.15) 1px, transparent 1px);
+      radial-gradient(circle at 50% 30%, rgba(52, 199, 89, 0.04) 0%, transparent 60%),
+      linear-gradient(rgba(0, 0, 0, 0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
     background-size: 100% 100%, 20px 20px, 20px 20px;
     background-position: center;
   }
@@ -85,37 +85,36 @@
     transform: rotateX(55deg) rotateZ(-35deg) translateZ(0);
     transform-style: preserve-3d;
     box-shadow: 
-      -15px 15px 40px rgba(0, 0, 0, 0.8),
-      0 0 120px rgba(16, 185, 129, 0.08) inset;
+      -10px 10px 30px rgba(0, 0, 0, 0.06),
+      0 0 60px rgba(52, 199, 89, 0.04) inset;
   }
 
   /* 3D 浮动战术卡片 */
   .isometric-float {
     transform: translateZ(28px) rotateZ(35deg) rotateX(-55deg);
     transform-style: preserve-3d;
-    filter: drop-shadow(0 12px 12px rgba(0, 0, 0, 0.7));
+    filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.08));
   }
 
-  /* Edge 荧光发光效果 */
+  /* Edge 荧光发光效果 (苹果版) */
   .border-edge-glow {
-    box-shadow: 0 0 15px rgba(16, 185, 129, 0.3);
-    border-color: rgba(16, 185, 129, 0.6) !important;
+    box-shadow: 0 0 12px rgba(52, 199, 89, 0.15);
+    border-color: rgba(52, 199, 89, 0.4) !important;
   }
 
-  /* 保险金盾金色流光 */
+  /* 保险金盾金色流光 (苹果版) */
   .bg-gold-glow {
-    background: linear-gradient(135deg, #c5a059 0%, #f3e5ab 50%, #9e782f 100%);
-    box-shadow: 0 0 15px rgba(243, 229, 171, 0.3);
+    background: linear-gradient(135deg, #ffe082 0%, #fff9c4 50%, #ffd54f 100%);
+    box-shadow: 0 0 12px rgba(255, 213, 79, 0.25);
   }
 }
 
 @layer components {
-  /* 磨砂玻璃感的极简面板 */
+  /* 苹果高斯毛玻璃卡片 */
   .card-matte {
-    @apply bg-[#0f1416]/80 backdrop-blur-xl border border-[#202b30] rounded-2xl shadow-[0_4px_24px_rgba(0,0,0,0.4)] overflow-hidden transition-all duration-300 hover:border-[#10b981]/20 hover:bg-[#131b1e]/90;
+    @apply bg-white border border-[#e5e5ea] rounded-3xl shadow-[0_8px_32px_rgba(0,0,0,0.03)] overflow-hidden transition-all duration-300 hover:shadow-[0_8px_32px_rgba(0,0,0,0.06)] hover:bg-gray-50/50;
   }
   .input-matte {
-    @apply bg-[#070a0b] border border-[#202b30] text-white rounded-xl px-4 py-2.5 focus:outline-none focus:border-[#10b981] focus:ring-1 focus:ring-[#10b981] transition-all;
+    @apply bg-gray-50 border border-gray-200 text-gray-900 rounded-2xl px-4 py-3 focus:outline-none focus:bg-white focus:border-[#34c759] focus:ring-1 focus:ring-[#34c759] transition-all;
   }
 }
-

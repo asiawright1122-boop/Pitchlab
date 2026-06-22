@@ -7,7 +7,7 @@ import BettingMarkets from "./BettingMarkets";
 import LineupsField from "./LineupsField";
 import MatchEventsTimeline from "./MatchEventsTimeline";
 import TmaPanel from "./TmaPanel";
-import { Activity, Flag, BarChart2, MessageSquare, ShieldAlert, BarChart, Shield } from "lucide-react";
+import { Activity, Flag, BarChart2, MessageSquare, ShieldAlert, Clock, Trophy } from "lucide-react";
 import { MatteCard } from "@/components/ui/MatteCard";
 
 interface MatchDetailClientProps {
@@ -92,7 +92,7 @@ export default function MatchDetailClient({
     };
   }, [liveDetails]);
 
-  // 📈 实时攻防时空波形图数据合成 (攻防分时图，类似股市 K 线)
+  // 📈 实时攻防时空波形图数据合成
   const momentumPoints = useMemo(() => {
     const points: number[] = [];
     const events = liveDetails.events || [];
@@ -106,8 +106,8 @@ export default function MatchDetailClient({
         let weight = 0;
         if (evt.type === "Goal") weight = 40;
         else if (evt.detail?.includes("Card")) weight = evt.detail?.includes("Red") ? -25 : -5;
-        else if (evt.type === "subst") weight = 2; // 调整
-        else weight = 8; // 射门/进攻等
+        else if (evt.type === "subst") weight = 2;
+        else weight = 8;
         
         const isHome = evt.team?.name === fixture.home;
         buckets[bucketIdx] += isHome ? weight : -weight;
@@ -149,72 +149,72 @@ export default function MatchDetailClient({
   }, [momentumPoints]);
 
   return (
-    <div className="flex flex-col flex-1 pb-24 z-10">
+    <div className="flex flex-col flex-1 pb-24 z-10 text-[#1c1c1e] bg-[#f2f2f7]">
       
       {/* 🏟️ 3D Isometric 战术球场沙盘 */}
-      <div className="bg-pitch-green border-b border-[#202b30] pt-6 pb-6 px-4 flex flex-col gap-6 items-center shadow-[0_10px_30px_rgba(0,0,0,0.5)]">
+      <div className="bg-pitch-green border-b border-gray-200/50 pt-6 pb-6 px-4 flex flex-col gap-6 items-center shadow-[0_4px_16px_rgba(0,0,0,0.02)]">
         
         {/* Isometric Sandbox Container */}
         <div className="w-full max-w-[340px] h-[190px] isometric-perspective flex items-center justify-center relative overflow-hidden select-none">
           {/* Isometric Grass Field Grid */}
-          <div className="w-[380px] h-[260px] bg-[#10b981]/5 border-2 border-emerald-500/20 rounded-3xl isometric-pitch flex flex-col relative overflow-hidden">
+          <div className="w-[380px] h-[260px] bg-[#34c759]/5 border-2 border-[#34c759]/20 rounded-3xl isometric-pitch flex flex-col relative overflow-hidden">
             <div className="absolute inset-0 bg-pitch-green opacity-40"></div>
             
             {/* Field Lines */}
-            <div className="absolute top-1/2 left-0 w-full h-[1.5px] bg-white/10"></div>
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 rounded-full border border-white/10"></div>
+            <div className="absolute top-1/2 left-0 w-full h-[1.5px] bg-white/40"></div>
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 rounded-full border border-white/40"></div>
             
             {/* Penalty Areas */}
-            <div className="absolute left-0 top-[22%] w-[18%] h-[56%] border-r border-y border-white/10"></div>
-            <div className="absolute right-0 top-[22%] w-[18%] h-[56%] border-l border-y border-white/10"></div>
+            <div className="absolute left-0 top-[22%] w-[18%] h-[56%] border-r border-y border-white/40"></div>
+            <div className="absolute right-0 top-[22%] w-[18%] h-[56%] border-l border-y border-white/40"></div>
           </div>
 
           {/* Isometric Floating Tactical Cards */}
           {/* Home Logo */}
           <div className="absolute left-[12%] top-[25%] isometric-float flex flex-col items-center gap-1.5 z-10">
-            <div className="w-14 h-14 rounded-2xl bg-[#0f1416]/95 border border-emerald-500/40 p-2.5 shadow-[0_12px_24px_rgba(0,0,0,0.8)] flex items-center justify-center transition-transform hover:scale-105">
+            <div className="w-14 h-14 rounded-2xl bg-white border border-gray-150 p-2.5 shadow-[0_8px_20px_rgba(0,0,0,0.06)] flex items-center justify-center transition-transform hover:scale-105">
               <TeamFlag teamName={fixture.home} className="w-full h-full object-contain" />
             </div>
-            <span className="text-[9px] font-black text-emerald-400 bg-[#070a0b]/90 border border-emerald-500/25 px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+            <span className="text-[9px] font-black text-[#248a3d] bg-white/95 border border-[#34c759]/30 px-2.5 py-0.5 rounded-full uppercase tracking-wider shadow-sm max-w-[85px] truncate text-center block">
               {fixture.home}
             </span>
           </div>
 
           {/* Away Logo */}
           <div className="absolute right-[12%] top-[25%] isometric-float flex flex-col items-center gap-1.5 z-10">
-            <div className="w-14 h-14 rounded-2xl bg-[#0f1416]/95 border border-[#202b30] p-2.5 shadow-[0_12px_24px_rgba(0,0,0,0.8)] flex items-center justify-center transition-transform hover:scale-105">
+            <div className="w-14 h-14 rounded-2xl bg-white border border-gray-150 p-2.5 shadow-[0_8px_20px_rgba(0,0,0,0.06)] flex items-center justify-center transition-transform hover:scale-105">
               <TeamFlag teamName={fixture.away} className="w-full h-full object-contain" />
             </div>
-            <span className="text-[9px] font-black text-gray-300 bg-[#070a0b]/90 border border-[#202b30] px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+            <span className="text-[9px] font-black text-gray-700 bg-white/95 border border-gray-200 px-2.5 py-0.5 rounded-full uppercase tracking-wider shadow-sm max-w-[85px] truncate text-center block">
               {fixture.away}
             </span>
           </div>
 
           {/* Floating Score overlay */}
           <div className="absolute top-[42%] text-center z-20 select-none">
-            <div className="text-4.5xl font-black text-white tracking-tighter drop-shadow-[0_4px_20px_rgba(0,0,0,0.95)] flex items-center gap-4.5 font-sans">
+            <div className="text-4xl font-black text-gray-800 tracking-tighter drop-shadow-[0_2px_8px_rgba(0,0,0,0.1)] flex items-center gap-4.5 font-sans">
               <span>{fixture.homeGoals ?? 0}</span>
-              <span className="text-emerald-500 animate-pulse text-3xl font-light">:</span>
+              <span className="text-[#34c759] animate-pulse text-2.5xl font-light">:</span>
               <span>{fixture.awayGoals ?? 0}</span>
             </div>
-            <div className="mt-2.5 px-3 py-0.5 bg-[#070a0b]/90 border border-emerald-500/20 text-emerald-400 rounded-full text-[8px] font-black uppercase tracking-[0.2em] inline-block shadow-[0_0_8px_rgba(16,185,129,0.15)]">
+            <div className="mt-2.5 px-3 py-0.5 bg-white/95 border border-[#34c759]/30 text-[#248a3d] rounded-full text-[8px] font-black uppercase tracking-[0.2em] inline-block shadow-sm">
               {fixture.status === "finished" ? "FT MATCH" : "LIVE QUANT"}
             </div>
           </div>
         </div>
 
-        {/* 📈 实时攻防时空分时图 (Attack Momentum Wave) */}
-        <div className="w-full max-w-[340px] bg-[#070a0b]/75 border border-[#202b30] rounded-2xl p-4.5 flex flex-col gap-2.5 relative select-none">
+        {/* 📈 实时攻防波形图 */}
+        <div className="w-full max-w-[340px] bg-white border border-gray-200 rounded-3xl p-4.5 flex flex-col gap-2.5 relative select-none shadow-[0_4px_16px_rgba(0,0,0,0.02)]">
           <div className="flex justify-between items-center px-1">
-            <span className="text-[9px] font-black text-gray-500 uppercase tracking-widest">Attack Momentum</span>
-            <span className="text-[8px] font-black text-emerald-400 bg-emerald-500/10 px-1.5 py-0.2 border border-emerald-500/20 rounded uppercase tracking-widest">
+            <span className="text-[9px] font-black text-gray-400 uppercase tracking-widest">Attack Momentum</span>
+            <span className="text-[8px] font-black text-[#248a3d] bg-[#eafaf1] px-1.5 py-0.5 border border-[#d5f5e3] rounded uppercase tracking-widest">
               Live Wave
             </span>
           </div>
           
           <div className="w-full h-[60px] relative">
             {/* Zero midline */}
-            <div className="absolute top-1/2 left-0 w-full h-[1px] border-t border-dashed border-gray-700/60 z-0"></div>
+            <div className="absolute top-1/2 left-0 w-full h-[1px] border-t border-dashed border-gray-200 z-0"></div>
             
             <svg className="w-full h-full relative z-10" viewBox="0 0 340 60" preserveAspectRatio="none">
               <path 
@@ -226,15 +226,15 @@ export default function MatchDetailClient({
               />
               <defs>
                 <linearGradient id="waveGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stopColor="#10b981" />
-                  <stop offset="50%" stopColor="#34d399" />
-                  <stop offset="100%" stopColor="#059669" />
+                  <stop offset="0%" stopColor="#007aff" />
+                  <stop offset="50%" stopColor="#34c759" />
+                  <stop offset="100%" stopColor="#30d158" />
                 </linearGradient>
               </defs>
             </svg>
           </div>
 
-          <div className="flex justify-between text-[7px] font-black text-gray-600 uppercase tracking-widest px-0.5">
+          <div className="flex justify-between text-[7px] font-black text-gray-400 uppercase tracking-widest px-0.5">
             <span>{fixture.home.substring(0, 3)} Dominance</span>
             <span>{fixture.away.substring(0, 3)} Dominance</span>
           </div>
@@ -243,14 +243,14 @@ export default function MatchDetailClient({
       </div>
 
       {/* 📱 Interactive Premium Tab Menu */}
-      <div className="px-4 py-3 bg-[#070a0b]/80 border-b border-[#202b30] sticky top-[57px] z-20 backdrop-blur-md">
-        <div className="flex justify-center items-center gap-1 bg-[#0f1416] p-1 rounded-2xl border border-[#202b30] overflow-x-auto custom-scrollbar">
+      <div className="px-4 py-3 bg-[#f2f2f7]/80 border-b border-gray-200/50 sticky top-[57px] z-20 backdrop-blur-md">
+        <div className="flex justify-center items-center gap-1 bg-white p-1 rounded-2xl border border-gray-200/50 overflow-x-auto custom-scrollbar">
           <button 
             onClick={() => setActiveTab("markets")}
-            className={`flex-1 min-w-[70px] flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-wider transition-all duration-300 ${
+            className={`flex-1 min-w-[70px] flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-[9.5px] font-black uppercase tracking-wider transition-all duration-300 ${
               activeTab === "markets" 
-                ? "bg-[#202b30] text-white shadow-sm border border-[#2c3c43]" 
-                : "text-gray-500 hover:text-gray-300"
+                ? "bg-gray-100 text-gray-800 font-extrabold shadow-sm" 
+                : "text-gray-400 hover:text-gray-600"
             }`}
           >
             <BarChart2 size={11} /> Markets
@@ -258,10 +258,10 @@ export default function MatchDetailClient({
           
           <button 
             onClick={() => setActiveTab("stats")}
-            className={`flex-1 min-w-[70px] flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-wider transition-all duration-300 ${
+            className={`flex-1 min-w-[70px] flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-[9.5px] font-black uppercase tracking-wider transition-all duration-300 ${
               activeTab === "stats" 
-                ? "bg-[#202b30] text-white shadow-sm border border-[#2c3c43]" 
-                : "text-gray-500 hover:text-gray-300"
+                ? "bg-gray-100 text-gray-800 font-extrabold shadow-sm" 
+                : "text-gray-400 hover:text-gray-600"
             }`}
           >
             <BarChart2 size={11} /> Stats
@@ -269,10 +269,10 @@ export default function MatchDetailClient({
           
           <button 
             onClick={() => setActiveTab("lineups")}
-            className={`flex-1 min-w-[70px] flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-wider transition-all duration-300 ${
+            className={`flex-1 min-w-[70px] flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-[9.5px] font-black uppercase tracking-wider transition-all duration-300 ${
               activeTab === "lineups" 
-                ? "bg-[#202b30] text-white shadow-sm border border-[#2c3c43]" 
-                : "text-gray-500 hover:text-gray-300"
+                ? "bg-gray-100 text-gray-800 font-extrabold shadow-sm" 
+                : "text-gray-400 hover:text-gray-600"
             }`}
           >
             <Flag size={11} /> Lineups
@@ -280,10 +280,10 @@ export default function MatchDetailClient({
           
           <button 
             onClick={() => setActiveTab("timeline")}
-            className={`flex-1 min-w-[70px] flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-wider transition-all duration-300 ${
+            className={`flex-1 min-w-[70px] flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-[9.5px] font-black uppercase tracking-wider transition-all duration-300 ${
               activeTab === "timeline" 
-                ? "bg-[#202b30] text-white shadow-sm border border-[#2c3c43]" 
-                : "text-gray-500 hover:text-gray-300"
+                ? "bg-gray-100 text-gray-800 font-extrabold shadow-sm" 
+                : "text-gray-400 hover:text-gray-600"
             }`}
           >
             <Activity size={11} /> Timeline
@@ -291,10 +291,10 @@ export default function MatchDetailClient({
           
           <button 
             onClick={() => setActiveTab("chat")}
-            className={`flex-1 min-w-[70px] flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-wider transition-all duration-300 ${
+            className={`flex-1 min-w-[70px] flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-[9.5px] font-black uppercase tracking-wider transition-all duration-300 ${
               activeTab === "chat" 
-                ? "bg-[#202b30] text-white shadow-sm border border-[#2c3c43]" 
-                : "text-gray-500 hover:text-gray-300"
+                ? "bg-gray-100 text-gray-800 font-extrabold shadow-sm" 
+                : "text-gray-400 hover:text-gray-600"
             }`}
           >
             <MessageSquare size={11} /> Chat
@@ -320,9 +320,9 @@ export default function MatchDetailClient({
 
         {activeTab === "stats" && (
           <MatteCard className="p-5 space-y-5">
-            <div className="flex items-center gap-2 mb-2 border-b border-[#202b30]/85 pb-3">
-              <span className="w-1.5 h-3.5 bg-emerald-500 rounded-full"></span>
-              <h3 className="text-[10px] font-black text-gray-300 uppercase tracking-widest">DETAILED STATS</h3>
+            <div className="flex items-center gap-2 mb-2 border-b border-gray-100 pb-3">
+              <span className="w-1.5 h-3.5 bg-[#34c759] rounded-full"></span>
+              <h3 className="text-[10px] font-black text-gray-500 uppercase tracking-widest">DETAILED STATS</h3>
             </div>
             
             {liveDetails.stats && liveDetails.stats.length >= 2 ? (
@@ -337,21 +337,21 @@ export default function MatchDetailClient({
                   
                   return (
                     <div key={s.type} className="flex flex-col gap-1.5">
-                      <div className="flex justify-between text-xs font-bold text-gray-400 px-1">
+                      <div className="flex justify-between text-xs font-bold text-gray-600 px-1">
                         <span>{homeVal}</span>
-                        <span className="text-[9px] font-black uppercase text-gray-500 tracking-wider">{s.type}</span>
+                        <span className="text-[8.5px] font-black uppercase text-gray-400 tracking-wider">{s.type}</span>
                         <span>{awayVal}</span>
                       </div>
-                      <div className="flex h-2 bg-[#070a0b] rounded-full overflow-hidden border border-[#202b30]/40">
-                        <div style={{ width: `${hPct}%` }} className="bg-emerald-500"></div>
-                        <div style={{ width: `${100 - hPct}%` }} className="bg-emerald-800"></div>
+                      <div className="flex h-2 bg-gray-100 rounded-full overflow-hidden border border-gray-200/20">
+                        <div style={{ width: `${hPct}%` }} className="bg-[#34c759]"></div>
+                        <div style={{ width: `${100 - hPct}%` }} className="bg-[#007aff]"></div>
                       </div>
                     </div>
                   );
                 })}
               </div>
             ) : (
-              <div className="py-12 text-center text-gray-500 font-bold text-xs uppercase tracking-widest">
+              <div className="py-12 text-center text-gray-400 font-bold text-xs uppercase tracking-widest">
                 No statistics records for this match.
               </div>
             )}
@@ -376,14 +376,14 @@ export default function MatchDetailClient({
 
         {activeTab === "chat" && (
           <MatteCard className="p-8 text-center flex flex-col items-center justify-center gap-4 py-16">
-            <MessageSquare size={36} className="text-emerald-500 animate-pulse" />
-            <h4 className="text-sm font-black text-white uppercase tracking-widest mt-2">
+            <MessageSquare size={36} className="text-[#34c759] animate-pulse" />
+            <h4 className="text-sm font-black text-gray-800 uppercase tracking-widest mt-2">
               PitchLab Chat Room
             </h4>
-            <p className="text-xs text-gray-500 max-w-[260px] leading-relaxed">
+            <p className="text-xs text-gray-450 max-w-[260px] leading-relaxed">
               Live discussion, supporter channels and fan rooms are coming soon! Keep tuned.
             </p>
-            <div className="mt-4 px-4 py-2 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 rounded-full text-[10px] font-black uppercase tracking-widest flex items-center gap-2 select-none">
+            <div className="mt-4 px-4 py-2 bg-[#eafaf1] border border-[#d5f5e3] text-[#248a3d] rounded-full text-[9px] font-black uppercase tracking-widest flex items-center gap-2 select-none">
               <ShieldAlert size={12} /> Telegram Mini App Integration
             </div>
           </MatteCard>

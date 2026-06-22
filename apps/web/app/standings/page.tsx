@@ -403,20 +403,20 @@ export default async function StandingsPage() {
   });
 
   return (
-    <div className="min-h-screen bg-[#070a0b] text-white pb-28 relative overflow-x-hidden select-none">
+    <div className="min-h-screen bg-[#f2f2f7] text-[#1c1c1e] pb-28 relative overflow-x-hidden select-none">
       {/* 🟢 Ambient background decorations */}
-      <div className="absolute inset-0 bg-quant-mesh opacity-15 pointer-events-none"></div>
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[350px] bg-emerald-500/5 rounded-full blur-3xl pointer-events-none"></div>
+      <div className="absolute inset-0 bg-quant-mesh opacity-5 pointer-events-none"></div>
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[350px] bg-[#34c759]/5 rounded-full blur-3xl pointer-events-none"></div>
 
       {/* Mini App Sticky Header */}
-      <header className="px-5 py-5 flex items-center justify-between sticky top-0 z-40 bg-[#070a0b]/90 backdrop-blur-md border-b border-[#202b30]">
+      <header className="px-5 py-5 flex items-center justify-between sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-gray-200/50 shadow-sm">
         <div className="flex items-center gap-3">
-          <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-[0_0_12px_#10b981] animate-pulse"></div>
-          <span className="text-[13px] font-black text-white tracking-[0.25em] uppercase">
+          <div className="w-2.5 h-2.5 rounded-full bg-[#34c759] shadow-[0_0_8px_rgba(52,199,89,0.3)] animate-pulse"></div>
+          <span className="text-[12px] font-black text-gray-900 tracking-[0.25em] uppercase">
             QUANT DATA HUB
           </span>
         </div>
-        <span className="text-[8px] font-black text-emerald-400 bg-emerald-500/10 px-2.5 py-1 border border-emerald-500/20 rounded-full tracking-widest uppercase">
+        <span className="text-[8px] font-black text-[#248a3d] bg-[#34c759]/10 px-2.5 py-1 border border-[#34c759]/20 rounded-full tracking-widest uppercase">
           Live Stats
         </span>
       </header>
@@ -427,65 +427,65 @@ export default async function StandingsPage() {
         {/* 球队积分榜 */}
         <div id="teams" className="scroll-mt-24 space-y-4">
           <div className="flex items-center gap-2 px-1">
-            <span className="w-1.5 h-4.5 bg-emerald-500 rounded-full inline-block"></span>
-            <h2 className="text-[13px] font-black text-white uppercase tracking-wider">Group Stage Standings</h2>
+            <span className="w-1.5 h-4.5 bg-[#34c759] rounded-full inline-block"></span>
+            <h2 className="text-[12px] font-black text-gray-800 uppercase tracking-wider">Group Stage Standings</h2>
           </div>
 
           {finalGroups.length === 0 ? (
-            <div className="bg-[#0a0f12]/70 backdrop-blur-md border border-[#202b30]/80 rounded-3xl p-12 text-center text-gray-500 text-xs">
+            <div className="bg-white border border-gray-200 rounded-3xl p-12 text-center text-gray-400 text-xs">
               暂无有效的分组数据
             </div>
           ) : (
             <div className="flex flex-col gap-6">
               {finalGroups.map((group) => (
-                <div key={group.id} className="bg-[#0a0f12]/70 backdrop-blur-md border border-[#202b30] rounded-3xl overflow-hidden shadow-[0_10px_35px_rgba(0,0,0,0.55)]">
-                  <div className="bg-emerald-500/5 px-5 py-3 border-b border-[#202b30] flex justify-between items-center">
-                    <h3 className="text-xs font-black text-emerald-400 uppercase tracking-wider">{group.name}</h3>
-                    <span className="text-[7.5px] font-black text-gray-500 uppercase tracking-widest">Promotion Zone</span>
+                <div key={group.id} className="bg-white border border-gray-200/80 rounded-3xl overflow-hidden shadow-[0_4px_24px_rgba(0,0,0,0.02)]">
+                  <div className="bg-[#34c759]/5 px-5 py-3 border-b border-gray-150 flex justify-between items-center">
+                    <h3 className="text-xs font-black text-[#248a3d] uppercase tracking-wider">{group.name}</h3>
+                    <span className="text-[7.5px] font-black text-gray-400 uppercase tracking-widest">Promotion Zone</span>
                   </div>
                   <div className="overflow-x-auto">
                     <table className="w-full text-left text-xs whitespace-nowrap">
-                      <thead className="bg-[#0f1416]/50 text-gray-550 border-b border-[#202b30]/50 text-[9px] font-black uppercase tracking-widest">
+                      <thead className="bg-gray-50/50 text-gray-400 border-b border-gray-150 text-[9px] font-black uppercase tracking-widest">
                         <tr>
-                          <th className="px-4 py-3 w-10 text-center text-gray-500">Pos</th>
-                          <th className="px-4 py-3 text-gray-500">Team</th>
-                          <th className="px-2 py-3 text-center text-gray-500">P</th>
-                          <th className="px-2 py-3 text-center text-gray-500">W</th>
-                          <th className="px-2 py-3 text-center text-gray-500">D</th>
-                          <th className="px-2 py-3 text-center text-gray-500">L</th>
-                          <th className="px-2 py-3 text-center text-gray-500">+/-</th>
-                          <th className="px-4 py-3 text-bold text-center text-emerald-400">Pts</th>
+                          <th className="px-4 py-3 w-10 text-center text-gray-400">Pos</th>
+                          <th className="px-4 py-3 text-gray-400">Team</th>
+                          <th className="px-2 py-3 text-center text-gray-400">P</th>
+                          <th className="px-2 py-3 text-center text-gray-400">W</th>
+                          <th className="px-2 py-3 text-center text-gray-400">D</th>
+                          <th className="px-2 py-3 text-center text-gray-400">L</th>
+                          <th className="px-2 py-3 text-center text-gray-400">+/-</th>
+                          <th className="px-4 py-3 text-bold text-center text-[#34c759]">Pts</th>
                         </tr>
                       </thead>
-                      <tbody className="divide-y divide-[#202b30]/50">
+                      <tbody className="divide-y divide-gray-100">
                         {group.teams.map((row, index) => {
                           const rank = index + 1;
                           const isTopTwo = rank <= 2;
                           return (
-                            <tr key={row.team} className="hover:bg-emerald-500/5 transition-colors">
+                            <tr key={row.team} className="hover:bg-gray-50/50 transition-colors">
                               <td className="px-4 py-2.5 text-center">
                                 <span className={`inline-flex w-4.5 h-4.5 items-center justify-center rounded-full text-[9px] font-black ${
                                   isTopTwo 
-                                    ? 'bg-emerald-500 text-[#070a0b] shadow-[0_0_8px_rgba(16,185,129,0.3)]' 
-                                    : 'bg-[#162024] text-gray-400 border border-[#202b30]/50'
+                                    ? 'bg-[#34c759] text-white shadow-[0_2px_8px_rgba(52,199,89,0.15)]' 
+                                    : 'bg-gray-100 text-gray-400 border border-gray-200'
                                 }`}>
                                   {rank}
                                 </span>
                               </td>
                               <td className="px-4 py-2.5 flex items-center gap-2">
-                                <TeamFlag teamName={row.team} className="w-5.5 h-4 rounded shadow-sm object-cover border border-[#202b30]/50" />
-                                <span className="font-extrabold text-white text-xs uppercase truncate max-w-[90px]">{row.team}</span>
+                                <TeamFlag teamName={row.team} className="w-6 h-4 rounded shadow-sm object-cover border border-gray-200" />
+                                <span className="font-extrabold text-gray-800 text-xs uppercase truncate max-w-[90px]">{row.team}</span>
                               </td>
-                              <td className="px-2 py-2.5 text-center text-gray-400 font-bold">{row.p}</td>
-                              <td className="px-2 py-2.5 text-center text-gray-500">{row.w}</td>
-                              <td className="px-2 py-2.5 text-center text-gray-500">{row.d}</td>
-                              <td className="px-2 py-2.5 text-center text-gray-500">{row.l}</td>
+                              <td className="px-2 py-2.5 text-center text-gray-500 font-bold">{row.p}</td>
+                              <td className="px-2 py-2.5 text-center text-gray-400">{row.w}</td>
+                              <td className="px-2 py-2.5 text-center text-gray-400">{row.d}</td>
+                              <td className="px-2 py-2.5 text-center text-gray-400">{row.l}</td>
                               <td className={`px-2 py-2.5 text-center font-mono text-xs font-black ${
-                                row.gd > 0 ? 'text-emerald-400' : row.gd < 0 ? 'text-rose-500' : 'text-gray-500'
+                                row.gd > 0 ? 'text-[#34c759]' : row.gd < 0 ? 'text-[#ff3b30]' : 'text-gray-400'
                               }`}>
                                 {row.gd > 0 ? `+${row.gd}` : row.gd}
                               </td>
-                              <td className="px-4 py-2.5 text-center font-black text-xs text-emerald-400">{row.pts}</td>
+                              <td className="px-4 py-2.5 text-center font-black text-xs text-[#248a3d]">{row.pts}</td>
                             </tr>
                           );
                         })}
@@ -501,32 +501,32 @@ export default async function StandingsPage() {
         {/* 射手榜 */}
         <div id="scorers" className="scroll-mt-24 space-y-4">
           <div className="flex items-center gap-2 px-1">
-            <span className="w-1.5 h-4.5 bg-emerald-500 rounded-full inline-block"></span>
-            <h2 className="text-[13px] font-black text-white uppercase tracking-wider">Top Scorers</h2>
+            <span className="w-1.5 h-4.5 bg-[#34c759] rounded-full inline-block"></span>
+            <h2 className="text-[12px] font-black text-gray-800 uppercase tracking-wider">Top Scorers</h2>
           </div>
-          <div className="bg-[#0a0f12]/70 backdrop-blur-md border border-[#202b30] rounded-3xl overflow-hidden shadow-[0_10px_35px_rgba(0,0,0,0.55)]">
+          <div className="bg-white border border-gray-200/80 rounded-3xl overflow-hidden shadow-[0_4px_24px_rgba(0,0,0,0.02)]">
             {sortedScorers.length === 0 ? (
-              <div className="p-12 text-center text-gray-500 font-semibold text-xs">暂无进球数据</div>
+              <div className="p-12 text-center text-gray-400 font-semibold text-xs">暂无进球数据</div>
             ) : (
               <table className="w-full text-left text-xs whitespace-nowrap">
-                <thead className="bg-[#0f1416]/50 text-gray-550 border-b border-[#202b30]/50 text-[9px] font-black uppercase tracking-widest">
+                <thead className="bg-gray-50/50 text-gray-400 border-b border-gray-150 text-[9px] font-black uppercase tracking-widest">
                   <tr>
-                    <th className="px-5 py-3 w-12 text-center text-gray-500">Rank</th>
-                    <th className="px-5 py-3 text-gray-500">Player</th>
-                    <th className="px-5 py-3 text-gray-500">Team</th>
-                    <th className="px-5 py-3 text-right pr-6 text-emerald-400">Goals</th>
+                    <th className="px-5 py-3 w-12 text-center text-gray-400">Rank</th>
+                    <th className="px-5 py-3 text-gray-400">Player</th>
+                    <th className="px-5 py-3 text-gray-400">Team</th>
+                    <th className="px-5 py-3 text-right pr-6 text-[#34c759]">Goals</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#202b30]/50">
+                <tbody className="divide-y divide-gray-100">
                   {sortedScorers.map((row, idx) => (
-                    <tr key={row.name} className="hover:bg-emerald-500/5 transition-colors">
+                    <tr key={row.name} className="hover:bg-gray-50/50 transition-colors">
                       <td className="px-5 py-3 text-center text-gray-400 font-black">{idx + 1}</td>
-                      <td className="px-5 py-3 font-extrabold text-white text-xs uppercase truncate max-w-[120px]">{row.name}</td>
+                      <td className="px-5 py-3 font-extrabold text-gray-800 text-xs uppercase truncate max-w-[120px]">{row.name}</td>
                       <td className="px-5 py-3 flex items-center gap-2.5">
-                        <TeamFlag teamName={row.team} className="w-5.5 h-4 rounded shadow-sm object-cover border border-[#202b30]/30" />
-                        <span className="text-gray-400 font-extrabold text-[10px] uppercase truncate max-w-[80px]">{row.team}</span>
+                        <TeamFlag teamName={row.team} className="w-6 h-4 rounded shadow-sm object-cover border border-gray-200" />
+                        <span className="text-gray-500 font-extrabold text-[10px] uppercase truncate max-w-[80px]">{row.team}</span>
                       </td>
-                      <td className="px-5 py-3 text-right pr-6 font-black text-sm text-emerald-400">{row.goals}</td>
+                      <td className="px-5 py-3 text-right pr-6 font-black text-sm text-[#248a3d]">{row.goals}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -538,32 +538,32 @@ export default async function StandingsPage() {
         {/* 助攻榜 */}
         <div id="assists" className="scroll-mt-24 space-y-4">
           <div className="flex items-center gap-2 px-1">
-            <span className="w-1.5 h-4.5 bg-emerald-500 rounded-full inline-block"></span>
-            <h2 className="text-[13px] font-black text-white uppercase tracking-wider">Top Assists</h2>
+            <span className="w-1.5 h-4.5 bg-[#34c759] rounded-full inline-block"></span>
+            <h2 className="text-[12px] font-black text-gray-800 uppercase tracking-wider">Top Assists</h2>
           </div>
-          <div className="bg-[#0a0f12]/70 backdrop-blur-md border border-[#202b30] rounded-3xl overflow-hidden shadow-[0_10px_35px_rgba(0,0,0,0.55)]">
+          <div className="bg-white border border-gray-200/80 rounded-3xl overflow-hidden shadow-[0_4px_24px_rgba(0,0,0,0.02)]">
             {sortedAssisters.length === 0 ? (
-              <div className="p-12 text-center text-gray-500 font-semibold text-xs">暂无助攻数据</div>
+              <div className="p-12 text-center text-gray-400 font-semibold text-xs">暂无助攻数据</div>
             ) : (
               <table className="w-full text-left text-xs whitespace-nowrap">
-                <thead className="bg-[#0f1416]/50 text-gray-550 border-b border-[#202b30]/50 text-[9px] font-black uppercase tracking-widest">
+                <thead className="bg-gray-50/50 text-gray-400 border-b border-gray-150 text-[9px] font-black uppercase tracking-widest">
                   <tr>
-                    <th className="px-5 py-3 w-12 text-center text-gray-500">Rank</th>
-                    <th className="px-5 py-3 text-gray-500">Player</th>
-                    <th className="px-5 py-3 text-gray-500">Team</th>
-                    <th className="px-5 py-3 text-right pr-6 text-emerald-500">Assists</th>
+                    <th className="px-5 py-3 w-12 text-center text-gray-400">Rank</th>
+                    <th className="px-5 py-3 text-gray-400">Player</th>
+                    <th className="px-5 py-3 text-gray-400">Team</th>
+                    <th className="px-5 py-3 text-right pr-6 text-[#007aff]">Assists</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#202b30]/50">
+                <tbody className="divide-y divide-gray-100">
                   {sortedAssisters.map((row, idx) => (
-                    <tr key={row.name} className="hover:bg-emerald-500/5 transition-colors">
+                    <tr key={row.name} className="hover:bg-gray-50/50 transition-colors">
                       <td className="px-5 py-3 text-center text-gray-400 font-black">{idx + 1}</td>
-                      <td className="px-5 py-3 font-extrabold text-white text-xs uppercase truncate max-w-[120px]">{row.name}</td>
+                      <td className="px-5 py-3 font-extrabold text-gray-800 text-xs uppercase truncate max-w-[120px]">{row.name}</td>
                       <td className="px-5 py-3 flex items-center gap-2.5">
-                        <TeamFlag teamName={row.team} className="w-5.5 h-4 rounded shadow-sm object-cover border border-[#202b30]/30" />
-                        <span className="text-gray-400 font-extrabold text-[10px] uppercase truncate max-w-[80px]">{row.team}</span>
+                        <TeamFlag teamName={row.team} className="w-6 h-4 rounded shadow-sm object-cover border border-gray-200" />
+                        <span className="text-gray-500 font-extrabold text-[10px] uppercase truncate max-w-[80px]">{row.team}</span>
                       </td>
-                      <td className="px-5 py-3 text-right pr-6 font-black text-sm text-emerald-500">{row.assists}</td>
+                      <td className="px-5 py-3 text-right pr-6 font-black text-sm text-[#007aff]">{row.assists}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -575,34 +575,34 @@ export default async function StandingsPage() {
         {/* 红黄牌统计 */}
         <div id="cards" className="scroll-mt-24 space-y-4">
           <div className="flex items-center gap-2 px-1">
-            <span className="w-1.5 h-4.5 bg-emerald-500 rounded-full inline-block"></span>
-            <h2 className="text-[13px] font-black text-white uppercase tracking-wider">Discipline & Cards</h2>
+            <span className="w-1.5 h-4.5 bg-[#34c759] rounded-full inline-block"></span>
+            <h2 className="text-[12px] font-black text-gray-800 uppercase tracking-wider">Discipline & Cards</h2>
           </div>
-          <div className="bg-[#0a0f12]/70 backdrop-blur-md border border-[#202b30] rounded-3xl overflow-hidden shadow-[0_10px_35px_rgba(0,0,0,0.55)]">
+          <div className="bg-white border border-gray-200/80 rounded-3xl overflow-hidden shadow-[0_4px_24px_rgba(0,0,0,0.02)]">
             {sortedCards.length === 0 ? (
-              <div className="p-12 text-center text-gray-500 font-semibold text-xs">暂无纪律数据</div>
+              <div className="p-12 text-center text-gray-400 font-semibold text-xs">暂无纪律数据</div>
             ) : (
               <table className="w-full text-left text-xs whitespace-nowrap">
-                <thead className="bg-[#0f1416]/50 text-gray-550 border-b border-[#202b30]/50 text-[9px] font-black uppercase tracking-widest">
+                <thead className="bg-gray-50/50 text-gray-400 border-b border-gray-150 text-[9px] font-black uppercase tracking-widest">
                   <tr>
-                    <th className="px-5 py-3 w-12 text-center text-gray-500">Rank</th>
-                    <th className="px-5 py-3 text-gray-500">Player</th>
-                    <th className="px-5 py-3 text-gray-500">Team</th>
-                    <th className="px-4 py-3 text-center w-16 text-[#e0a904]">Yellow</th>
-                    <th className="px-4 py-3 text-center w-16 text-rose-500">Red</th>
+                    <th className="px-5 py-3 w-12 text-center text-gray-400">Rank</th>
+                    <th className="px-5 py-3 text-gray-400">Player</th>
+                    <th className="px-5 py-3 text-gray-400">Team</th>
+                    <th className="px-4 py-3 text-center w-16 text-amber-600">Yellow</th>
+                    <th className="px-4 py-3 text-center w-16 text-[#ff3b30]">Red</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#202b30]/50">
+                <tbody className="divide-y divide-gray-100">
                   {sortedCards.map((row, idx) => (
-                    <tr key={row.name} className="hover:bg-emerald-500/5 transition-colors">
+                    <tr key={row.name} className="hover:bg-gray-50/50 transition-colors">
                       <td className="px-5 py-3 text-center text-gray-400 font-black">{idx + 1}</td>
-                      <td className="px-5 py-3 font-extrabold text-white text-xs uppercase truncate max-w-[120px]">{row.name}</td>
+                      <td className="px-5 py-3 font-extrabold text-gray-800 text-xs uppercase truncate max-w-[120px]">{row.name}</td>
                       <td className="px-5 py-3 flex items-center gap-2.5">
-                        <TeamFlag teamName={row.team} className="w-5.5 h-4 rounded shadow-sm object-cover border border-[#202b30]/30" />
-                        <span className="text-gray-400 font-extrabold text-[10px] uppercase truncate max-w-[80px]">{row.team}</span>
+                        <TeamFlag teamName={row.team} className="w-6 h-4 rounded shadow-sm object-cover border border-gray-200" />
+                        <span className="text-gray-500 font-extrabold text-[10px] uppercase truncate max-w-[80px]">{row.team}</span>
                       </td>
-                      <td className="px-4 py-3 text-center font-black text-sm text-[#e0a904]">{row.yellow}</td>
-                      <td className="px-4 py-3 text-center font-black text-sm text-rose-500">{row.red}</td>
+                      <td className="px-4 py-3 text-center font-black text-sm text-amber-600">{row.yellow}</td>
+                      <td className="px-4 py-3 text-center font-black text-sm text-[#ff3b30]">{row.red}</td>
                     </tr>
                   ))}
                 </tbody>

@@ -458,7 +458,7 @@ export default function OddsTable({ fixtures, userWallet, userTrades, isLoggedIn
                     <div className="wc-outright-rank flex items-center justify-center w-6 h-6 rounded-full bg-yellow-400 text-yellow-950 font-black text-xs">1</div>
                     <span className="wc-outright-name font-extrabold text-slate-800 text-base">巴西 (Brazil)</span>
                   </div>
-                  <TeamFlag teamName="Brazil" className="wc-outright-flag w-8 h-5.5 rounded shadow-sm" />
+                  <TeamFlag teamName="Brazil" className="wc-outright-flag w-8 h-5 rounded shadow-sm" />
                 </div>
                 <div className="wc-outright-info">
                   <div className="wc-outright-metrics grid grid-cols-2 gap-4 mb-4">
@@ -483,7 +483,7 @@ export default function OddsTable({ fixtures, userWallet, userTrades, isLoggedIn
                     <div className="wc-outright-rank flex items-center justify-center w-6 h-6 rounded-full bg-slate-350 text-slate-900 font-black text-xs">2</div>
                     <span className="wc-outright-name font-extrabold text-slate-800 text-base">法国 (France)</span>
                   </div>
-                  <TeamFlag teamName="France" className="wc-outright-flag w-8 h-5.5 rounded shadow-sm" />
+                  <TeamFlag teamName="France" className="wc-outright-flag w-8 h-5 rounded shadow-sm" />
                 </div>
                 <div className="wc-outright-info">
                   <div className="wc-outright-metrics grid grid-cols-2 gap-4 mb-4">
@@ -508,7 +508,7 @@ export default function OddsTable({ fixtures, userWallet, userTrades, isLoggedIn
                     <div className="wc-outright-rank flex items-center justify-center w-6 h-6 rounded-full bg-amber-600 text-white font-black text-xs">3</div>
                     <span className="wc-outright-name font-extrabold text-slate-800 text-base">英格兰 (England)</span>
                   </div>
-                  <TeamFlag teamName="England" className="wc-outright-flag w-8 h-5.5 rounded shadow-sm" />
+                  <TeamFlag teamName="England" className="wc-outright-flag w-8 h-5 rounded shadow-sm" />
                 </div>
                 <div className="wc-outright-info">
                   <div className="wc-outright-metrics grid grid-cols-2 gap-4 mb-4">

@@ -37,18 +37,18 @@ export default function ProfileClient({ user, wallet, initialTrades }: ProfileCl
     
     // 量化段位计算
     let level = "Bronze Analyst";
-    let badgeColor = "border-amber-600/40 text-amber-500 bg-amber-950/5";
+    let badgeColor = "border-amber-500/30 text-amber-600 bg-amber-50";
     if (total >= 5) {
       if (winRate >= 60) {
         level = "Quant Master: Gold";
-        badgeColor = "border-[#c5a059]/40 text-[#f3e5ab] bg-[#c5a059]/5";
+        badgeColor = "border-amber-500/30 text-[#b28c34] bg-amber-50/50";
       } else if (winRate >= 50) {
         level = "Quant Analyst: Silver";
-        badgeColor = "border-slate-400/40 text-slate-200 bg-slate-800/20";
+        badgeColor = "border-slate-300 text-slate-600 bg-slate-50";
       }
     } else {
       level = "Junior Analyst";
-      badgeColor = "border-emerald-600/30 text-emerald-400 bg-emerald-950/5";
+      badgeColor = "border-[#34c759]/30 text-[#248a3d] bg-[#34c759]/5";
     }
 
     return {
@@ -121,39 +121,39 @@ export default function ProfileClient({ user, wallet, initialTrades }: ProfileCl
   };
 
   return (
-    <div className="flex-1 overflow-y-auto px-4 py-5 space-y-6 select-none">
+    <div className="flex-1 overflow-y-auto px-4 py-5 space-y-6 select-none text-[#1c1c1e] bg-[#f2f2f7]">
       
       {/* 💳 资产权益增长卡片 (Equity Card) */}
-      <div className="bg-quant-mesh border border-[#202b30] rounded-3xl p-5 shadow-[0_10px_35px_rgba(0,0,0,0.6)] relative overflow-hidden flex flex-col gap-4">
+      <div className="bg-white border border-gray-200/80 rounded-3xl p-5 shadow-[0_8px_32px_rgba(0,0,0,0.03)] relative overflow-hidden flex flex-col gap-4 animate-fade-in">
         <div className="flex items-center justify-between">
           <div className="flex flex-col">
-            <span className="text-[9px] font-black text-gray-500 uppercase tracking-widest">Research Wallet</span>
-            <h3 className="text-xl font-black text-white uppercase mt-0.5 tracking-tight flex items-baseline gap-1">
+            <span className="text-[9px] font-black text-gray-400 uppercase tracking-widest">Research Wallet</span>
+            <h3 className="text-xl font-black text-gray-900 uppercase mt-0.5 tracking-tight flex items-baseline gap-1">
               {wallet.balance.toLocaleString(undefined, { maximumFractionDigits: 0 })}
-              <span className="text-xs text-emerald-400 font-extrabold uppercase ml-1">RU</span>
+              <span className="text-xs text-[#34c759] font-extrabold uppercase ml-1">RU</span>
             </h3>
-            <span className="text-[8px] text-gray-500 uppercase tracking-widest mt-0.5 leading-none">
+            <span className="text-[8px] text-gray-400 uppercase tracking-widest mt-0.5 leading-none">
               Current Available Balance
             </span>
           </div>
-          <div className="w-10 h-10 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400">
+          <div className="w-10 h-10 rounded-2xl bg-[#34c759]/10 border border-[#34c759]/20 flex items-center justify-center text-[#248a3d]">
             <TrendingUp size={18} />
           </div>
         </div>
 
         {/* Portfolio Equity Curve Graph */}
-        <div className="w-full h-[90px] relative border-t border-[#202b30]/50 pt-2.5">
+        <div className="w-full h-[90px] relative border-t border-gray-100 pt-2.5">
           <svg className="w-full h-full" viewBox="0 0 340 90" preserveAspectRatio="none">
             <defs>
               <linearGradient id="equityGlow" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#10b981" stopOpacity="0.22" />
-                <stop offset="100%" stopColor="#10b981" stopOpacity="0" />
+                <stop offset="0%" stopColor="#34c759" stopOpacity="0.15" />
+                <stop offset="100%" stopColor="#34c759" stopOpacity="0" />
               </linearGradient>
             </defs>
             <path d={areaD} fill="url(#equityGlow)" />
-            <path d={pathD} fill="none" stroke="#10b981" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+            <path d={pathD} fill="none" stroke="#34c759" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
-          <div className="absolute bottom-0.5 left-0 w-full flex justify-between text-[7px] font-black text-gray-600 uppercase tracking-widest">
+          <div className="absolute bottom-0.5 left-0 w-full flex justify-between text-[7px] font-black text-gray-400 uppercase tracking-widest">
             <span>Portfolio Origin</span>
             <span>Real-time Equity Curve</span>
           </div>
@@ -161,84 +161,84 @@ export default function ProfileClient({ user, wallet, initialTrades }: ProfileCl
       </div>
 
       {/* 🏆 量化分析师段位徽章 */}
-      <MatteCard className="p-5 flex flex-col items-center justify-center text-center gap-3.5 relative overflow-hidden border-[#202b30]">
-        <div className="absolute top-0 right-0 w-24 h-24 bg-emerald-500/5 rounded-full blur-2xl pointer-events-none"></div>
+      <MatteCard className="p-5 flex flex-col items-center justify-center text-center gap-3.5 relative overflow-hidden border-gray-200">
+        <div className="absolute top-0 right-0 w-24 h-24 bg-[#34c759]/5 rounded-full blur-2xl pointer-events-none"></div>
         <div className="flex flex-col items-center">
-          <span className="text-[8px] font-black text-gray-500 uppercase tracking-widest mb-2.5">Quant Certification</span>
+          <span className="text-[8px] font-black text-gray-400 uppercase tracking-widest mb-2.5">Quant Certification</span>
           
           {/* Neon Glow Gold Badge */}
-          <div className={`w-20 h-20 rounded-full border-2 flex items-center justify-center shadow-[0_4px_24px_rgba(0,0,0,0.6)] ${stats.badgeColor} relative overflow-hidden transition-transform duration-500 hover:rotate-6`}>
-            <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent opacity-60"></div>
-            <Shield size={36} className="drop-shadow-[0_0_12px_currentColor]" />
+          <div className={`w-16 h-16 rounded-full border-2 flex items-center justify-center shadow-[0_4px_16px_rgba(0,0,0,0.03)] ${stats.badgeColor} relative overflow-hidden transition-transform duration-500 hover:rotate-6`}>
+            <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent opacity-60"></div>
+            <Shield size={28} className="drop-shadow-[0_0_8px_currentColor]" />
           </div>
           
-          <h4 className="text-sm font-black text-white uppercase tracking-widest mt-4">
+          <h4 className="text-xs font-black text-gray-900 uppercase tracking-widest mt-3">
             {stats.level}
           </h4>
-          <span className="text-[8.5px] text-gray-500 font-extrabold uppercase tracking-widest mt-1">
+          <span className="text-[8px] text-gray-400 font-extrabold uppercase tracking-widest mt-1">
             Certified Level based on CLV & Win Rate
           </span>
         </div>
 
         {/* Quant Performance stats table */}
-        <div className="w-full grid grid-cols-2 gap-3.5 border-t border-[#202b30]/70 pt-4 mt-1 text-left">
+        <div className="w-full grid grid-cols-2 gap-3.5 border-t border-gray-150 pt-4 mt-1 text-left">
           {/* Win Rate */}
-          <div className="bg-[#0f1416]/50 border border-[#202b30]/65 rounded-xl p-3 flex flex-col gap-1">
-            <span className="text-[8.5px] font-black text-gray-500 uppercase tracking-widest leading-none">Win Rate</span>
+          <div className="bg-gray-50 border border-gray-150 rounded-xl p-3 flex flex-col gap-1">
+            <span className="text-[8.5px] font-black text-gray-400 uppercase tracking-widest leading-none">Win Rate</span>
             <div className="flex items-baseline justify-between mt-1">
-              <span className="text-sm font-black text-white">{stats.winRate}%</span>
-              <span className="text-[7.5px] font-black text-emerald-400 bg-emerald-500/10 px-1 rounded">SaaS</span>
+              <span className="text-xs font-black text-gray-900">{stats.winRate}%</span>
+              <span className="text-[7.5px] font-black text-[#248a3d] bg-[#34c759]/10 px-1 rounded">SaaS</span>
             </div>
             {/* Progress bar */}
-            <div className="h-1 w-full bg-[#070a0b] rounded-full overflow-hidden mt-1 border border-[#202b30]/40">
-              <div style={{ width: `${stats.winRate}%` }} className="bg-emerald-500 h-full rounded-full"></div>
+            <div className="h-1 w-full bg-gray-100 rounded-full overflow-hidden mt-1 border border-gray-200/50">
+              <div style={{ width: `${stats.winRate}%` }} className="bg-[#34c759] h-full rounded-full"></div>
             </div>
           </div>
 
           {/* Profit Factor */}
-          <div className="bg-[#0f1416]/50 border border-[#202b30]/65 rounded-xl p-3 flex flex-col gap-1">
-            <span className="text-[8.5px] font-black text-gray-500 uppercase tracking-widest leading-none">Profit Factor</span>
+          <div className="bg-gray-50 border border-gray-150 rounded-xl p-3 flex flex-col gap-1">
+            <span className="text-[8.5px] font-black text-gray-400 uppercase tracking-widest leading-none">Profit Factor</span>
             <div className="flex items-baseline justify-between mt-1">
-              <span className="text-sm font-black text-white">{stats.profitFactor}x</span>
-              <span className="text-[7.5px] font-black text-emerald-500/70 bg-emerald-500/5 px-1 rounded">Quant</span>
+              <span className="text-xs font-black text-gray-900">{stats.profitFactor}x</span>
+              <span className="text-[7.5px] font-black text-emerald-700 bg-emerald-50 px-1 rounded">Quant</span>
             </div>
-            <div className="h-1 w-full bg-[#070a0b] rounded-full overflow-hidden mt-1 border border-[#202b30]/40">
-              <div style={{ width: `${Math.min(100, parseFloat(stats.profitFactor) * 30)}%` }} className="bg-emerald-800 h-full rounded-full"></div>
+            <div className="h-1 w-full bg-gray-100 rounded-full overflow-hidden mt-1 border border-gray-200/50">
+              <div style={{ width: `${Math.min(100, parseFloat(stats.profitFactor) * 30)}%` }} className="bg-[#248a3d] h-full rounded-full"></div>
             </div>
           </div>
 
           {/* Active Trades */}
-          <div className="bg-[#0f1416]/50 border border-[#202b30]/65 rounded-xl p-3 flex flex-col justify-center">
-            <span className="text-[8.5px] font-black text-gray-500 uppercase tracking-widest leading-none">Trades Placed</span>
-            <span className="text-sm font-black text-white mt-1.5">{stats.totalTrades}</span>
+          <div className="bg-gray-50 border border-gray-150 rounded-xl p-3 flex flex-col justify-center">
+            <span className="text-[8.5px] font-black text-gray-400 uppercase tracking-widest leading-none">Trades Placed</span>
+            <span className="text-xs font-black text-gray-900 mt-1.5">{stats.totalTrades}</span>
           </div>
 
           {/* Average CLV */}
-          <div className="bg-[#0f1416]/50 border border-[#202b30]/65 rounded-xl p-3 flex flex-col justify-center">
-            <span className="text-[8.5px] font-black text-gray-500 uppercase tracking-widest leading-none">Average CLV</span>
-            <span className="text-sm font-black text-emerald-400 mt-1.5">+4.8%</span>
+          <div className="bg-gray-50 border border-gray-150 rounded-xl p-3 flex flex-col justify-center">
+            <span className="text-[8.5px] font-black text-gray-400 uppercase tracking-widest leading-none">Average CLV</span>
+            <span className="text-xs font-black text-[#248a3d] mt-1.5">+4.8%</span>
           </div>
         </div>
       </MatteCard>
 
       {/* 👥 Telegram 社交分享裂变卡片 */}
-      <div className="bg-quant-mesh border border-[#202b30] rounded-3xl p-5 shadow-[0_8px_30px_rgba(0,0,0,0.5)] relative overflow-hidden flex flex-col gap-3">
-        <div className="absolute top-0 right-0 w-20 h-20 bg-emerald-500/5 rounded-full blur-2xl pointer-events-none"></div>
+      <div className="bg-white border border-gray-200/80 rounded-3xl p-5 shadow-[0_8px_32px_rgba(0,0,0,0.03)] relative overflow-hidden flex flex-col gap-3">
+        <div className="absolute top-0 right-0 w-20 h-20 bg-[#34c759]/5 rounded-full blur-2xl pointer-events-none"></div>
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400">
+          <div className="w-9 h-9 rounded-xl bg-[#34c759]/10 border border-[#34c759]/20 flex items-center justify-center text-[#248a3d]">
             <Users size={16} />
           </div>
           <div className="flex flex-col">
-            <span className="text-[10px] font-black uppercase tracking-wider text-white">Quant Invite Code</span>
-            <span className="text-[7.5px] text-gray-500 uppercase tracking-widest mt-0.5">Invite friends to unlock features</span>
+            <span className="text-[10px] font-black uppercase tracking-wider text-gray-900">Quant Invite Code</span>
+            <span className="text-[7.5px] text-gray-400 uppercase tracking-widest mt-0.5">Invite friends to unlock features</span>
           </div>
         </div>
 
-        <div className="grid grid-cols-5 gap-2.5 mt-2">
+        <div className="flex flex-col sm:flex-row gap-2.5 mt-2">
           {/* Promo code display */}
-          <div className="col-span-3 bg-[#070a0b] border border-[#202b30] rounded-2xl px-4 py-3 flex flex-col justify-center">
-            <span className="text-[7.5px] font-black text-gray-500 uppercase tracking-widest">Referral Code</span>
-            <span className="text-xs font-black text-white uppercase tracking-wider mt-0.5">
+          <div className="flex-1 bg-gray-50 border border-gray-150 rounded-2xl px-4 py-3 flex flex-col justify-center min-w-0">
+            <span className="text-[7.5px] font-black text-gray-400 uppercase tracking-widest">Referral Code</span>
+            <span className="text-xs font-black text-gray-900 uppercase tracking-wider mt-0.5 truncate">
               GOLD-{user.id.substring(0, 5).toUpperCase()}
             </span>
           </div>
@@ -246,19 +246,19 @@ export default function ProfileClient({ user, wallet, initialTrades }: ProfileCl
           {/* Copy Button */}
           <button 
             onClick={handleCopyInvite}
-            className={`col-span-2 rounded-2xl font-black text-[9.5px] uppercase tracking-widest transition-all duration-300 flex items-center justify-center gap-1.5 active:scale-95 ${
+            className={`px-4 py-3 sm:py-0 rounded-2xl font-black text-[9.5px] uppercase tracking-widest transition-all duration-300 flex items-center justify-center gap-1.5 shrink-0 active:scale-95 ${
               copied 
-                ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/25" 
-                : "bg-emerald-500 hover:bg-emerald-400 text-[#070a0b] shadow-[0_0_12px_rgba(16,185,129,0.3)]"
+                ? "bg-[#34c759]/10 text-[#248a3d] border border-[#34c759]/25" 
+                : "bg-[#34c759] hover:bg-[#2fbd53] text-white shadow-[0_4px_12px_rgba(52,199,89,0.15)]"
             }`}
           >
             {copied ? (
               <>
-                <Check size={11} /> Copied
+                <Check size={11} className="shrink-0" /> Copied
               </>
             ) : (
               <>
-                <Copy size={11} /> Copy Link
+                <Copy size={11} className="shrink-0" /> Copy Link
               </>
             )}
           </button>

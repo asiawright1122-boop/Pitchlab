@@ -38,11 +38,11 @@ export function MatchSubscribeButton({ fixtureId }: { fixtureId: string }) {
       onClick={toggleSubscribe}
       className={`w-9 h-9 rounded-full flex items-center justify-center transition-all duration-300 ${
         isSubscribed 
-          ? 'bg-emerald-500 text-[#070a0b] shadow-[0_0_12px_#10b981]' 
-          : 'bg-[#161e22] border border-[#202b30] text-gray-500 hover:text-emerald-500 hover:border-emerald-500/40'
+          ? 'bg-[#34c759] text-white shadow-[0_3px_8px_rgba(52,199,89,0.25)]' 
+          : 'bg-gray-50 border border-gray-200 text-gray-400 hover:text-[#34c759] hover:border-[#34c759]/30'
       }`}
     >
-      <Bell size={13} className={isSubscribed ? "fill-current" : ""} />
+      <Bell size={12} className={isSubscribed ? "fill-current" : ""} />
     </button>
   );
 }

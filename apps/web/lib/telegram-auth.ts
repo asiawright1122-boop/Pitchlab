@@ -22,7 +22,7 @@ export function validateTelegramInitData(initData: string, botToken: string): bo
     const secretKey = crypto.createHmac("sha256", "WebAppData").update(botToken).digest();
     
     // Calculate expected hash: HMAC_SHA256(<data_check_string>, <secret_key>)
-    const calculatedHash = crypto.createHmac("sha256", secretKey).update(dataCheckString).digest("hex");
+    const calculatedHash = crypto.createHmac("sha256", secretKey as any).update(dataCheckString).digest("hex");
 
     return calculatedHash === hash;
   } catch (err) {
