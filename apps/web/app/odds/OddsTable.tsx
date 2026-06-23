@@ -77,7 +77,13 @@ export default function OddsTable({ fixtures, userWallet, userTrades, isLoggedIn
 
   const renderOddsCell = (oddsList: any[] | undefined, sel: "home" | "draw" | "away") => {
     if (!oddsList || oddsList.length === 0) return <span className="wc-match-odds-tbd">-</span>;
-    const snaps = oddsList.filter((s) => s.selection === sel);
+    const snaps = oddsList.filter((s) => {
+      const sSel = s.selection.toLowerCase();
+      if (sel === "home") return sSel === "home" || sSel === "h";
+      if (sel === "draw") return sSel === "draw" || sSel === "d";
+      if (sel === "away") return sSel === "away" || sSel === "a";
+      return false;
+    });
     if (snaps.length === 0) return <span className="wc-match-odds-tbd">-</span>;
 
     const latest = snaps[snaps.length - 1];
@@ -398,7 +404,7 @@ export default function OddsTable({ fixtures, userWallet, userTrades, isLoggedIn
                         </div>
                         <div className="wc-drawer-card-match">{t.home} vs {t.away}</div>
                         <div className="wc-drawer-card-detail">
-                          <div>预测: <strong className="text-slate-800">{t.selection === "H" ? "主胜" : t.selection === "D" ? "平局" : "客胜"}</strong></div>
+                          <div>预测: <strong className="text-slate-800">{t.selection.toUpperCase() === "H" || t.selection.toLowerCase() === "home" ? "主胜" : t.selection.toUpperCase() === "D" || t.selection.toLowerCase() === "draw" ? "平局" : "客胜"}</strong></div>
                           <div>赔率: <strong className="text-slate-800">{t.odds.toFixed(2)}</strong></div>
                           <div>本金: <strong className="text-slate-850">${t.stake}</strong></div>
                         </div>
@@ -423,7 +429,7 @@ export default function OddsTable({ fixtures, userWallet, userTrades, isLoggedIn
                           </div>
                           <div className="wc-drawer-card-match">{t.home} vs {t.away}</div>
                           <div className="wc-drawer-card-detail">
-                            <div>选项: <strong>{t.selection === "H" ? "主胜" : t.selection === "D" ? "平局" : "客胜"}</strong></div>
+                            <div>选项: <strong>{t.selection.toUpperCase() === "H" || t.selection.toLowerCase() === "home" ? "主胜" : t.selection.toUpperCase() === "D" || t.selection.toLowerCase() === "draw" ? "平局" : "客胜"}</strong></div>
                             <div>赔率: <strong>{t.odds.toFixed(2)}</strong></div>
                             <div>本金: <strong>${t.stake}</strong></div>
                           </div>

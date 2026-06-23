@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { Activity, Clock, ShieldAlert, Award, RefreshCw } from "lucide-react";
 
 interface MatchEvent {
   time: { elapsed: number; extra: number | null };
@@ -20,8 +21,9 @@ interface MatchEventsTimelineProps {
 export default function MatchEventsTimeline({ events, homeTeam, awayTeam }: MatchEventsTimelineProps) {
   if (!events || events.length === 0) {
     return (
-      <div className="bg-white/80 backdrop-blur-md border border-slate-200/60 rounded-2xl p-6 shadow-sm text-center">
-        <p className="text-sm text-slate-400">本场比赛暂无关键事件记录</p>
+      <div className="bg-white/80 backdrop-blur-md border border-slate-200/60 rounded-3xl p-6 shadow-sm text-center flex flex-col items-center justify-center py-12">
+        <ShieldAlert size={28} className="text-gray-400 mb-2" />
+        <p className="text-xs text-gray-500 font-extrabold uppercase tracking-wider">No match events recorded yet</p>
       </div>
     );
   }
@@ -29,111 +31,135 @@ export default function MatchEventsTimeline({ events, homeTeam, awayTeam }: Matc
   // 排序：将事件按时间升序排列
   const sortedEvents = [...events].sort((a, b) => a.time.elapsed - b.time.elapsed);
 
-  const renderEventIcon = (type: string, detail: string) => {
-    if (type === "Goal") {
-      if (detail === "Penalty") {
-        return (
-          <span className="w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center font-black shadow-sm text-xs select-none">
-            ⚽️
-          </span>
-        );
-      }
-      return (
-        <span className="w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center font-black shadow-sm text-sm select-none">
-          ⚽
-        </span>
-      );
-    }
-
-    if (type === "Card") {
-      const isRed = detail.toLowerCase().includes("red");
-      return (
-        <span className={`w-8 h-8 rounded-full flex items-center justify-center shadow-sm select-none ${
-          isRed ? "bg-rose-500 text-white" : "bg-amber-400 text-slate-800"
-        }`}>
-          {isRed ? "🟥" : "🟨"}
-        </span>
-      );
-    }
-
-    if (type === "Subst" || type === "subst") {
-      return (
-        <span className="w-8 h-8 rounded-full bg-blue-500 text-white flex items-center justify-center shadow-sm text-xs select-none">
-          🔄
-        </span>
-      );
-    }
-
-    // Default VAR or generic
-    return (
-      <span className="w-8 h-8 rounded-full bg-indigo-500 text-white flex items-center justify-center shadow-sm text-xs select-none">
-        🖥️
-      </span>
-    );
-  };
-
   const isHomeEvent = (teamName: string) => {
     return teamName.toLowerCase() === homeTeam.toLowerCase();
   };
 
-  return (
-    <div className="bg-white/95 backdrop-blur-md border border-slate-200/80 rounded-2xl p-6 shadow-md transition-all flex flex-col gap-6">
-      <h3 className="text-lg font-black text-slate-900 flex items-center gap-2">
-        <span className="w-2.5 h-6 bg-[#e04039] rounded-full inline-block"></span>
-        赛况直播与重要事件 (Timeline)
-      </h3>
+  const getEventStyle = (type: string, detail: string) => {
+    const typeLower = type.toLowerCase();
+    const detailLower = detail ? detail.toLowerCase() : "";
 
-      <div className="relative border-l border-slate-200 ml-4 md:ml-6 pl-6 py-2 flex flex-col gap-6">
+    if (typeLower === "goal") {
+      return {
+        cardBg: "bg-gradient-to-tr from-[#34c759]/5 via-[#34c759]/8 to-[#34c759]/3 border-[#34c759]/30",
+        tagBg: "bg-[#34c759]/10 text-[#248a3d] border-[#34c759]/20",
+        icon: (
+          <span className="w-8 h-8 rounded-full bg-[#34c759] text-white flex items-center justify-center font-black shadow-[0_2px_8px_rgba(52,199,89,0.3)] text-sm select-none">
+            ⚽
+          </span>
+        )
+      };
+    }
+
+    if (typeLower === "card") {
+      const isRed = detailLower.includes("red");
+      if (isRed) {
+        return {
+          cardBg: "bg-gradient-to-tr from-rose-500/5 via-rose-500/8 to-rose-500/3 border-rose-500/30",
+          tagBg: "bg-rose-500/10 text-rose-700 border-rose-500/20",
+          icon: (
+            <span className="w-8 h-8 rounded-full bg-rose-500 text-white flex items-center justify-center font-black shadow-[0_2px_8px_rgba(244,63,94,0.3)] text-xs select-none">
+              🟥
+            </span>
+          )
+        };
+      }
+      return {
+        cardBg: "bg-gradient-to-tr from-amber-500/5 via-amber-500/8 to-amber-500/3 border-amber-500/30",
+        tagBg: "bg-amber-500/10 text-amber-700 border-amber-500/20",
+        icon: (
+          <span className="w-8 h-8 rounded-full bg-amber-500 text-slate-800 flex items-center justify-center font-black shadow-[0_2px_8px_rgba(245,158,11,0.3)] text-xs select-none">
+            🟨
+          </span>
+        )
+      };
+    }
+
+    if (typeLower === "subst") {
+      return {
+        cardBg: "bg-gradient-to-tr from-[#007aff]/5 via-[#007aff]/8 to-[#007aff]/3 border-[#007aff]/30",
+        tagBg: "bg-[#007aff]/10 text-[#007aff] border-[#007aff]/20",
+        icon: (
+          <span className="w-8 h-8 rounded-full bg-[#007aff] text-white flex items-center justify-center font-black shadow-[0_2px_8px_rgba(0,122,255,0.3)] text-[10px] select-none">
+            🔄
+          </span>
+        )
+      };
+    }
+
+    // Default or VAR
+    return {
+      cardBg: "bg-gradient-to-tr from-indigo-500/5 via-indigo-500/8 to-indigo-500/3 border-indigo-500/30",
+      tagBg: "bg-indigo-500/10 text-indigo-700 border-indigo-500/20",
+      icon: (
+        <span className="w-8 h-8 rounded-full bg-indigo-500 text-white flex items-center justify-center font-black shadow-[0_2px_8px_rgba(99,102,241,0.3)] text-xs select-none">
+          🖥️
+        </span>
+      )
+    };
+  };
+
+  return (
+    <div className="bg-white border border-gray-200/80 rounded-3xl p-5 shadow-[0_8px_32px_rgba(0,0,0,0.03)] transition-all flex flex-col gap-5">
+      <div className="flex items-center gap-2 mb-1 border-b border-gray-100 pb-3">
+        <Activity size={14} className="text-[#34c759]" />
+        <h3 className="text-[10px] font-black text-gray-500 uppercase tracking-widest">Match Timeline</h3>
+      </div>
+
+      <div className="relative border-l-2 border-gray-100 ml-4 md:ml-6 pl-6 py-2 flex flex-col gap-6 select-none">
         {sortedEvents.map((ev, index) => {
           const home = isHomeEvent(ev.team.name);
+          const style = getEventStyle(ev.type, ev.detail);
+
           return (
             <div 
               key={`event-${index}`} 
               className="relative flex items-start group animate-fade-in"
             >
-              {/* 时间线轴上图标 */}
-              <div className="absolute -left-[41px] top-1 z-10 transition-transform group-hover:scale-110">
-                {renderEventIcon(ev.type, ev.detail)}
+              {/* Timeline Axle Icon */}
+              <div className="absolute -left-[41px] top-1 z-10 transition-transform duration-300 group-hover:scale-110">
+                {style.icon}
               </div>
 
-              {/* 事件卡片内容 */}
-              <div className="bg-slate-50/60 hover:bg-slate-50 border border-slate-150 rounded-xl p-4 flex-1 flex items-center justify-between shadow-sm transition-all">
-                <div className="flex flex-col gap-1">
-                  <div className="flex items-center gap-2">
-                    <span className="text-sm font-black text-[#e04039]">
+              {/* Event Card Panel */}
+              <div className={`border rounded-2xl p-4 flex-1 flex items-center justify-between shadow-sm transition-all duration-300 ${style.cardBg}`}>
+                <div className="flex flex-col gap-1 min-w-0 mr-2">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <span className="text-xs font-black text-gray-800 flex items-center gap-0.5">
+                      <Clock size={10} className="text-gray-400" />
                       {ev.time.elapsed}'
                       {ev.time.extra ? `+${ev.time.extra}` : ""}
                     </span>
-                    <span className="text-xs font-bold text-slate-400 bg-slate-200/50 px-2 py-0.5 rounded-full">
+                    <span className="text-[8px] font-black bg-white px-2 py-0.5 rounded-full border border-gray-200 text-gray-500 uppercase tracking-wider truncate max-w-[110px]">
                       {ev.team.name}
                     </span>
                     {ev.detail && (
-                      <span className="text-[10px] font-extrabold text-slate-550 border border-slate-300/60 px-1.5 py-0.2 rounded-md uppercase tracking-wider">
+                      <span className={`text-[7.5px] font-black border px-1.5 py-0.2 rounded-md uppercase tracking-wider ${style.tagBg}`}>
                         {ev.detail}
                       </span>
                     )}
                   </div>
 
-                  <div className="text-sm font-extrabold text-slate-800 mt-1">
+                  <div className="text-xs font-black text-gray-800 mt-1 truncate">
                     {ev.player.name}
                   </div>
 
                   {ev.assist && (
-                    <div className="text-xs text-slate-450 font-bold flex items-center gap-1">
-                      <span className="text-[10px]">👟</span> 
-                      助攻: {ev.assist.name}
+                    <div className="text-[9.5px] text-gray-400 font-bold flex items-center gap-1.5 mt-0.5">
+                      <Award size={10} className="text-gray-400" />
+                      <span>Assist: {ev.assist.name}</span>
                     </div>
                   )}
                 </div>
 
-                {/* 主客队徽章区分指示 */}
-                <div className="flex items-center">
-                  <span className={`text-[10px] font-black uppercase px-2.5 py-1 rounded-full ${
+                {/* Team label badge */}
+                <div className="flex-shrink-0">
+                  <span className={`text-[8.5px] font-black uppercase px-2.5 py-1 rounded-full border ${
                     home 
-                      ? "bg-blue-50 text-blue-600 border border-blue-100" 
-                      : "bg-red-50 text-red-600 border border-red-100"
+                      ? "bg-[#34c759]/10 text-[#248a3d] border-[#34c759]/20" 
+                      : "bg-[#007aff]/10 text-[#007aff] border-[#007aff]/20"
                   }`}>
-                    {home ? "主队" : "客队"}
+                    {home ? "Home" : "Away"}
                   </span>
                 </div>
               </div>

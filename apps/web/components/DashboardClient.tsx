@@ -1,13 +1,13 @@
 "use client";
 import { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
-import type { Fixture, Prediction } from "@prisma/client";
+import type { Fixture, Prediction, OddsSnapshot } from "@prisma/client";
 import TeamFlag from "./TeamFlag";
 import { MatteCard } from "@/components/ui/MatteCard";
 import { ChevronRight, Bell, Calendar, Trophy, Sparkles, Clock, TrendingUp, AlertTriangle } from "lucide-react";
 
 interface DashboardClientProps {
-  initialFixtures: (Fixture & { predictions: Prediction[] })[];
+  initialFixtures: (Fixture & { predictions: Prediction[]; oddsSnapshots: OddsSnapshot[] })[];
 }
 
 export function DashboardClient({ initialFixtures }: DashboardClientProps) {
@@ -342,6 +342,16 @@ export function DashboardClient({ initialFixtures }: DashboardClientProps) {
                   const pAway = awayPred ? Math.round(awayPred.prob * 100) : 35;
                   const pDraw = drawPred ? Math.round(drawPred.prob * 100) : 25;
 
+                  // 📈 提取最新的 Pinnacle 赔率 (1X2)
+                  const oddsList = match.oddsSnapshots || [];
+                  const homeOddsSnap = oddsList.find(o => o.selection === "home" || o.selection === "Home");
+                  const drawOddsSnap = oddsList.find(o => o.selection === "draw" || o.selection === "Draw");
+                  const awayOddsSnap = oddsList.find(o => o.selection === "away" || o.selection === "Away");
+
+                  const homeOdds = homeOddsSnap ? homeOddsSnap.price.toFixed(2) : "—";
+                  const drawOdds = drawOddsSnap ? drawOddsSnap.price.toFixed(2) : "—";
+                  const awayOdds = awayOddsSnap ? awayOddsSnap.price.toFixed(2) : "—";
+
                   return (
                     <Link href={`/matches/${match.id}`} key={match.id} className="block group">
                       <MatteCard className={`p-4 relative transition-all duration-300 border-gray-200/70 hover:border-[#34c759]/40 overflow-hidden ${
@@ -376,7 +386,7 @@ export function DashboardClient({ initialFixtures }: DashboardClientProps) {
                                   hasFinished 
                                     ? isHomeWinner ? 'text-gray-900' : 'text-gray-400'
                                     : 'text-gray-800'
-                                }`}>
+                                  }`}>
                                   {match.home}
                                 </span>
                               </div>
@@ -395,7 +405,7 @@ export function DashboardClient({ initialFixtures }: DashboardClientProps) {
                                   hasFinished 
                                     ? isAwayWinner ? 'text-gray-900' : 'text-gray-400'
                                     : 'text-gray-800'
-                                }`}>
+                                  }`}>
                                   {match.away}
                                 </span>
                               </div>
@@ -443,6 +453,16 @@ export function DashboardClient({ initialFixtures }: DashboardClientProps) {
                               {pAway > 15 && (
                                 <span className="absolute right-2 text-[7px] font-black text-white uppercase">{pAway}%</span>
                               )}
+                            </div>
+                          </div>
+
+                          {/* 📈 Pinnacle Live Market Odds */}
+                          <div className="flex justify-between items-center text-[8px] font-black text-gray-400 uppercase tracking-widest px-2.5 py-1.5 rounded-2xl bg-gray-50 border border-gray-150/40 mt-2 shadow-[inset_0_1px_2px_rgba(0,0,0,0.01)]">
+                            <span>Pinnacle Odds</span>
+                            <div className="flex gap-3">
+                              <span className="flex items-center gap-1">H: <span className="text-gray-800 font-extrabold normal-case">{homeOdds}</span></span>
+                              <span className="flex items-center gap-1">D: <span className="text-gray-850 font-extrabold normal-case">{drawOdds}</span></span>
+                              <span className="flex items-center gap-1">A: <span className="text-gray-800 font-extrabold normal-case">{awayOdds}</span></span>
                             </div>
                           </div>
                         </div>
