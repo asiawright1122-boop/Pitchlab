@@ -92,32 +92,8 @@ async function syncFixtureOdds(fixtureId: string) {
 }
 
 export default async function MatchPage({ params }: { params: { id: string } }) {
-  let fixture = await prisma.fixture.findUnique({
-    where: { id: params.id },
-    include: {
-      oddsSnapshots: {
-        orderBy: { takenAt: "asc" }
-      },
-      predictions: true
-    }
-  });
-
-  if (!fixture) notFound();
-
-  const hasMultiMarketOdds = fixture.oddsSnapshots.some(
-    o => o.market !== "Match Winner" && o.market !== "1x2" && o.market !== "home" && o.market !== "draw" && o.market !== "away"
-  );
-
-  const latestSnapshot = fixture.oddsSnapshots.reduce((latest, current) => {
-    return (!latest || current.takenAt > latest.takenAt) ? current : latest;
-  }, null as any);
-
-  const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000);
-  const isCooldownActive = latestSnapshot && latestSnapshot.takenAt > oneHourAgo;
-
-  if (!hasMultiMarketOdds && fixture.status !== "finished" && !isCooldownActive) {
-    await syncFixtureOdds(fixture.id);
-    fixture = await prisma.fixture.findUnique({
+  try {
+    let fixture = await prisma.fixture.findUnique({
       where: { id: params.id },
       include: {
         oddsSnapshots: {
@@ -125,68 +101,111 @@ export default async function MatchPage({ params }: { params: { id: string } }) 
         },
         predictions: true
       }
-    }) || fixture;
-  }
-
-  const user = await getCurrentUser();
-  let isUnlocked = false;
-  if (user) {
-    const unlockRecord = await prisma.matchUnlock.findUnique({
-      where: { userId_fixtureId: { userId: user.id, fixtureId: params.id } }
     });
-    if (unlockRecord) isUnlocked = true;
-  }
 
-  const homeOdds = fixture.oddsSnapshots.filter(o => o.selection === "home" || (o.market === "Match Winner" && o.selection === "Home"));
-  const drawOdds = fixture.oddsSnapshots.filter(o => o.selection === "draw" || (o.market === "Match Winner" && o.selection === "Draw"));
-  const awayOdds = fixture.oddsSnapshots.filter(o => o.selection === "away" || (o.market === "Match Winner" && o.selection === "Away"));
-  
-  const latestOdds = {
-    home: homeOdds.length > 0 ? homeOdds[homeOdds.length - 1].price : 0,
-    draw: drawOdds.length > 0 ? drawOdds[drawOdds.length - 1].price : 0,
-    away: awayOdds.length > 0 ? awayOdds[awayOdds.length - 1].price : 0,
-  };
+    if (!fixture) notFound();
 
-  const liveDetails = await getLiveMatchDetails(fixture.id, fixture.home, fixture.away);
+    const hasMultiMarketOdds = fixture.oddsSnapshots.some(
+      o => o.market !== "Match Winner" && o.market !== "1x2" && o.market !== "home" && o.market !== "draw" && o.market !== "away"
+    );
 
-  return (
-    <div className="flex flex-col min-h-[100dvh] bg-pitch text-white font-sans relative overflow-x-hidden">
-      
-      {/* Top Header */}
-      <header className="px-5 py-4 flex items-center justify-between sticky top-0 z-40 bg-[#070a0b]/90 backdrop-blur-md border-b border-[#202b30]">
-        <Link href="/" className="w-9 h-9 rounded-full bg-[#161e22] border border-[#202b30] flex items-center justify-center text-gray-400 hover:text-emerald-500 transition-colors">
-          <ChevronLeft size={16} />
-        </Link>
-        <div className="flex flex-col items-center">
-          <span className="text-[11px] font-black text-white tracking-[0.2em] uppercase flex items-center gap-1.5">
-            MATCH CENTER
-          </span>
-          <span className="text-[9px] text-gray-500 font-extrabold uppercase tracking-widest mt-0.5">{fixture.league}</span>
+    const latestSnapshot = fixture.oddsSnapshots.reduce((latest, current) => {
+      return (!latest || current.takenAt > latest.takenAt) ? current : latest;
+    }, null as any);
+
+    const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000);
+    const isCooldownActive = latestSnapshot && latestSnapshot.takenAt > oneHourAgo;
+
+    if (!hasMultiMarketOdds && fixture.status !== "finished" && !isCooldownActive) {
+      await syncFixtureOdds(fixture.id);
+      fixture = await prisma.fixture.findUnique({
+        where: { id: params.id },
+        include: {
+          oddsSnapshots: {
+            orderBy: { takenAt: "asc" }
+          },
+          predictions: true
+        }
+      }) || fixture;
+    }
+
+    const user = await getCurrentUser();
+    let isUnlocked = false;
+    if (user) {
+      const unlockRecord = await prisma.matchUnlock.findUnique({
+        where: { userId_fixtureId: { userId: user.id, fixtureId: params.id } }
+      });
+      if (unlockRecord) isUnlocked = true;
+    }
+
+    const homeOdds = fixture.oddsSnapshots.filter(o => o.selection === "home" || (o.market === "Match Winner" && o.selection === "Home"));
+    const drawOdds = fixture.oddsSnapshots.filter(o => o.selection === "draw" || (o.market === "Match Winner" && o.selection === "Draw"));
+    const awayOdds = fixture.oddsSnapshots.filter(o => o.selection === "away" || (o.market === "Match Winner" && o.selection === "Away"));
+    
+    const latestOdds = {
+      home: homeOdds.length > 0 ? homeOdds[homeOdds.length - 1].price : 0,
+      draw: drawOdds.length > 0 ? drawOdds[drawOdds.length - 1].price : 0,
+      away: awayOdds.length > 0 ? awayOdds[awayOdds.length - 1].price : 0,
+    };
+
+    const liveDetails = await getLiveMatchDetails(fixture.id, fixture.home, fixture.away);
+
+    return (
+      <div className="flex flex-col min-h-[100dvh] bg-pitch text-white font-sans relative overflow-x-hidden">
+        
+        {/* Top Header */}
+        <header className="px-5 py-4 flex items-center justify-between sticky top-0 z-40 bg-[#070a0b]/90 backdrop-blur-md border-b border-[#202b30]">
+          <Link href="/" className="w-9 h-9 rounded-full bg-[#161e22] border border-[#202b30] flex items-center justify-center text-gray-400 hover:text-emerald-500 transition-colors">
+            <ChevronLeft size={16} />
+          </Link>
+          <div className="flex flex-col items-center">
+            <span className="text-[11px] font-black text-white tracking-[0.2em] uppercase flex items-center gap-1.5">
+              MATCH CENTER
+            </span>
+            <span className="text-[9px] text-gray-500 font-extrabold uppercase tracking-widest mt-0.5">{fixture.league}</span>
+          </div>
+          <MatchSubscribeButton fixtureId={fixture.id} />
+        </header>
+
+        {/* Main Wrapper Client Component */}
+        <MatchDetailClient 
+          fixture={fixture} 
+          liveDetails={liveDetails} 
+          latestOdds={latestOdds} 
+          initialOdds={fixture.oddsSnapshots} 
+          isUnlocked={isUnlocked} 
+        />
+
+        {/* Persistent floating BetSlip at bottom */}
+        <BetSlip 
+          fixtureId={fixture.id} 
+          home={fixture.home}
+          away={fixture.away}
+          league={fixture.league}
+          kickoffUtc={fixture.kickoffUtc}
+          latestOdds={latestOdds}
+        />
+
+      </div>
+    );
+  } catch (err) {
+    console.error("[Database Connection Error in Details]", err);
+    return (
+      <div className="flex flex-col min-h-[100dvh] bg-[#f2f2f7] items-center justify-center p-6 text-center select-none font-sans text-[#1c1c1e]">
+        <div className="bg-white border border-gray-200 p-6 rounded-3xl shadow-sm flex flex-col items-center gap-4.5 max-w-sm">
+          <div className="w-12 h-12 rounded-full bg-amber-50 border border-amber-100 flex items-center justify-center text-amber-500 text-lg animate-pulse">
+            ⚡
+          </div>
+          <h2 className="text-xs font-black text-gray-800 uppercase tracking-widest">Network Congestion</h2>
+          <p className="text-[10px] text-gray-400 leading-relaxed">
+            The remote database connection is currently establishing. Please perform a manual pull-to-refresh or tap reload to retry.
+          </p>
+          <p className="text-[10px] text-gray-500 font-extrabold leading-relaxed mt-1">
+            云端数据库连接可能有些许波动或初次冷启动延迟，请您手动点击浏览器刷新重试。
+          </p>
         </div>
-        <MatchSubscribeButton fixtureId={fixture.id} />
-      </header>
-
-      {/* Main Wrapper Client Component */}
-      <MatchDetailClient 
-        fixture={fixture} 
-        liveDetails={liveDetails} 
-        latestOdds={latestOdds} 
-        initialOdds={fixture.oddsSnapshots} 
-        isUnlocked={isUnlocked} 
-      />
-
-      {/* Persistent floating BetSlip at bottom */}
-      <BetSlip 
-        fixtureId={fixture.id} 
-        home={fixture.home}
-        away={fixture.away}
-        league={fixture.league}
-        kickoffUtc={fixture.kickoffUtc}
-        latestOdds={latestOdds}
-      />
-
-
-    </div>
-  );
+      </div>
+    );
+  }
 }
 
